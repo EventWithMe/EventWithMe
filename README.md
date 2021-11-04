@@ -91,11 +91,14 @@ App allows users to create account and chat with people going to the same events
 * Settings
 
 ## Wireframes
+
 <img src="WireFrame.PNG" width=600>
 
-### [BONUS] Digital Wireframes & Mockups
+### Interactive Prototype
 
-### [BONUS] Interactive Prototype
+<img src='WireFrameWalkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Schema 
 [This section will be completed in Unit 9]
