@@ -92,7 +92,7 @@ App allows users to create account and chat with people going to the same events
 
 ## Wireframes
 
-<img src="WireFrame.PNG" width=600>
+<img src="WireFramePic.PNG" width=600>
 
 ### Interactive Prototype
 
