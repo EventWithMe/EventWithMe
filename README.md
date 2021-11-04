@@ -54,7 +54,6 @@ App allows users to create account and chat with people going to the same events
     * User can view events they signed up for
 * Event Detail (Viewing)
     * User can sign up to attend an event
-* Event Detail (Attending)
     * User can chat with other attendees
 * Messages
     * User can privately message people attending
@@ -76,19 +75,46 @@ App allows users to create account and chat with people going to the same events
 
 * Login
     * Event Stream
+    * Signup
 * Register
-    * Event Stream
+    * Login
 * Event Stream
-    * Event Detail (Viewing or Attending depending on what is selected)
+    * Event Detail 
+    * My Events
+    * Chat
+    * Profile
+    * Login
 * My Events
-    * Event Detail (Attending)
-* Event Detail (Viewing)
-* Event Detail (Attending)
-    * Messages with another user
+    * Event Detail 
+    * Event Stream
+    * My Events
+    * Chat
+    * Profile
+    * Login
+* Event Detail 
+    * Messages 
+    * Event Stream
+    * My Events
+    * Chat
+    * Profile
+    * Login
+* Chat
+    * Event Stream
+    * My Events
+    * Messages
+    * Profile
+    * Login
 * Messages
+    * Event Stream
+    * My Events
+    * Chat
+    * Profile
+    * Login
 * Profile
-    * Settings
-* Settings
+    * Event Stream
+    * My Events
+    * Chat
+    * Login
 
 ## Wireframes
 
