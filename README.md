@@ -96,7 +96,7 @@ App allows users to create account and chat with people going to the same events
 
 ### Interactive Prototype
 
-<img src='WireFrameWalkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='WireFrame_Walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
