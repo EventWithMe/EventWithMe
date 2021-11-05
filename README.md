@@ -150,15 +150,6 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 | photo  | image  | photo of user for profile  |
 | location  | String  | location of user  |
 
-**User**
-| Property  | Type | Description |
-| ------------- | ------------- | ------------- |
-| name  | String  | name of an user  |
-| email  | String  | email of user  |
-| password  | String  | password of user  |
-| photo  | image  | photo of user for profile  |
-| location  | String  | location of user  |
-
 **Message**
 | Property  | Type | Description |
 | ------------- | ------------- | ------------- |
