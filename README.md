@@ -147,7 +147,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 | username  | String  | username of an user  |
 | email  | String  | email of user  |
 | password  | String  | password of user  |
-| photo  | image  | photo of user for profile  |
+| photo  | Image  | photo of user for profile  |
 | location  | String  | location of user  |
 
 **Message**
