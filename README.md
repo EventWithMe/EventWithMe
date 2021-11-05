@@ -134,7 +134,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 | ------------- | ------------- | ------------- |
 | eventName  | String  | name of an event  |
 | location  | String  | location of an event  |
-| date  | String  | date of event  |
+| date  | DateTime  | date and time of event  |
 | description  | String  | description of an event  |
 | occupancy  | String  | max amount of attendees  |
 | venueName  | String  | name of venue  |
@@ -154,7 +154,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 | Property  | Type | Description |
 | ------------- | ------------- | ------------- |
 | content  | String  | content of message  |
-| timestamp  | String  | time message was sent  |
+| timestamp  | DateTime  | time message was sent  |
 | username  | String  | username attached to message  |
 
 
