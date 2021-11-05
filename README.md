@@ -127,9 +127,14 @@ App allows users to create account and chat with people going to the same events
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+
+**Event**
+| Property  | Type | Description |
+| ------------- | ------------- | ------------- |
+| Name  | String  | User's name  |
+| Content Cell  | Content Cell  |
+
 ### Networking
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
