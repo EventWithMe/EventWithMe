@@ -134,7 +134,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 | ------------- | ------------- | ------------- |
 | eventName  | String  | name of an event  |
 | location  | String  | location of an event  |
-| date  | DateTime  | date and time of event  |
+| date  | String  | date of event  |
 | description  | String  | description of an event  |
 | occupancy  | String  | max amount of attendees  |
 | venueName  | String  | name of venue  |
@@ -147,19 +147,40 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 | username  | String  | username of an user  |
 | email  | String  | email of user  |
 | password  | String  | password of user  |
-| photo  | Image  | photo of user for profile  |
+| photo  | image  | photo of user for profile  |
 | location  | String  | location of user  |
 
 **Message**
 | Property  | Type | Description |
 | ------------- | ------------- | ------------- |
 | content  | String  | content of message  |
-| timestamp  | DateTime  | time message was sent  |
+| timestamp  | String  | time message was sent  |
 | username  | String  | username attached to message  |
 
-
-
 ### Networking
+* Login
+    * (read/GET) Query user data to verify login from parse database
+* Register
+    * (read/GET) user data from 
+    * (create/POST) create user in 
+* Event Stream
+    * (read/GET) event data from event API
+* My Events
+    * (read/GET) event data from event API 
+    * (read/GET) user data related to event
+* Event Detail 
+    * (read/GET) event data from event API
+* Chat
+    * (read/GET) list of chats from 
+    * (delete) remove chat from 
+* Messages
+    * (read/GET) reads messages 
+    * (create/POST) create message 
+* Profile
+    * (read/GET) reads user profile  
+    * (Update/PUT) Update user profile data
+    * (delete) delete account
+
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
