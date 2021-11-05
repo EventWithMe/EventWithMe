@@ -132,8 +132,41 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 **Event**
 | Property  | Type | Description |
 | ------------- | ------------- | ------------- |
-| Name  | String  | User's name  |
-| Content Cell  | Content Cell  |
+| eventName  | String  | name of an event  |
+| location  | String  | location of an event  |
+| date  | String  | date of event  |
+| description  | String  | description of an event  |
+| occupancy  | String  | max amount of attendees  |
+| venueName  | String  | name of venue  |
+| eventType  | String  | type of event  |
+
+**User**
+| Property  | Type | Description |
+| ------------- | ------------- | ------------- |
+| name  | String  | name of an user  |
+| username  | String  | username of an user  |
+| email  | String  | email of user  |
+| password  | String  | password of user  |
+| photo  | image  | photo of user for profile  |
+| location  | String  | location of user  |
+
+**User**
+| Property  | Type | Description |
+| ------------- | ------------- | ------------- |
+| name  | String  | name of an user  |
+| email  | String  | email of user  |
+| password  | String  | password of user  |
+| photo  | image  | photo of user for profile  |
+| location  | String  | location of user  |
+
+**Message**
+| Property  | Type | Description |
+| ------------- | ------------- | ------------- |
+| content  | String  | content of message  |
+| timestamp  | String  | time message was sent  |
+| username  | String  | username attached to message  |
+
+
 
 ### Networking
 - [Add list of network requests by screen ]
