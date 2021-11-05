@@ -134,7 +134,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 | ------------- | ------------- | ------------- |
 | eventName  | String  | name of an event  |
 | location  | String  | location of an event  |
-| date  | String  | date of event  |
+| date  | DateTime  | date of event  |
 | description  | String  | description of an event  |
 | occupancy  | String  | max amount of attendees  |
 | venueName  | String  | name of venue  |
