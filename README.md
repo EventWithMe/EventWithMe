@@ -166,8 +166,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 * Event Stream
     * (read/GET) event data from event API
 * My Events
-    * (read/GET) event data from event API 
-    * (read/GET) user data related to event
+    * (read/GET) event data and user data related to event from event API 
     ```java
         ParseQuery<Post> query = ParseQuery.getQuery(Event.class);
         query.include(Event.KEY_USER);
@@ -185,7 +184,6 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
             }
         });
     ```
-    * (read/GET) user data related to event
 * Event Detail 
     * (read/GET) event data from event API
     ```java
