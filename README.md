@@ -167,22 +167,6 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     * (read/GET) event data from event API
 * My Events
     * (read/GET) event data from event API 
-    ```java
-        ParseQuery<Post> query = ParseQuery.getQuery(Event.class);
-        query.include(Event.KEY_USER);
-        query.findInBackground(new FindCallback<Event>() {
-            @Override
-            public void done(List<Event> events, ParseException e) {
-                if(e != null){
-                    Log.e(TAG, "Issue with getting events", e);
-                    return;
-                }
-                for(Event event : events){
-                    Log.i(TAG, "Event: " + event.getEventName());
-                }
-            }
-        });
-    ```
     * (read/GET) user data related to event
     ```java
         ParseQuery<Post> query = ParseQuery.getQuery(Event.class);
@@ -196,11 +180,12 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
                 }
 		//When events pulled up with success then list them
                 for(Event event : events){
-                    Log.i(TAG, "Event chat: " + event.getEventChat());
+                    Log.i(TAG, "Event: " + event.getEventName() + "Event chat: " + event.getEventChat());
                 }
             }
         });
     ```
+    * (read/GET) user data related to event
 * Event Detail 
     * (read/GET) event data from event API
     ```java
