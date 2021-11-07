@@ -177,7 +177,6 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
                     Log.e(TAG, "Issue with getting events", e);
                     return;
                 }
-		//When events pulled up with success then list them
                 for(Event event : events){
                     Log.i(TAG, "Event: " + event.getEventName());
                 }
