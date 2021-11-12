@@ -209,6 +209,23 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     * (create/POST) create message 
 * Profile
     * (read/GET) reads user profile  
+    ```java
+    	ParseQuery<Post> query = ParseQuery.getQuery(Profile.class);
+    	query.include(Profile.KEY_USER);
+    	query.findInBackground(new FindCallback<Profile>() {
+        	@Override
+        	public void done(List<Profile> profiles, ParseException e) {
+            		if(e != null){
+                		Log.e(TAG, "No profile found", e);
+                		return;
+            		}
+			//When profile pulled up with success then list
+            		for(Profile profile : profiles){
+               			Log.i(TAG, "Profile: " + profile.getProfileName());
+            		}
+        	}
+    	});
+    ```
     * (Update/PUT) Update user profile data
     * (delete) delete account
 
