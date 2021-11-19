@@ -12,8 +12,9 @@ public class Event {
     private String description;
     private String venueName;
     private String eventType;
+    private String eventId;
 
-    public Event(String eventName, String city, LocalDate date, String startTime, int occupancy, String description, String venueName, String eventType) {
+    public Event(String eventName, String city, LocalDate date, String startTime, int occupancy, String description, String venueName, String eventType, String eventId) {
         this.eventName = eventName;
         this.city = city;
         this.date = date;
@@ -22,6 +23,7 @@ public class Event {
         this.description = description;
         this.venueName = venueName;
         this.eventType = eventType;
+        this.eventId = eventId;
     }
 
     public String getEventName() {
@@ -86,5 +88,13 @@ public class Event {
 
     public void setEventType(String eventType) {
         this.eventType = eventType;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 }

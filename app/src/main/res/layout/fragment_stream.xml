@@ -6,7 +6,7 @@
     tools:context=".fragments.StreamFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPosts"
+        android:id="@+id/rvStreamList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp" />
