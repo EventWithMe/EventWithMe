@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <EditText
+        android:id="@+id/editTextLoginUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="10dp"
+        android:ems="10"
+        android:hint="@string/login_text_hint_username"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:autofillHints="username" />
+
+    <EditText
+        android:id="@+id/editTextLoginPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLoginUsername"
+        android:layout_alignStart="@+id/editTextLoginUsername"
+        android:layout_alignEnd="@+id/editTextLoginUsername"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
+        android:ems="10"
+        android:hint="@string/login_text_hint_password"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:autofillHints="password" />
+
+    <Button
+        android:id="@+id/buttonLoginSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLoginPassword"
+        android:layout_alignStart="@+id/editTextLoginPassword"
+        android:layout_alignEnd="@+id/editTextLoginPassword"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
+        android:text="@string/login_button_text_log_in" />
+
+    <Button
+        android:id="@+id/buttonLoginLogIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonLoginSignUp"
+        android:layout_alignStart="@+id/buttonLoginSignUp"
+        android:layout_alignEnd="@+id/buttonLoginSignUp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
+        android:text="@string/login_button_text_sign_up" />
+</RelativeLayout>
