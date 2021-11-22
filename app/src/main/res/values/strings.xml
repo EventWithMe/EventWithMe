@@ -1,5 +1,24 @@
 <resources>
     <string name="app_name">EventWithUs</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_button_text_log_in">Log In</string>
+    <string name="login_text_hint_password">password</string>
+    <string name="login_button_text_sign_up">No account? Sign up</string>
+    <string name="login_text_hint_username">username/email</string>
+    <string name="signup_text_hint_username">username</string>
+    <string name="signup_text_hint_password">password</string>
+    <string name="signup_button_text_sign_up">Sign Up</string>
+    <string name="signup_button_text_log_ing">Already have an account? Log In</string>
+    <string name="signup_text_hint_email">email</string>
+    <string name="signup_text_hint_confirm_password">confirm password</string>
+    <string name="errorUsernameTaken">Username is taken</string>
+    <string name="errorEmailTaken">Email already in use</string>
+    <string name="errorInvalidEmail">Please enter a valid email address</string>
+    <string name="errorUnknownSignupError">Unknown error signing up</string>
+    <string name="errorEmptyEmail">An email is required</string>
+    <string name="errorEmptyUsername">A username is required</string>
+    <string name="errorEmptyPassword">A password is required</string>
+    <string name="errorPasswordMismatch">Passwords do not match</string>
+    <string name="errorInvalidCredentials">Invalid username or password</string>
+    <string name="errorUnknownLoginError">Unknown error logging in</string>
+    <string name="errorEmptyUsernameEmail">A username or email is required</string>
 </resources>
