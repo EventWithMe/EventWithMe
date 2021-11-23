@@ -4,12 +4,12 @@ package com.example.eventwithus.models;
 public class EventItem {
     private String mImageUrl;
     private String eventName;
-    private String type;
+    private String date;
 
-    public EventItem(String imageUrl, String eventNames, String types) {
+    public EventItem(String imageUrl, String eventNames, String Date) {
         mImageUrl = imageUrl;
         eventName = eventNames;
-        type = types;
+        date = Date;
     }
 
     public String getImageUrl() {
@@ -21,6 +21,6 @@ public class EventItem {
     }
 
     public String getLikeCount() {
-        return type;
+        return date;
     }
 }

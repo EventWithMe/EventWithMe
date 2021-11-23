@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:text="Creator Name"
+        android:text="Event Name"
         android:textColor="@android:color/black"
         android:textSize="40sp" />
 
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Likes: "
+        android:text="Date: "
         android:textSize="20sp"
         android:typeface="serif" />
 
