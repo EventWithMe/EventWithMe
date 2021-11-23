@@ -5,6 +5,7 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.eventwithus.fragments.StreamFragment;
 
 public class RequestQueueSingleton {
     private static RequestQueueSingleton instance; //does this exist already in memory?

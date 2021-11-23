@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewHolder> {
     private Context mContext;
-    private ArrayList<EventItem> mExampleList;
+    private ArrayList<EventItem> eventItems;
     private OnItemClickListener mListener;
 
 
@@ -31,7 +31,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewH
     }
     public EventAdapter(Context context, ArrayList<EventItem> exampleList) {
         mContext = context;
-        mExampleList = exampleList;
+        eventItems = exampleList;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewH
 
     @Override
     public void onBindViewHolder(ExampleViewHolder holder, int position) {
-        EventItem currentItem = mExampleList.get(position);
+        EventItem currentItem = eventItems.get(position);
 
         String imageUrl = currentItem.getImageUrl();
         String evenName = currentItem.getCreator();
@@ -55,7 +55,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewH
 
     @Override
     public int getItemCount() {
-        return mExampleList.size();
+        return eventItems.size();
     }
 
     public class ExampleViewHolder extends RecyclerView.ViewHolder {
