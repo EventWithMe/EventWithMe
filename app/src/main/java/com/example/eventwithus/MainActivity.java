@@ -16,6 +16,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String EXTRA_URL = "imageUrl";
+    public static final String EXTRA_EVENT_NAME = "eventName";
+    public static final String EXTRA_EVENT_TYPE = "type";
+
+
     public static final String TAG = "MainActivity";
     private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
