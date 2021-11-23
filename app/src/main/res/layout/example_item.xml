@@ -22,7 +22,7 @@
             android:id="@+id/text_view_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Creator Name"
+            android:text="Event Name"
             android:textColor="@android:color/black"
             android:textSize="20sp" />
 
