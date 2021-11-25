@@ -25,22 +25,22 @@ App allows users to create account and chat with people going to the same events
 
 **Required Must-have Stories**
 
-* [x] User can create an account and login
-* [] User can view and change their displayed name, picture, location, etc.
-* [x] User can view a list of nearby events
-* [] User can sign up to attend an event
-* [] User can chat with others attending the events
-* [] User can view events they signed up for
+- [x] User can create an account and login
+- [ ] User can view and change their displayed name, picture, location, etc.
+- [x] User can view a list of nearby events
+- [ ] User can sign up to attend an event
+- [ ] User can chat with others attending the events
+- [ ] User can view events they signed up for
 
 **Optional Nice-to-have Stories**
 
-* [] User can use phone GPS to detect location
-* [] User can choose to sort either by most recent or by distance
-* [] User can privately message people attending
-* [] User can create groups with group chats for people attending together
-* [] User can receive notifications about new messages or new events in their area
-* [] User can change privacy settings and notification settings
-* [] User can view other people's profiles
+- [ ] User can use phone GPS to detect location
+- [ ] User can choose to sort either by most recent or by distance
+- [ ] User can privately message people attending
+- [ ] User can create groups with group chats for people attending together
+- [ ] User can receive notifications about new messages or new events in their area
+- [ ] User can change privacy settings and notification settings
+- [ ] User can view other people's profiles
 
 ### 2. Screen Archetypes
 
