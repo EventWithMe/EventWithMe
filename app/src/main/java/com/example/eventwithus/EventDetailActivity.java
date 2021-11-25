@@ -18,7 +18,7 @@ public class EventDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_detail);
+        setContentView(R.layout.activity_my_event_detail);
 
         Intent intent = getIntent();
         String imageUrl = intent.getStringExtra(EXTRA_URL);

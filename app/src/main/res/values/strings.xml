@@ -21,4 +21,8 @@
     <string name="errorInvalidCredentials">Invalid username or password</string>
     <string name="errorUnknownLoginError">Unknown error logging in</string>
     <string name="errorEmptyUsernameEmail">A username or email is required</string>
+    <string name="todo">TODO</string>
+    <string name="rsvp">RSVP</string>
+    <string name="chat">CHAT</string>
+    <string name="more_info">MORE INFO</string>
 </resources>

@@ -2,59 +2,44 @@ package com.example.eventwithus.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.eventwithus.EventDetailActivity;
 import com.example.eventwithus.R;
+import com.example.eventwithus.RequestQueueSingleton;
+import com.example.eventwithus.adapters.MyEventAdapter;
+import com.example.eventwithus.models.MyEvents;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RsvpFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class RsvpFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public static final String TAG = "RsvpFragment";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView recyclerView;
+    private MyEventAdapter myEventAdapter;
+    private ArrayList<MyEvents> eventsList;
+    private ArrayList<EventDetailActivity> detailActivityList;
+    private RequestQueue requestQueue;
 
     public RsvpFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RsvpFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RsvpFragment newInstance(String param1, String param2) {
-        RsvpFragment fragment = new RsvpFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -62,5 +47,64 @@ public class RsvpFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_rsvp, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView = view.findViewById(R.id.rvMyEventsList);
+        recyclerView.setHasFixedSize(true);
+
+        eventsList = new ArrayList<>();
+        myEventAdapter = new MyEventAdapter(getContext(), eventsList);
+        detailActivityList = new ArrayList<>();
+
+        recyclerView.setAdapter(myEventAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        parseJSON();
+    }
+
+    private void parseJSON() {
+        String url = "https://app.ticketmaster.com/discovery/v2/events/?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+
+                        JSONArray jsonArray = response.getJSONObject("_embedded").getJSONArray("events");
+
+                        Log.d(TAG,"onResponseSuccess");
+                        String imageURL = "";
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject hit = jsonArray.getJSONObject(i);
+
+                            String eventName = hit.getString("name");
+                            String city = hit.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("city").getString("name");
+                            String date = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
+                            String startTime = hit.getJSONObject("dates").getJSONObject("start").getString("localTime");
+                            String venueName = hit.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getString("name");
+                            String eventType = hit.getString("type");
+                            String eventId = hit.getString("id");
+                            String eventLink = hit.getString("url");
+
+                            JSONArray imagesArray = hit.getJSONArray("images");
+
+                            for (int j = 0; j < imagesArray.length(); j++) {
+                                JSONObject elem = imagesArray.getJSONObject(j);
+                                imageURL = elem.getString("url");//gets the image url
+                            }
+                            eventsList.add(new MyEvents(eventName, city, date, startTime, venueName, eventType, eventId, imageURL, eventLink));
+                        }
+
+                        myEventAdapter = new MyEventAdapter(getActivity().getBaseContext(), eventsList);
+                        recyclerView.setAdapter(myEventAdapter);
+                        //myEventAdapter.setOnItemClickListener(StreamFragment.this );
+
+                    } catch (JSONException e) {
+                        Log.e(TAG,"onResponse Failure :"+e);
+                        e.printStackTrace();
+                    }
+                }, Throwable::printStackTrace);
+        RequestQueueSingleton.getInstance(getActivity().getBaseContext()).addToRequestQueue(request);
     }
 }

@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.eventwithus">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:name=".ParseApplication"
         android:allowBackup="true"
@@ -14,11 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EventWithUs">
         <activity
+            android:name=".MyEventDetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".SignupActivity"
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,8 +27,13 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
-        <activity android:name=".EventDetailActivity" android:exported="true"/>
+            android:exported="true" />
+        <activity
+            android:name=".EventDetailActivity"
+            android:exported="true" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
