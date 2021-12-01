@@ -50,6 +50,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         currentUser = ParseUser.getCurrentUser();
         events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
+        rsvpCheck();
 
         Intent intent = getIntent();
         String imageUrl = intent.getStringExtra(EXTRA_URL);
@@ -68,12 +69,22 @@ public class EventDetailActivity extends AppCompatActivity {
         tvDate.setText(eventDate);
 
         btnRSVP = findViewById(R.id.btnRSVP);
+
+        if(rsvp) {
+            btnRSVP.setText("Cancel RSVP");
+        }
+
         btnRSVP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "RSVP button clicked date: " + eventDate);
-                // TODO: 12/1/2021 add proper id variable and date
-                rsvpEvent("123", eventDate);
+                Log.d(TAG, "btnRSVP clicked date: " + eventDate);
+
+                if(rsvp) {
+                    cancelRSVP("123");
+                } else {
+                    // TODO: 12/1/2021 add proper id variable and date
+                    rsvpEvent("123", eventDate);
+                }
             }
         });
     }
@@ -87,7 +98,36 @@ public class EventDetailActivity extends AppCompatActivity {
                 rsvp = false;
             }
         }
+    }
 
+    private void cancelRSVP(String eventId) {
+        for(int i = 0; i < events.size(); i++) {
+            String[] format = events.get(i).split("_");
+            if(format[0].equals(eventId)){
+                events.remove(i);
+            }
+        }
+
+        String updated = "";
+
+        for(int i = 0; i < events.size() - 1; i++) {
+            updated += events.get(i) + ", ";
+        }
+        updated += events.get(events.size() - 1);
+
+        currentUser.put(PARSE_RSVP_KEY, updated);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast.makeText(getApplicationContext(), "You have cancelled your RSVP", Toast.LENGTH_SHORT).show();
+                    btnRSVP.setText("RSVP");
+                    rsvp = false;
+                } else {
+                    Log.e(TAG, "Error: " + e.getMessage());
+                }
+            }
+        });
     }
 
     // updates Parse DB User eventsinfo column
@@ -100,7 +140,8 @@ public class EventDetailActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Toast.makeText(getApplicationContext(), "You have RSVP'd", Toast.LENGTH_SHORT).show();
-                    btnRSVP.setText("Remove RSVP");
+                    btnRSVP.setText("Cancel RSVP");
+                    rsvp = true;
                 } else {
                     Log.e(TAG, "Error: " + e.getMessage());
                 }
