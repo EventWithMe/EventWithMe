@@ -39,7 +39,7 @@ public class EventDetailActivity extends AppCompatActivity {
     TextView tvDate;
     ImageView imageView;
 
-    private boolean RSVP;
+    private boolean rsvp;
     private ParseUser currentUser;
     List<String> events;
 
@@ -79,7 +79,15 @@ public class EventDetailActivity extends AppCompatActivity {
     }
 
     private void rsvpCheck() {
-        currentUser.getString(PARSE_RSVP_KEY);
+        for(String s : events) {
+            String[] eventInfo = s.split("_");
+            if(eventInfo[1].equals("EventId")){
+                rsvp = true;
+            } else {
+                rsvp = false;
+            }
+        }
+
     }
 
     // updates Parse DB User eventsinfo column
