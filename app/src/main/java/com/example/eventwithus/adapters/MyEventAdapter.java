@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+/*
 import com.example.eventwithus.MyEventDetailActivity;
 import com.example.eventwithus.R;
 import com.example.eventwithus.models.MyEvents;
@@ -124,3 +124,4 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
         }
     }
 }
+*/

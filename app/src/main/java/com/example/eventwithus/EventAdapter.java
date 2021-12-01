@@ -46,11 +46,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewH
 
         String imageUrl = currentItem.getImageUrl();
         String evenName = currentItem.getCreator();
-        String eventType = currentItem.getLikeCount();
+        String eventType = currentItem.getDate();
 
         holder.mEventName.setText(evenName);
         holder.mEventDesc.setText("Starts on: " + eventType);
-        Picasso.with(mContext).load(imageUrl).fit().centerInside().into(holder.mImageView);
+        Picasso.with(mContext).load(imageUrl).fit().centerInside().transform(new RoundedTransformation(50, 0)).into(holder.mImageView);
     }
 
     @Override

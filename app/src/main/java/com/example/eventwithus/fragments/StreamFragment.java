@@ -40,16 +40,13 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     public static final String EXTRA_URL = "imageUrl";
     public static final String EXTRA_EVENT_NAME = "eventName";
     public static final String EXTRA_EVENT_TYPE = "type";
+    public static final String EXTRA_EVENT_DATE = "date";
 
     private RecyclerView mRecyclerView;
     private EventAdapter eventAdapter;
     private ArrayList<EventItem> mEventList;
     private ArrayList<EventDetail> mDetailList;
     private RequestQueue mRequestQueue;
-
-
-
-
     public static final String TAG = "StreamFragment";
     private RecyclerView rvEvents;
     protected EventsAdapter adapter;
@@ -109,6 +106,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
                                 String eventName = hit.getString("name");
                                 String date = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
+                                // TODO: 12/1/2021 get the unique id for an event from the Json
+                                // String id = hit.getString("");
+
                                 // String type = hit.getString("type");
                                 JSONArray imagesArray = hit.getJSONArray("images");
                                 String info = hit.getString("info");
@@ -119,7 +119,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
                                 }
 
-
+                                // TODO: 12/1/2021 add the id to this new call
                                 mEventList.add(new EventItem(eventImage, eventName, date));
                                 mDetailList.add(new EventDetail(info));
                             }
@@ -150,10 +150,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         EventDetail clickedItem1 = mDetailList.get(position);
         // JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.GET, ur)
 
-
         detailIntent.putExtra(EXTRA_URL, clickedItem.getImageUrl());
         detailIntent.putExtra(EXTRA_EVENT_NAME, clickedItem.getCreator());
-
+        detailIntent.putExtra(EXTRA_EVENT_DATE, clickedItem.getDate());
 
         detailIntent.putExtra(EXTRA_EVENT_TYPE, clickedItem1.getInfo());
 

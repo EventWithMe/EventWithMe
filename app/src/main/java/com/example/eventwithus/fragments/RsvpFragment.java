@@ -19,8 +19,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.eventwithus.EventDetailActivity;
 import com.example.eventwithus.R;
 import com.example.eventwithus.RequestQueueSingleton;
-import com.example.eventwithus.adapters.MyEventAdapter;
-import com.example.eventwithus.models.MyEvents;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class RsvpFragment extends Fragment {
-
+/*
     public static final String TAG = "RsvpFragment";
 
     private RecyclerView recyclerView;
@@ -106,5 +104,5 @@ public class RsvpFragment extends Fragment {
                     }
                 }, Throwable::printStackTrace);
         RequestQueueSingleton.getInstance(getActivity().getBaseContext()).addToRequestQueue(request);
-    }
+    }*/
 }
