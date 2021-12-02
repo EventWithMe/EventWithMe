@@ -49,7 +49,7 @@ public class EventDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_detail);
 
         currentUser = ParseUser.getCurrentUser();
-        events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
+       events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
 
         Intent intent = getIntent();
         String imageUrl = intent.getStringExtra(EXTRA_URL);
