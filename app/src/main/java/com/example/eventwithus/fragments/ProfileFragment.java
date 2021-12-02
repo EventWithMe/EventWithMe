@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,12 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+// TODO: 12/2/2021 add image functionality
+
 public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment"; // tag for logging
     public static final String EMAIL_KEY= "email";
-    public static final String PASSWORD_KEY= "password";
     public static final String FIRSTNAME_KEY= "firstname";
     public static final String LASTNAME_KEY= "lastname";
     public static final String IMAGE_KEY= "image";
@@ -35,7 +37,6 @@ public class ProfileFragment extends Fragment {
     TextView tvFirstNameP;
     TextView tvLastNameP;
     TextView tvEmailP;
-    TextView tvPasswordP;
     Button btnEditProfile;
 
     private ParseUser currentUser;
@@ -62,7 +63,6 @@ public class ProfileFragment extends Fragment {
         tvFirstNameP = view.findViewById(R.id.tvFirstNameP);
         tvLastNameP = view.findViewById(R.id.tvLastNameP);
         tvEmailP = view.findViewById(R.id.tvEmailP);
-        tvPasswordP = view.findViewById(R.id.tvPasswordP);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
 
         currentUser.fetchInBackground(new GetCallback<ParseObject>() {
@@ -75,8 +75,15 @@ public class ProfileFragment extends Fragment {
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG, "Edit Profile Button Clicked");
                 Intent intent = new Intent(getActivity().getBaseContext(), EditProfileActivity.class);
                 getActivity().startActivity(intent);
+                currentUser.fetchInBackground(new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject object, ParseException e) {
+                        populateProfileData();
+                    }
+                });
             }
         });
     }
@@ -89,6 +96,5 @@ public class ProfileFragment extends Fragment {
         tvFirstNameP.setText(firstName);
         tvLastNameP.setText(lastName);
         tvEmailP.setText(email);
-        tvPasswordP.setText(R.string.profile_password);
     }
 }

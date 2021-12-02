@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EventWithUs">
         <activity
+            android:name=".PasswordChangeActivity"
+            android:exported="true" />
+        <activity
             android:name=".EditProfileActivity"
             android:exported="true" />
         <activity
