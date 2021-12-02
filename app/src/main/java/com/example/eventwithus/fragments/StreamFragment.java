@@ -26,6 +26,7 @@ import com.example.eventwithus.R;
 import com.example.eventwithus.RequestQueueSingleton;
 import com.example.eventwithus.models.Event;
 import com.example.eventwithus.models.EventDetail;
+import com.example.eventwithus.models.EventHelper;
 import com.example.eventwithus.models.EventItem;
 
 import org.json.JSONArray;
@@ -105,7 +106,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                 JSONObject hit = jsonArray.getJSONObject(i);
 
                                 String eventName = hit.getString("name");
-                                String date = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
+                                String date = EventHelper.formatJsonDate(hit.getJSONObject("dates").getJSONObject("start").getString("localDate"));
                                 // TODO: 12/1/2021 get the unique id for an event from the Json
                                 // String id = hit.getString("");
 
