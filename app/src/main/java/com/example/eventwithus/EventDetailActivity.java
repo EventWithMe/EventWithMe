@@ -83,7 +83,7 @@ public class EventDetailActivity extends AppCompatActivity {
             rsvpCheck();
         }
 
-        // if the user is already rsvp'd then set the button to cancel
+        // if the user is already rsvp'd then set the btnEditProfile to cancel
         if(rsvp) {
             btnRSVP.setText("Cancel RSVP");
         }
@@ -121,7 +121,7 @@ public class EventDetailActivity extends AppCompatActivity {
         System.out.print("RSVP VERDICT: " + rsvp);
     }
 
-    // if user click the button when it says "cancel rsvp" then we remove the item from the list and DB
+    // if user click the btnEditProfile when it says "cancel rsvp" then we remove the item from the list and DB
     private void cancelRSVP(String eventId) {
         System.out.println("CANCEL RSVP:");
         String updated = "";

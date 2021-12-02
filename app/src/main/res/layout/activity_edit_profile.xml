@@ -5,83 +5,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ProfileFragment">
+    tools:context=".EditProfile">
 
     <ImageView
-        android:id="@+id/ivPfp"
+        android:id="@+id/ivPfpE"
         android:layout_width="195dp"
         android:layout_height="179dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/ic_baseline_person_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvEmailP"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/tvEmailPE"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Email: brandon@android.com"
+        android:layout_marginTop="15dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLastNameP"
-        tools:text="Email: brandon@android.com" />
+        app:layout_constraintTop_toBottomOf="@id/tvLastNamePE" />
 
     <View
         android:id="@+id/divider2"
         android:layout_width="409dp"
         android:layout_height="1dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPfp" />
+        app:layout_constraintTop_toBottomOf="@+id/ivPfpE" />
 
-    <TextView
-        android:id="@+id/tvFirstNameP"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/tvFirstNamePE"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="First Name: Brandon"
+        android:layout_marginTop="15dp"
+        android:hint="First Name"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2"
-        tools:text="First Name: Brandon" />
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
-    <TextView
-        android:id="@+id/tvLastNameP"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/tvLastNamePE"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Last Name: Muller"
+        android:layout_marginTop="15dp"
+        android:hint="Last Name"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFirstNameP"
-        tools:text="Last Name: Muller" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFirstNamePE" />
 
-    <TextView
-        android:id="@+id/tvPasswordP"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/tvPasswordPE"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Password: **********"
+        android:layout_marginTop="15dp"
+        android:hint="Password"
+        android:inputType="textPassword"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEmailP"
-        tools:text="Password: **********" />
+        app:layout_constraintTop_toBottomOf="@+id/tvEmailPE" />
 
     <Button
-        android:id="@+id/btnEditProfile"
+        android:id="@+id/btnSaveProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit Profile"
+        android:text="Save Changes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPasswordP" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPasswordPE" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

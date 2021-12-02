@@ -96,7 +96,7 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
             //create new intent
             Intent intent = new Intent(context, MyEventDetailActivity.class);
             //pass data
-            intent.putExtra("imageView", event.getImageURL());
+            intent.putExtra("ivPfp", event.getImageURL());
             intent.putExtra("nameTV", event.getEventName());
             intent.putExtra("cityTV", event.getCity());
             intent.putExtra("timeTV", event.getStartTime());

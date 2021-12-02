@@ -32,7 +32,7 @@ public class MyEventDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_event_detail);
 
         Bundle extras = getIntent().getExtras();
-        imageView = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.ivPfp);
         nameTV = findViewById(R.id.nameTV);
         cityTV = findViewById(R.id.cityTV);
         timeTV = findViewById(R.id.timeTV);
@@ -50,7 +50,7 @@ public class MyEventDetailActivity extends AppCompatActivity {
             String venue = extras.getString("venueTV");
             String description = extras.getString("descriptionTV");
             String date = extras.getString("dateTV");
-            String image = extras.getString("imageView");
+            String image = extras.getString("ivPfp");
 
             nameTV.setText(name);
             cityTV.setText("City: " + city);
