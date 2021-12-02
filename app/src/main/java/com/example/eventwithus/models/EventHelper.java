@@ -9,9 +9,13 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /*
     This classes purpose is just to have one place for static methods for assisting in events
@@ -53,5 +57,51 @@ public class EventHelper {
                 }
             }
         });
+    }
+
+    // takes string json date in the form YYYY-MM-DD and turns it into something like 06 January 2022
+    public static String formatJsonDate(String rawJsonDate) {
+        String formatted = "";
+        String[] arr = rawJsonDate.split("-");
+        formatted += arr[2] + " ";
+        switch(arr[1]){
+            case "01":
+                formatted += "January";
+                break;
+            case "02":
+                formatted += "February";
+                break;
+            case "03":
+                formatted += "March";
+                break;
+            case "04":
+                formatted += "April";
+                break;
+            case "05":
+                formatted += "May";
+                break;
+            case "06":
+                formatted += "June";
+                break;
+            case "07":
+                formatted += "July";
+                break;
+            case "08":
+                formatted += "August";
+                break;
+            case "09":
+                formatted += "September";
+                break;
+            case "10":
+                formatted += "October";
+                break;
+            case "11":
+                formatted += "November";
+                break;
+            case "12":
+                formatted += "December";
+                break;
+        }
+        return  formatted += " " + arr[0];
     }
 }
