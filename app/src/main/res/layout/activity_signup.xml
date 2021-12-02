@@ -26,10 +26,29 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textLayoutSignupEmail"
+        android:id="@+id/textLayoutSignupDisplayName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textLayoutSignupUsername"
+        android:layout_alignStart="@+id/textLayoutSignupEmail"
+        android:layout_alignEnd="@+id/textLayoutSignupEmail"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="0dp"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextSignupDisplayName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/signup_text_hint_display_name" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textLayoutSignupEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textLayoutSignupDisplayName"
         android:layout_alignStart="@+id/textLayoutSignupUsername"
         android:layout_alignEnd="@+id/textLayoutSignupUsername"
         android:layout_marginStart="0dp"
@@ -110,4 +129,5 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="0dp"
         android:text="@string/signup_button_text_log_ing" />
+
 </RelativeLayout>

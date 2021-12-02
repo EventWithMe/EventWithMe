@@ -27,6 +27,7 @@
     <string name="more_info">MORE INFO</string>
     <string name="profile_first">First name:</string>
     <string name="profile_last">Last name:</string>
+    <string name="signup_text_hint_display_name">name (first/last)</string>
     <string name="profile_email">Email:</string>
     <string name="profile_password">Password: **********</string>
 </resources>
