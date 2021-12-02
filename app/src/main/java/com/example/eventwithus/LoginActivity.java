@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         });
 
-        // Watches for change in a text box and updates whether Log In button is enabled
+        // Watches for change in a text box and updates whether Log In btnRSVP is enabled
         // Also clears any error from the text being empty
         TextWatcher textWatcher = new TextWatcher() {
             @Override
