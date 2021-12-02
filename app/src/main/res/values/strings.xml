@@ -25,4 +25,8 @@
     <string name="rsvp">RSVP</string>
     <string name="chat">CHAT</string>
     <string name="more_info">MORE INFO</string>
+    <string name="profile_first">First:</string>
+    <string name="profile_last">Last:</string>
+    <string name="profile_email">Email:</string>
+    <string name="profile_password">Password: **********</string>
 </resources>

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EventWithUs">
         <activity
-            android:name=".EditProfile"
+            android:name=".EditProfileActivity"
             android:exported="true" />
         <activity
             android:name=".MyEventDetailActivity"
