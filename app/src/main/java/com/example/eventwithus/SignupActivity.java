@@ -23,10 +23,12 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
     TextInputLayout textLayoutUsername;
+    TextInputLayout textLayoutDisplayName;
     TextInputLayout textLayoutEmail;
     TextInputLayout textLayoutPassword;
     TextInputLayout textLayoutConfirmPassword;
     EditText editTextUsername;
+    EditText editTextDisplayName;
     EditText editTextEmail;
     EditText editTextPassword;
     EditText editTextConfirmPassword;
@@ -40,10 +42,12 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         textLayoutUsername = findViewById(R.id.textLayoutSignupUsername);
+        textLayoutDisplayName = findViewById(R.id.textLayoutSignupDisplayName);
         textLayoutEmail = findViewById(R.id.textLayoutSignupEmail);
         textLayoutPassword = findViewById(R.id.textLayoutSignupPassword);
         textLayoutConfirmPassword = findViewById(R.id.textLayoutSignupConfirmPassword);
         editTextUsername = findViewById(R.id.editTextSignupUsername);
+        editTextDisplayName = findViewById(R.id.editTextSignupDisplayName);
         editTextEmail = findViewById(R.id.editTextSignupEmail);
         editTextPassword = findViewById(R.id.editTextSignupPassword);
         editTextConfirmPassword = findViewById(R.id.editTextSignupConfirmPassword);
@@ -54,11 +58,12 @@ public class SignupActivity extends AppCompatActivity {
 
         buttonSignUp.setOnClickListener(v -> {
             String username = editTextUsername.getText().toString();
+            String displayname = editTextDisplayName.getText().toString();
             String email = editTextEmail.getText().toString();
             String password = editTextPassword.getText().toString();
             String confirmPassword = editTextConfirmPassword.getText().toString();
             if (password.equals(confirmPassword)) {
-                signupUser(username, email, password);
+                signupUser(username, displayname, email, password);
             }
             else {
                 Toast.makeText(this, getString(R.string.errorPasswordMismatch), Toast.LENGTH_SHORT).show();
@@ -177,16 +182,26 @@ public class SignupActivity extends AppCompatActivity {
         editTextConfirmPassword.setOnFocusChangeListener(onFocusChangeListener);
     }
 
-    private void signupUser(String username, String email, String password) {
+    private void signupUser(String username, String displayname, String email, String password) {
 
         ParseUser user = new ParseUser();
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
 
+        if (displayname.isEmpty()) {
+            user.put("firstname", username);
+            user.put("lastname", "");
+        }
+        else {
+            String[] first_last = displayname.split(" ", 2);
+            user.put("firstname", first_last[0]);
+            user.put("lastname", first_last[1]);
+        }
+
         user.signUpInBackground(e -> {
             if (e != null) {
-                Log.e(TAG, "Issue logging in", e);
+                Log.e(TAG, "Issue signing up", e);
                 if (e.getCode() == 202)
                     textLayoutUsername.setError(getString(R.string.errorUsernameTaken));
                 else if (e.getCode() == 203)
