@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-/*
+
 import com.example.eventwithus.MyEventDetailActivity;
 import com.example.eventwithus.R;
 import com.example.eventwithus.models.MyEvents;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -97,14 +96,14 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
             //create new intent
             Intent intent = new Intent(context, MyEventDetailActivity.class);
             //pass data
-            intent.putExtra("imageView", events.get(position).getImageURL());
-            intent.putExtra("nameTV", events.get(position).getEventName());
-            intent.putExtra("cityTV", events.get(position).getCity());
-            intent.putExtra("timeTV", events.get(position).getStartTime());
-            intent.putExtra("venueTV", events.get(position).getVenueName());
-            intent.putExtra("descriptionTV", events.get(position).getEventId());
-            intent.putExtra("dateTV", events.get(position).getDate());
-            intent.putExtra("eventLink", events.get(position).getEventLink());
+            intent.putExtra("imageView", event.getImageURL());
+            intent.putExtra("nameTV", event.getEventName());
+            intent.putExtra("cityTV", event.getCity());
+            intent.putExtra("timeTV", event.getStartTime());
+            intent.putExtra("venueTV", event.getVenueName());
+            intent.putExtra("descriptionTV", event.getEventId());
+            intent.putExtra("dateTV", event.getDate());
+            intent.putExtra("eventLink", event.getEventLink());
 
             //show the activity
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -124,4 +123,3 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
         }
     }
 }
-*/
