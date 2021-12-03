@@ -53,6 +53,13 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     protected EventsAdapter adapter;
     protected List<Event> allEvents;
 
+    String url = "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=kitten&image_type=photo&pretty=true";
+    String url2 = "https://app.ticketmaster.com/discovery/v2/events/k7vGFKzleBdwS/images.json?apikey=kdQ1Zu3hN6RX9";//images TICKETMASTER
+    String url3 = "https://app.ticketmaster.com/discovery/v2/events/?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
+    String url4 = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
+    String url5 = "https://app.ticketmaster.com/discovery/v2/events?keyword=music&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
+
+
     public StreamFragment() {
         // Required empty public constructor
     }
@@ -73,7 +80,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         mEventList = new ArrayList<>();
         mDetailList = new ArrayList<>();
         //mRequestQueue = Volley.newRequestQueue(this);
-        parseJSON();
+       // parseJSON();
+        parseJSON2();
 
         mRecyclerView = view.findViewById(R.id.rvStreamList);
         mRecyclerView.setHasFixedSize(true);
@@ -87,10 +95,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         // TODO: 11/21/2021 method will get data from the ticketmaster API & store it in the events model
     }
     private void parseJSON() {
-        String url = "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=kitten&image_type=photo&pretty=true";
-        String url2 = "https://app.ticketmaster.com/discovery/v2/events/k7vGFKzleBdwS/images.json?apikey=kdQ1Zu3hN6RX9";//images TICKETMASTER
-        String url3 = "https://app.ticketmaster.com/discovery/v2/events/?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
-        String url4 = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
+
+
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url4, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -123,6 +130,63 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                 // TODO: 12/1/2021 add the id to this new call
                                 mEventList.add(new EventItem(eventImage, eventName, date));
                                 mDetailList.add(new EventDetail(info));
+                            }
+
+                            eventAdapter = new EventAdapter(getActivity().getBaseContext(), mEventList);
+                            mRecyclerView.setAdapter(eventAdapter);
+                            eventAdapter.setOnItemClickListener(StreamFragment.this );
+
+                        } catch (JSONException e) {
+                            Log.e(TAG,"onResponse Failure :"+e);
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        RequestQueueSingleton.getInstance(getActivity().getBaseContext()).addToRequestQueue(request);
+
+    }
+
+    private void parseJSON2() {
+
+
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url5, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            JSONArray jsonArray = response.getJSONObject("_embedded").getJSONArray("events");
+
+                            Log.d("Main Activity","onResponseSuccess");
+                            String eventImage = "";
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject hit = jsonArray.getJSONObject(i);
+
+                                String eventName = hit.getString("name");
+                                String date = EventHelper.formatJsonDate(hit.getJSONObject("dates").getJSONObject("start").getString("localDate"));
+                                // TODO: 12/1/2021 get the unique id for an event from the Json
+                                // String id = hit.getString("");
+
+                                // String type = hit.getString("type");
+                                JSONArray imagesArray = hit.getJSONArray("images");
+                                //String info = hit.getString("info");
+                                for (int j = 0; j < imagesArray.length(); j++) {
+                                    JSONObject elem = imagesArray.getJSONObject(j);
+
+                                    eventImage = elem.getString("url");//gets the image url
+
+                                }
+
+                                // TODO: 12/1/2021 add the id to this new call
+                                mEventList.add(new EventItem(eventImage, eventName, date));
+                                //mDetailList.add(new EventDetail(info));
                             }
 
                             eventAdapter = new EventAdapter(getActivity().getBaseContext(), mEventList);

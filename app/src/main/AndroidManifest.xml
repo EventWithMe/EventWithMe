@@ -58,6 +58,7 @@
         <activity
             android:name=".EventDetailActivity"
             android:exported="true" />
+
     </application>
 
 </manifest>
