@@ -28,7 +28,7 @@ App allows users to create account and chat with people going to the same events
 - [x] User can create an account and login
 - [ ] User can view and change their displayed name, picture, location, etc.
 - [x] User can view a list of nearby events
-- [ ] User can sign up to attend an event
+- [x] User can rsvp to attend an event
 - [ ] User can chat with others attending the events
 - [ ] User can view events they signed up for
 
