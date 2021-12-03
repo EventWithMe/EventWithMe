@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+// TODO: 12/3/2021 on line 101 switch our rsvp for event id
 public class EventDetailActivity extends AppCompatActivity {
 
     public static final String TAG = "EventDetailActivity"; // tag for logging

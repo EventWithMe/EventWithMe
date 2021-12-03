@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.eventwithus.fragments.ProfileFragment;
 import com.example.eventwithus.models.EventHelper;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -32,8 +33,12 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 // TODO: 12/2/2021 write changes to the DB below
@@ -49,6 +54,7 @@ public class EditProfileActivity extends AppCompatActivity {
     public static final String IMAGE_KEY= "image";
     public static final String PHOTO= "photo";
     public static final String GALLERY= "gallery";
+    public static final int EDIT_PROFILE_KEY = 99;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private static final int PICK_IMAGE = 39;
     private static final int TAKE_PHOTO = 41;
@@ -59,12 +65,12 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText etEmailPE;
     Button btnSaveProfile;
 
-
     private ParseUser currentUser;
     private File photoFile;
     private String selectedImagePath;
     private String filemanagerstring;
     public String photoFileName = "photo.jpg";
+    private boolean pfpChange;
     Context context;
 
     @Override
@@ -80,12 +86,18 @@ public class EditProfileActivity extends AppCompatActivity {
 
         currentUser = ParseUser.getCurrentUser();
         context = getApplicationContext();
+        pfpChange = false;
 
         etFirstNamePE.setText(currentUser.getString(FIRSTNAME_KEY));
         etLastNamePE.setText(currentUser.getString(LASTNAME_KEY));
         etEmailPE.setText(currentUser.getString(EMAIL_KEY));
 
-        loadProfilePic();
+        currentUser.fetchInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                loadProfilePic();
+            }
+        });
 
         ivPfpE.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,9 +125,28 @@ public class EditProfileActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please input your email it is required", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // TODO: 12/2/2021 write the code to save this data
+
+                if(pfpChange) {
+                    saveHelper();
+                }
+
+                currentUser.put(FIRSTNAME_KEY, firstName);
+                currentUser.put(LASTNAME_KEY, lastName);
+                currentUser.put(EMAIL_KEY, email);
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        Log.i(TAG, "profile changes saved");
+                        Toast.makeText(context, "profile changes saved", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
             }
         });
+    }
+
+    private void saveHelper() {
+        savePhoto(this.photoFile);
     }
 
     private void loadProfilePic() {
@@ -136,6 +167,8 @@ public class EditProfileActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri selectedImageUri = data.getData();
                 Picasso.with(context).load(selectedImageUri).into(ivPfpE);
+                savePhoto(this.photoFile);
+
             } else { // Result was a failure
                 Toast.makeText(context, "System image could not be retrieved", Toast.LENGTH_SHORT).show();
             }
@@ -145,13 +178,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
-                savePhoto(this.photoFile);
-                currentUser.fetchInBackground(new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(ParseObject object, ParseException e) {
-                        Glide.with(context).load(currentUser.getParseFile(IMAGE_KEY).getUrl()).into(ivPfpE);
-                    }
-                });
+                pfpChange = true;
+                Glide.with(context).load(currentUser.getParseFile(IMAGE_KEY).getUrl()).into(ivPfpE);
             } else { // Result was a failure
                 Toast.makeText(context, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
@@ -164,13 +192,14 @@ public class EditProfileActivity extends AppCompatActivity {
         if(choice.equals(PHOTO)) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             photoFile = getPhotoFileUri(photoFileName);
-            Log.i(TAG, "getPhotoFileUri complete");
             Uri fileProvider = FileProvider.getUriForFile(context, "com.codepath.fileprovider", photoFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-            Log.i(TAG, "Before checking if user can handle intent");
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         } else if(choice.equals(GALLERY)) {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            photoFile = getPhotoFileUri(photoFileName);
+            Uri fileProvider = FileProvider.getUriForFile(context, "com.codepath.fileprovider", photoFile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
             intent.setType("image/*");
             startActivityForResult(intent, PICK_IMAGE);
         }
@@ -201,7 +230,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
         dialog.show();
     }
 
