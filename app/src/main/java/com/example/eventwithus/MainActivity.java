@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import com.example.eventwithus.fragments.ChatFragment;
 import com.example.eventwithus.fragments.ProfileFragment;
 import com.example.eventwithus.fragments.RsvpFragment;
+import com.example.eventwithus.fragments.SearchFragment;
 import com.example.eventwithus.fragments.StreamFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.Parse;
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_rsvp:
                         fragment = new RsvpFragment();
+                        break;
+                    case R.id.get_location:
+                        fragment = new SearchFragment();
                         break;
                     case R.id.action_chat:
                         fragment = new ChatFragment();
