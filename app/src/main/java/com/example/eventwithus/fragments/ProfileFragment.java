@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eventwithus.EditProfileActivity;
+import com.example.eventwithus.LoginActivity;
 import com.example.eventwithus.R;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -38,6 +39,8 @@ public class ProfileFragment extends Fragment {
     TextView tvLastNameP;
     TextView tvEmailP;
     Button btnEditProfile;
+    Button btnLogout;
+
 
     private ParseUser currentUser;
     Context context;
@@ -64,6 +67,7 @@ public class ProfileFragment extends Fragment {
         tvLastNameP = view.findViewById(R.id.tvLastNameP);
         tvEmailP = view.findViewById(R.id.tvEmailP);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
+        btnLogout = view.findViewById(R.id.btnLogout);
 
         currentUser.fetchInBackground(new GetCallback<ParseObject>() {
             @Override
@@ -84,6 +88,16 @@ public class ProfileFragment extends Fragment {
                         populateProfileData();
                     }
                 });
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "Logout Button Clicked");
+                ParseUser.logOut();
+                Intent intent = new Intent(getActivity().getBaseContext(), LoginActivity.class);
+                getActivity().startActivity(intent);
             }
         });
     }
