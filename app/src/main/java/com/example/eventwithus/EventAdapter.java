@@ -25,6 +25,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewH
         void onItemClick(int position);
     }
 
+
     public void setOnItemClickListener(OnItemClickListener listener)
     {
         mListener = listener;

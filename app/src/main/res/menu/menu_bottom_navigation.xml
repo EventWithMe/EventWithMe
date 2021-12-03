@@ -3,6 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/get_location"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_stream"
         android:icon="@android:drawable/ic_menu_compass"
         android:title="Stream"
