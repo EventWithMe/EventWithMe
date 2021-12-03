@@ -72,7 +72,7 @@ public class EventDetailActivity extends AppCompatActivity {
         Picasso.with(this).load(imageUrl).fit().centerInside().transform(new RoundedTransformation(50, 0)).into(imageView);
         textviewEventName.setText(eventName);
         textviewEventType.setText("Info: " + eventType);
-        tvDate.setText(EventHelper.formatJsonDate(eventDate));
+        tvDate.setText(eventDate);
 
         //printEvents();
 
