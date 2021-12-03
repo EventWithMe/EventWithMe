@@ -1,5 +1,6 @@
 package com.example.eventwithus.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,6 +8,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -53,6 +58,25 @@ public class ProfileFragment extends Fragment {
     private ParseUser currentUser;
     Context context;
 
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            Log.d(TAG, "onActivityResult: ");
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                // There are no request codes
+                Intent intent = result.getData();
+                String firstName = intent.getStringExtra(FIRSTNAME_KEY);
+                String lastName = intent.getStringExtra(LASTNAME_KEY);
+                String email = intent.getStringExtra(EMAIL_KEY);
+                tvFirstNameP.setText(firstName);
+                tvLastNameP.setText(lastName);
+                tvEmailP.setText(email);
+            } else {
+                Log.e(TAG, "result code not OK some error");
+            }
+        }
+    });
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -91,15 +115,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Log.i(TAG, "Edit Profile Button Clicked");
                 Intent intent = new Intent(getActivity().getBaseContext(), EditProfileActivity.class);
-// TODO: 12/3/2021 set up startactivityforresult() so that whenever the edit profile fragment is done it refreshes everything
-                startActivityForResult(intent, EDIT_PROFILE_KEY);
-                currentUser.fetchInBackground(new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(ParseObject object, ParseException e) {
-                        populateProfileData();
-                        loadProfilePic();
-                    }
-                });
+                activityResultLauncher.launch(intent);
             }
         });
 
@@ -122,22 +138,6 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
-
-// TODO: 12/3/2021 set up on activity for result properly
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "OnActivityResult Entered");
-
-            if (resultCode == RESULT_OK) {
-                Uri selectedImageUri = data.getData();
-                Picasso.with(context).load(selectedImageUri).into(ivPfpE);
-                savePhoto(this.photoFile);
-
-            } else { // Result was a failure
-                Toast.makeText(context, "System image could not be retrieved", Toast.LENGTH_SHORT).show();
-            }
-    }*/
 
     private void loadProfilePic() {
         Log.i(TAG, "Entering loadProfilePic");
