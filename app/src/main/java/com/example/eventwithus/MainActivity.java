@@ -21,13 +21,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
-public class MainActivity extends AppCompatActivity implements Initializable {
+public class MainActivity extends AppCompatActivity implements Initializable, SearchFragment.FragmentSearchListener, StreamFragment.FragmentStreamListener {
 
     public static final String EXTRA_URL = "imageUrl";
     public static final String EXTRA_EVENT_NAME = "eventName";
     public static final String EXTRA_EVENT_TYPE = "type";
 
-
+    private StreamFragment streamFragment;
     public static final String TAG = "MainActivity";
     private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -36,17 +36,20 @@ public class MainActivity extends AppCompatActivity implements Initializable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+       // StreamFragment streamFragment;
+        streamFragment = new StreamFragment();
+       // streamFragment = new StreamFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 Fragment fragment;
+
                 switch (item.getItemId()) {
                     case R.id.action_stream:
-                        refreshFragment();
-                        fragment = new StreamFragment();
+                        fragment = streamFragment;
+                       // refreshFragment();
                         break;
                     case R.id.action_rsvp:
                         fragment = new RsvpFragment();
@@ -86,6 +89,16 @@ public class MainActivity extends AppCompatActivity implements Initializable {
 
     @Override
     public void initialize() {
-        refreshFragment();
+      //  refreshFragment();
+    }
+
+    @Override
+    public void onInputSearchSent(CharSequence input) {
+       streamFragment.updateEditText(input);
+    }
+
+    @Override
+    public void onInputStreamSent(CharSequence input) {
+
     }
 }

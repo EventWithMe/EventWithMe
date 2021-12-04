@@ -45,7 +45,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class StreamFragment extends Fragment  implements  EventAdapter.OnItemClickListener, SearchFragment.FragmentSearchListener , Initializable {
+public class StreamFragment extends Fragment  implements  EventAdapter.OnItemClickListener , Initializable {
+    private StreamFragment.FragmentStreamListener listener;
+
+    public interface  FragmentStreamListener{
+        void onInputStreamSent(CharSequence input);
+    }
     public static final String EXTRA_URL = "imageUrl";
     public static final String EXTRA_EVENT_NAME = "eventName";
     public static final String EXTRA_EVENT_TYPE = "type";
@@ -63,6 +68,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     protected EventsAdapter adapter;
     protected List<Event> allEvents;
     Spinner spinner2;
+    String StreamText = "";
     final String keyword = "keyword=";
     String keyword2 = "";
     final String apikey = "apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
@@ -132,7 +138,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         //adapter = new EventsAdapter(getContext(), allEvents);
        // mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        populateEvents();
+/**
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,7 +153,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                     fragTransaction.attach(currentFragment);
                     fragTransaction.commit();
                 }
-                switch (spinner2.getSelectedItem().toString()) {
+                switch (StreamText) {
                     case "Concerts":
                         System.out.println("Concerts");
                         parseJSON2(music);
@@ -171,12 +178,53 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                         System.out.println("Saturday");
                         parseJSON2(artNThr);
                         break;
+                    default:
+                        parseJSON2(misc);
 
                 }
             }
         });
     }
 
+ **/
+
+    }
+
+    public void populateEvents(){
+
+        switch (StreamText) {
+            case "Concerts":
+                System.out.println("Concerts");
+                parseJSON2(music);
+                break;
+            case "Sports":
+                System.out.println("Sports");
+                parseJSON2(sports);
+                break;
+            case "Family":
+                System.out.println("Family");
+                parseJSON2(family);
+                break;
+            case "Film":
+                System.out.println("Film");
+                parseJSON2(film);
+                break;
+            case "Misc":
+                System.out.println("Misc");
+                parseJSON2(misc);
+                break;
+            case "Arts & Theater":
+                System.out.println("Saturday");
+                parseJSON2(artNThr);
+                break;
+            case "":
+                parseJSON2(misc);
+
+        }
+    }
+    public void updateEditText(CharSequence newText) {
+        StreamText= (String) newText;
+    }
 
 
 
@@ -238,7 +286,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     }
 
     private void parseJSON2(String url) {
-        Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),StreamText, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -317,13 +366,11 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     }
 
 
-    @Override
-    public void onInputSearchSent(CharSequence input) {
 
-    }
 
     @Override
     public void initialize() {
+
 
     }
 }

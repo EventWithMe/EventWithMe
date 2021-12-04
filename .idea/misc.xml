@@ -3,18 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/drawable/bg_window.xml" value="0.5703125" />
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/layout/activity_edit_profile.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/layout/activity_event_detail.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/layout/activity_password_change.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/layout/activity_signup.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/layout/bg_window.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/layout/event_card.xml" value="0.5" />
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/layout/example_item.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/layout/fragment_chat.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/layout/fragment_profile.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/layout/fragment_stream.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Branm/git/EventWithMe/app/src/main/res/layout/image_chooser_popup.xml" value="0.5" />
+        <entry key="..\:/Users/HowToCantaloupe/AndroidStudioProjects/EventWithMe/app/src/main/res/layout/activity_login.xml" value="0.5" />
+        <entry key="..\:/Users/HowToCantaloupe/AndroidStudioProjects/EventWithMe/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/HowToCantaloupe/AndroidStudioProjects/EventWithMe/app/src/main/res/layout/activity_signup.xml" value="0.5" />
+        <entry key="..\:/Users/HowToCantaloupe/AndroidStudioProjects/EventWithMe/app/src/main/res/layout/event_card.xml" value="0.25677083333333334" />
+        <entry key="..\:/Users/rellik/Desktop/EventWithMe/app/src/main/res/layout/activity_event_detail.xml" value="0.14994934143870314" />
+        <entry key="..\:/Users/rellik/Desktop/EventWithMe/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/rellik/Desktop/EventWithMe/app/src/main/res/layout/activity_password_change.xml" value="0.3932291666666667" />
+        <entry key="..\:/Users/rellik/Desktop/EventWithMe/app/src/main/res/layout/activity_search.xml" value="0.3932291666666667" />
+        <entry key="..\:/Users/rellik/Desktop/EventWithMe/app/src/main/res/layout/event_card.xml" value="0.33" />
+        <entry key="..\:/Users/rellik/Desktop/EventWithMe/app/src/main/res/layout/example_item.xml" value="0.14994934143870314" />
+        <entry key="..\:/Users/rellik/Desktop/EventWithMe/app/src/main/res/layout/fragment_profile.xml" value="0.15172239108409322" />
+        <entry key="..\:/Users/rellik/Desktop/EventWithMe/app/src/main/res/layout/fragment_search.xml" value="0.3932291666666667" />
+        <entry key="..\:/Users/rellik/Desktop/EventWithMe/app/src/main/res/layout/fragment_stream.xml" value="0.33" />
+        <entry key="..\:/Users/rellik/Desktop/EventWithMe/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.3932291666666667" />
       </map>
     </option>
   </component>
