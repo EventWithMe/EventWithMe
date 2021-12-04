@@ -13,6 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,12 +41,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class StreamFragment extends Fragment  implements  EventAdapter.OnItemClickListener{
+public class StreamFragment extends Fragment  implements  EventAdapter.OnItemClickListener, SearchFragment.FragmentSearchListener {
     public static final String EXTRA_URL = "imageUrl";
     public static final String EXTRA_EVENT_NAME = "eventName";
     public static final String EXTRA_EVENT_TYPE = "type";
     public static final String EXTRA_EVENT_DATE = "date";
 
+    private Button searchBtn;
+   private EditText inputET;
     private RecyclerView mRecyclerView;
     private EventAdapter eventAdapter;
     private ArrayList<EventItem> mEventList;
@@ -53,20 +59,37 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     protected EventsAdapter adapter;
     protected List<Event> allEvents;
 
+    final String keyword = "keyword=";
+    String keyword2 = "";
+    final String apikey = "apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
+    final String city = "&city=San%20Antonio";
+    final String eventsurl = "https://app.ticketmaster.com/discovery/v2/events?";
     String url = "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=kitten&image_type=photo&pretty=true";
     String url2 = "https://app.ticketmaster.com/discovery/v2/events/k7vGFKzleBdwS/images.json?apikey=kdQ1Zu3hN6RX9";//images TICKETMASTER
     String url3 = "https://app.ticketmaster.com/discovery/v2/events/?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
     String url4 = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
-    String url5 = "https://app.ticketmaster.com/discovery/v2/events?keyword=music&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
+    String url5 = "https://app.ticketmaster.com/discovery/v2/events?+"+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
 
 
     public StreamFragment() {
         // Required empty public constructor
     }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+          String  keyword = getArguments().getString("UserInput");
+            Toast.makeText(getContext(), "keyword :"+keyword, Toast.LENGTH_LONG).show();
+        }
 
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stream, container, false);
     }
@@ -74,6 +97,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Toast.makeText(getContext(), "onViewCreated ", Toast.LENGTH_LONG).show();
 
 
 
@@ -83,17 +107,28 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
        // parseJSON();
         parseJSON2();
 
+        searchBtn = view.findViewById(R.id.searchBtn);
+        inputET = view.findViewById(R.id.inputET);
         mRecyclerView = view.findViewById(R.id.rvStreamList);
         mRecyclerView.setHasFixedSize(true);
         //allEvents = new ArrayList<>();
         //adapter = new EventsAdapter(getContext(), allEvents);
        // mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                keyword2 = inputET.getText().toString();
+                Toast.makeText(getContext(), keyword2, Toast.LENGTH_LONG).show();
+                parseJSON2();
+            }
+        });
     }
 
-    protected void populateEvents() {
-        // TODO: 11/21/2021 method will get data from the ticketmaster API & store it in the events model
-    }
+
+
+
     private void parseJSON() {
 
 
@@ -152,7 +187,13 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     }
 
     private void parseJSON2() {
-
+        if( inputET == null){
+            url5 = eventsurl+apikey+city;
+        }
+        else{
+            url5 = eventsurl+keyword+keyword2+apikey+city;
+        }
+        Toast.makeText(getContext(), url5.toString(), Toast.LENGTH_LONG).show();
 
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url5, null,
@@ -224,4 +265,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         getActivity().startActivity(detailIntent);
     }
 
+
+    @Override
+    public void onInputSearchSent(CharSequence input) {
+
+    }
 }

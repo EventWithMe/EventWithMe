@@ -1,5 +1,6 @@
 package com.example.eventwithus.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.eventwithus.R;
 
@@ -23,14 +25,24 @@ import com.example.eventwithus.R;
  * create an instance of this fragment.
  */
 public class SearchFragment extends Fragment {
+    private FragmentSearchListener listener;
+
+    public interface  FragmentSearchListener{
+        void onInputSearchSent(CharSequence input);
+    }
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String key = "UserInput";
     Button getLocationBtn;
     SearchView searchView;
     Spinner spinner;
+
+
+
+    //
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -74,11 +86,19 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
+        View v = inflater.inflate(R.layout.fragment_search, container, false);
+        searchView = v.findViewById(R.id.searchView);
+        getLocationBtn = v.findViewById(R.id.getLocationBtn);
+        spinner = v.findViewById(R.id.spinner);
+        getLocationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CharSequence input = spinner.getSelectedItem().toString();
+                listener.onInputSearchSent(input);
+            }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
-
+        return v;
     }
 
 
@@ -89,23 +109,12 @@ public class SearchFragment extends Fragment {
         String[] Categories = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
         String[] Dates = { "All Dates", "This Weekend"};
         String[] Distance = { "10 mi", "25 mi", "50 mi","75 mi","All (mi)"};
-
-        searchView = view.findViewById(R.id.searchView);
-
-        spinner = view.findViewById(R.id.spinner);
+        //Bundle bundle = new Bundle();
+       // SteamFragment fragment = new StreamFragment();
 
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getContext(), spinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                Toast.makeText(getContext(), " Nothing selected", Toast.LENGTH_LONG).show();
-            }
-        });
+
 
 
         //Creating the ArrayAdapter instance having the country list
@@ -120,9 +129,11 @@ public class SearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-
+                Fragment fragment = new StreamFragment();
                 Toast.makeText(getContext(), "your Input "+s, Toast.LENGTH_LONG).show();
-                
+                Bundle bundle = new Bundle();
+                bundle.putString(key, s);
+                fragment.setArguments(bundle);
                 return false;
             }
 
