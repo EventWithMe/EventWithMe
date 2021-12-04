@@ -85,7 +85,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     String sports = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
     String family = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=family&locale=*";
     String film = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film";
-    String misc = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
+    String misc = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
     String artNThr = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
     public StreamFragment() {
         // Required empty public constructor
@@ -310,8 +310,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
                                 // String type = hit.getString("type");
                                 JSONArray imagesArray = hit.getJSONArray("images");
-                                //String info = hit.getString("info");
-                                String info = "";
+                                String info = hit.getString("info");
+                                //String info = "";
                                 for (int j = 0; j < imagesArray.length(); j++) {
                                     JSONObject elem = imagesArray.getJSONObject(j);
 

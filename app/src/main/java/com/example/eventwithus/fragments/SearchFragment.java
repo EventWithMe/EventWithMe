@@ -88,7 +88,7 @@ public class SearchFragment extends Fragment  {
     }
 
 
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -105,8 +105,13 @@ public class SearchFragment extends Fragment  {
                 }else{
                     textSwitcher.setText(row[++stringIndex]);
                 }
-               CharSequence input = textView.getText();
-                listener.onInputSearchSent(input);
+                TextView tv = (TextView) textSwitcher.getCurrentView();
+                if (tv.getText().toString().length()>0) {
+                    CharSequence input = tv.getText().toString();
+                    listener.onInputSearchSent(input);
+                }
+
+
 
             }
         });
