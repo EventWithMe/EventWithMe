@@ -138,6 +138,11 @@ public class EditProfileActivity extends AppCompatActivity {
                     public void done(ParseException e) {
                         Log.i(TAG, "profile changes saved");
                         Toast.makeText(context, "profile changes saved", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, ProfileFragment.class);
+                        intent.putExtra(FIRSTNAME_KEY, firstName);
+                        intent.putExtra(LASTNAME_KEY, lastName);
+                        intent.putExtra(EMAIL_KEY, email);
+                        setResult(RESULT_OK, intent);
                         finish();
                     }
                 });

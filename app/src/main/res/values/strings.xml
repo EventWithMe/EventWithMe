@@ -31,5 +31,5 @@
     <string name="profile_email">Email:</string>
     <string name="profile_password">Password: **********</string>
     <string name="pick_image_intent_text">Camera or gallery?</string>
-    <string name="password_info">Password Requirements:\n\t- 8 to 15 characters long\n\t- At least one upper case character\n\t- at least one symbol</string>
+    <string name="password_info">Password Requirements:\n\t- 8 to 20 characters long\n\t- At least one upper case character\n\t- at least one symbol\n\t-at least one digit</string>
 </resources>
