@@ -91,7 +91,7 @@ public class SearchFragment extends Fragment  {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         searchView = v.findViewById(R.id.searchView);
-        searchBTN = v.findViewById(R.id.searchBTN);
+        searchBTN = v.findViewById(R.id.leftBTN);
         spinner = v.findViewById(R.id.spinner);
         textSwitcher = v.findViewById(R.id.textSwitcher);
         searchBTN.setOnClickListener(new View.OnClickListener() {
@@ -103,8 +103,8 @@ public class SearchFragment extends Fragment  {
                 }else{
                     textSwitcher.setText(row[++stringIndex]);
                 }
-               // CharSequence input = spinner.getSelectedItem().toString();
-              //  listener.onInputSearchSent(input);
+               CharSequence input = spinner.getSelectedItem().toString();
+                listener.onInputSearchSent(input);
 
             }
         });
@@ -169,14 +169,108 @@ public class SearchFragment extends Fragment  {
      //   startActivity(intent);
         Toast.makeText(getContext(), "toast", Toast.LENGTH_LONG).show();
 
+       // GestureDetector gestureDetector;
+       /** gestureDetector = new GestureDetector(new MyGestureDetector());
+        View.OnTouchListener gestureListener = new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (gestureDetector.onTouchEvent(event)) {
+                    return true;
+                }
+                return false;
+            }
+        };
+        textView.setOnTouchListener(gestureListener);
 
 
+
+**/
     }
-
-
     public void displaySearchView(){
 
     }
 
 
+
+
+
+
+
+
+
+/**
+
+
+    class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
+
+        final String TAG = MyGestureDetector.class.getSimpleName();
+
+        // for touch left or touch right events
+        private static final int SWIPE_MIN_DISTANCE = 80;   //default is 120
+        private static final int SWIPE_MAX_OFF_PATH = 400;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 70;
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            return super.onSingleTapConfirmed(e);
+        }
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Log.d(TAG, " on filing event, first velocityX :" + velocityX +
+                    " second velocityY" + velocityY);
+            try {
+                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                    return false;
+                if(e1.getX() - e2.getX()
+                        > SWIPE_MIN_DISTANCE && Math.abs(velocityX)
+                        > SWIPE_THRESHOLD_VELOCITY) {
+                    onHorizonTouch(true);  // left
+                }  else if (e2.getX() - e1.getX()
+                        > SWIPE_MIN_DISTANCE && Math.abs(velocityX)
+                        > SWIPE_THRESHOLD_VELOCITY) {
+                    onHorizonTouch(false); // right
+                }
+            } catch (Exception e) {
+                // nothing
+            }
+            return false;
+        }
+
+        void onHorizonTouch(Boolean toLeft) {
+
+            if(!toLeft ) {
+                stringIndex = 0;
+                textSwitcher.setInAnimation(AnimationUtils.loadAnimation(
+                        getContext(), android.R.anim.fade_in));
+                textSwitcher.setOutAnimation(AnimationUtils.loadAnimation(
+                        getContext(), android.R.anim.fade_out));
+
+                textSwitcher.setText(row[++stringIndex]);
+               //textView.setText("Text1");
+            }
+            if(toLeft) {
+                textSwitcher.setInAnimation(AnimationUtils.loadAnimation(
+                        getContext(), android.R.anim.fade_in));
+                textSwitcher.setOutAnimation(AnimationUtils.loadAnimation(
+                        getContext(), android.R.anim.fade_out));
+
+                textSwitcher.setText(row[--stringIndex]);
+            }
+        }
     }
+**/
+
+
+
+
+
+    }
+
+

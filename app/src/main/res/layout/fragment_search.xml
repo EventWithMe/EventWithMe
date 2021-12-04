@@ -7,31 +7,52 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <Button
+            android:id="@+id/leftBTN"
+            android:layout_width="43dp"
+            android:layout_height="104dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/leftarrow" />
+
+        <Button
+            android:id="@+id/rightBTN"
+            android:layout_width="44dp"
+            android:layout_height="105dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/rightarrow" />
+
         <TextSwitcher
             android:id="@+id/textSwitcher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_above="@+id/spinner"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="175dp"
+            android:layout_marginEnd="-3dp"
+            android:layout_marginBottom="61dp"
+            android:layout_toStartOf="@+id/rightBTN"
+            android:layout_toEndOf="@+id/leftBTN"
             android:inAnimation="@android:anim/slide_in_left"
             android:outAnimation="@android:anim/slide_out_right"></TextSwitcher>
-
-        <Button
-            android:id="@+id/searchBTN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="search" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="-5dp"
+            android:layout_marginBottom="349dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>
