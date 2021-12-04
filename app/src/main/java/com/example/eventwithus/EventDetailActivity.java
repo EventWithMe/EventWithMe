@@ -96,7 +96,7 @@ public class EventDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.d(TAG, "btnRSVP clicked date: " + eventDate);
                 EventHelper.refreshUserData();
-
+// TODO: 12/4/2021 here change the 2 lines to event iD
                 if(rsvp) {
                     cancelRSVP("123");
                 } else {
