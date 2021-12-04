@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#34FFFFFF"
+        android:background="#5EFFFFFF"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -35,7 +35,10 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#191818"
             android:text="Date: "
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textColorHighlight="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

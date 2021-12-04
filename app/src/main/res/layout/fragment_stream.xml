@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="40dp"
-        android:background="@drawable/bgconcert"
+        android:background="@drawable/scenic"
         android:padding="20dp" />
 
 

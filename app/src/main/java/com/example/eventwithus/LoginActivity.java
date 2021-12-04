@@ -2,6 +2,8 @@ package com.example.eventwithus;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -54,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = editTextPassword.getText().toString();
             loginUser(username, password);
         });
+      
 
         buttonSignUp.setOnClickListener(v -> {
             startActivity(new Intent(this, SignupActivity.class));
