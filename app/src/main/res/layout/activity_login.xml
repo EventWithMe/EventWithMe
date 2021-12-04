@@ -14,9 +14,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="5dp"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -35,9 +36,10 @@
         android:layout_below="@+id/textLayoutLoginUsername"
         android:layout_alignStart="@+id/textLayoutLoginUsername"
         android:layout_alignEnd="@+id/textLayoutLoginUsername"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="-1dp"
         app:errorEnabled="true"
         app:passwordToggleEnabled="true">
 
@@ -59,9 +61,11 @@
         android:layout_below="@+id/textLayoutLoginPassword"
         android:layout_alignStart="@+id/textLayoutLoginPassword"
         android:layout_alignEnd="@+id/textLayoutLoginPassword"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="3dp"
         android:background="#CB000000"
         android:text="@string/login_button_text_log_in"
         android:textColor="#FFFDFD"
@@ -76,9 +80,10 @@
         android:layout_below="@+id/buttonLoginSignUp"
         android:layout_alignStart="@+id/buttonLoginSignUp"
         android:layout_alignEnd="@+id/buttonLoginSignUp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="-1dp"
         android:background="#C9000000"
         android:text="@string/login_button_text_sign_up"
         android:textColor="#FFFFFF"
@@ -87,5 +92,17 @@
         android:textColorLink="#D0000000"
         app:iconTint="#CD0E0E0E"
         app:rippleColor="#000000" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="149dp"
+        android:layout_height="170dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="341dp"
+        android:background="#68FFFFFF"
+        app:srcCompat="@drawable/logo" />
 
 </RelativeLayout>
