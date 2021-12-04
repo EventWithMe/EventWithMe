@@ -1,7 +1,9 @@
 package com.example.eventwithus.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +37,10 @@ public class SearchFragment extends Fragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TEXT = "text";
-
+    private TextSwitcher textSwitcher;
+    private int stringIndex = 0;
+    private String[] row = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
+    private TextView textView;
     private static final String key = "UserInput";
     Button searchBTN;
     SearchView searchView;
@@ -75,6 +83,7 @@ public class SearchFragment extends Fragment  {
         }
 
 
+
     }
 
     @Override
@@ -84,13 +93,32 @@ public class SearchFragment extends Fragment  {
         searchView = v.findViewById(R.id.searchView);
         searchBTN = v.findViewById(R.id.searchBTN);
         spinner = v.findViewById(R.id.spinner);
+        textSwitcher = v.findViewById(R.id.textSwitcher);
         searchBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CharSequence input = spinner.getSelectedItem().toString();
-                listener.onInputSearchSent(input);
+                if(stringIndex == row.length-1){
+                    stringIndex = 0;
+                    textSwitcher.setText(row[stringIndex]);
+                }else{
+                    textSwitcher.setText(row[++stringIndex]);
+                }
+               // CharSequence input = spinner.getSelectedItem().toString();
+              //  listener.onInputSearchSent(input);
+
             }
         });
+        textSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                textView = new TextView(getContext());
+                textView.setTextColor(Color.BLACK);
+                textView.setTextSize(30);
+                textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                return textView;
+            }
+        });
+        textSwitcher.setText(row[stringIndex]);
         // Inflate the layout for this fragment
         return v;
 
