@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    app:cardBackgroundColor="#31FFFFFF"
     app:cardCornerRadius="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#34FFFFFF"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -22,6 +24,7 @@
             android:id="@+id/text_view_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/amita_bold"
             android:text="Event Name"
             android:textColor="@android:color/black"
             android:textSize="20sp" />
@@ -30,7 +33,9 @@
             android:id="@+id/text_view_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date: " />
+            android:backgroundTint="#191818"
+            android:text="Date: "
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
