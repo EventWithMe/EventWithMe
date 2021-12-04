@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bgconcert"
     tools:context=".LoginActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -22,6 +23,7 @@
             android:id="@+id/editTextLoginUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#A6FFFFFF"
             android:hint="@string/login_text_hint_username"
             tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -43,6 +45,7 @@
             android:id="@+id/editTextLoginPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#A6FFFFFF"
             android:hint="@string/login_text_hint_password"
             android:inputType="textPassword"
             tools:ignore="TextContrastCheck" />
@@ -50,6 +53,7 @@
 
     <Button
         android:id="@+id/buttonLoginSignUp"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textLayoutLoginPassword"
@@ -58,10 +62,15 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
-        android:text="@string/login_button_text_log_in" />
+        android:background="#CB000000"
+        android:text="@string/login_button_text_log_in"
+        android:textColor="#FFFDFD"
+        app:iconTint="#000000"
+        app:rippleColor="#000000" />
 
     <Button
         android:id="@+id/buttonLoginLogIn"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonLoginSignUp"
@@ -70,6 +79,13 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="0dp"
-        android:text="@string/login_button_text_sign_up" />
+        android:background="#C9000000"
+        android:text="@string/login_button_text_sign_up"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#D2050505"
+        android:textColorHint="#CB050505"
+        android:textColorLink="#D0000000"
+        app:iconTint="#CD0E0E0E"
+        app:rippleColor="#000000" />
 
 </RelativeLayout>
