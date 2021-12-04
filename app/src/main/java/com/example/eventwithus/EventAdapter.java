@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.eventwithus.models.EventHelper;
 import com.example.eventwithus.models.EventItem;
 import com.squareup.picasso.Picasso;
 
@@ -47,10 +48,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewH
 
         String imageUrl = currentItem.getImageUrl();
         String evenName = currentItem.getCreator();
-        String eventType = currentItem.getDate();
+        String eventDate = EventHelper.formatJsonDate(currentItem.getDate());
 
         holder.mEventName.setText(evenName);
-        holder.mEventDesc.setText("Starts on: " + eventType);
+        holder.mEventDesc.setText("Starts on: " + eventDate);
         Picasso.with(mContext).load(imageUrl).fit().centerInside().transform(new RoundedTransformation(50, 0)).into(holder.mImageView);
     }
 

@@ -75,7 +75,7 @@ public class EventDetailActivity extends AppCompatActivity {
         Picasso.with(this).load(imageUrl).fit().centerInside().transform(new RoundedTransformation(50, 0)).into(imageView);
         textviewEventName.setText(eventName);
         textviewEventType.setText("Info: " + eventType);
-        tvDate.setText(eventDate);
+        tvDate.setText(EventHelper.formatJsonDate(eventDate));
 
         //printEvents();
 
@@ -100,7 +100,6 @@ public class EventDetailActivity extends AppCompatActivity {
                 if(rsvp) {
                     cancelRSVP("123");
                 } else {
-                    // TODO: 12/1/2021 add proper id variable and date
                     rsvpEvent("123", eventDate);
                 }
             }
@@ -182,6 +181,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     // updates Parse DB User eventsinfo column
     private void rsvpEvent(String eventId, String date) {
+        Log.i(TAG, "adding event Id: " + eventId + " on " + date);
         String eventsinfo = currentUser.getString(PARSE_RSVP_KEY);
         eventsinfo += "," + eventId + "_" + date;
         currentUser.put(PARSE_RSVP_KEY, eventsinfo);
