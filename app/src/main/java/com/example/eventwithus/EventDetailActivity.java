@@ -32,6 +32,7 @@ public class EventDetailActivity extends AppCompatActivity {
     public static final String TAG = "EventDetailActivity"; // tag for logging
     public static final String PARSE_RSVP_KEY= "eventsinfo"; // key to get and update the eventinfo column in the User object in Parse DB
     public static final String EXTRA_EVENT_DATE = "date"; // used to extract date data from intent
+    public static final String EXTRA_EVENT_ID = "id"; // used to extract date data from intent
 
     // UI elements
     Button btnRSVP;
@@ -61,6 +62,7 @@ public class EventDetailActivity extends AppCompatActivity {
         String eventName = intent.getStringExtra(EXTRA_EVENT_NAME);
         String eventType = intent.getStringExtra(EXTRA_EVENT_TYPE);
         String eventDate = intent.getStringExtra(EXTRA_EVENT_DATE);
+        String eventID = intent.getStringExtra(EXTRA_EVENT_ID);
 
         // initialize the UI elements
         imageView = findViewById(R.id.image_view_detail);

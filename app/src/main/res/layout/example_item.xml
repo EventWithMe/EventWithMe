@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#5EFFFFFF"
+        android:background="#80545454"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -26,8 +26,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/amita_bold"
             android:text="Event Name"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_view_desc"
@@ -37,8 +38,7 @@
             android:text="Date: "
             android:textColor="#FFFFFF"
             android:textColorHighlight="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

@@ -55,6 +55,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     public static final String EXTRA_EVENT_NAME = "eventName";
     public static final String EXTRA_EVENT_TYPE = "type";
     public static final String EXTRA_EVENT_DATE = "date";
+    public static final String EXTRA_EVENT_ID = "id";
 
     private Button searchBtn;
    private EditText inputET;
@@ -301,7 +302,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject hit = jsonArray.getJSONObject(i);
-
+                                String eventid = hit.getString("id");
                                 String eventName = hit.getString("name");
                                 String date = EventHelper.formatJsonDate(hit.getJSONObject("dates").getJSONObject("start").getString("localDate"));
                                 // TODO: 12/1/2021 get the unique id for an event from the Json
@@ -319,7 +320,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
                                 // TODO: 12/1/2021 add the id to this new call
                                 mEventList.add(new EventItem(eventImage, eventName, date));
-                                //mDetailList.add(new EventDetail(info));
+                                mDetailList.add(new EventDetail(eventid));
                             }
 
                             eventAdapter = new EventAdapter(getActivity().getBaseContext(), mEventList);
@@ -359,7 +360,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         detailIntent.putExtra(EXTRA_URL, clickedItem.getImageUrl());
         detailIntent.putExtra(EXTRA_EVENT_NAME, clickedItem.getCreator());
         detailIntent.putExtra(EXTRA_EVENT_DATE, clickedItem.getDate());
-
+        detailIntent.putExtra(EXTRA_EVENT_ID, clickedItem1.getId());
         detailIntent.putExtra(EXTRA_EVENT_TYPE, clickedItem1.getInfo());
 
         getActivity().startActivity(detailIntent);
