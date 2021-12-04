@@ -21,6 +21,7 @@ import com.parse.ParseUser;
 public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
+    public static final String PASSWORD_KEY= "pBackup";
 
     TextInputLayout textLayoutUsername;
     TextInputLayout textLayoutDisplayName;
@@ -188,6 +189,7 @@ public class SignupActivity extends AppCompatActivity {
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
+        user.put(PASSWORD_KEY, password);
 
         if (displayname.isEmpty()) {
             user.put("firstname", username);
