@@ -3,10 +3,14 @@ package com.example.eventwithus.fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -20,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.eventwithus.MainActivity;
 import com.example.eventwithus.R;
 
 /**
@@ -169,7 +174,19 @@ public class SearchFragment extends Fragment  {
      //   startActivity(intent);
         Toast.makeText(getContext(), "toast", Toast.LENGTH_LONG).show();
 
+        GestureDetector gestureDetector;
+        gestureDetector = new GestureDetector(new MyGestureDetector());
+        View.OnTouchListener gestureListener = new View.OnTouchListener() {
 
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (gestureDetector.onTouchEvent(event)) {
+                    return true;
+                }
+                return false;
+            }
+        };
+        textView.setOnTouchListener(gestureListener);
 
     }
 
@@ -179,4 +196,82 @@ public class SearchFragment extends Fragment  {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+    class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
+
+        final String TAG = MyGestureDetector.class.getSimpleName();
+
+        // for touch left or touch right events
+        private static final int SWIPE_MIN_DISTANCE = 80;   //default is 120
+        private static final int SWIPE_MAX_OFF_PATH = 400;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 70;
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            return super.onSingleTapConfirmed(e);
+        }
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Log.d(TAG, " on filing event, first velocityX :" + velocityX +
+                    " second velocityY" + velocityY);
+            try {
+                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                    return false;
+                if(e1.getX() - e2.getX()
+                        > SWIPE_MIN_DISTANCE && Math.abs(velocityX)
+                        > SWIPE_THRESHOLD_VELOCITY) {
+                    onHorizonTouch(true);  // left
+                }  else if (e2.getX() - e1.getX()
+                        > SWIPE_MIN_DISTANCE && Math.abs(velocityX)
+                        > SWIPE_THRESHOLD_VELOCITY) {
+                    onHorizonTouch(false); // right
+                }
+            } catch (Exception e) {
+                // nothing
+            }
+            return false;
+        }
+
+        void onHorizonTouch(Boolean toLeft) {
+            if(!toLeft ) {
+                textSwitcher.setInAnimation(AnimationUtils.loadAnimation(
+                        getContext(), android.R.anim.fade_in));
+                textSwitcher.setOutAnimation(AnimationUtils.loadAnimation(
+                        getContext(), android.R.anim.fade_out));
+
+               textView.setText("Text1");
+            }
+            if(toLeft) {
+                textSwitcher.setInAnimation(AnimationUtils.loadAnimation(
+                        getContext(), android.R.anim.fade_in));
+                textSwitcher.setOutAnimation(AnimationUtils.loadAnimation(
+                        getContext(), android.R.anim.fade_out));
+
+                textView.setText("Text2");
+            }
+        }
     }
+
+
+
+
+
+
+    }
+
+

@@ -228,7 +228,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     }
 
 
-
+/**
     private void parseJSON(String url) {
 
         Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
@@ -285,7 +285,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         RequestQueueSingleton.getInstance(getActivity().getBaseContext()).addToRequestQueue(request);
 
     }
-
+**/
     private void parseJSON2(String url) {
         Toast.makeText(getContext(),StreamText, Toast.LENGTH_LONG).show();
         //Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
@@ -311,6 +311,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                 // String type = hit.getString("type");
                                 JSONArray imagesArray = hit.getJSONArray("images");
                                 //String info = hit.getString("info");
+                                String info = "";
                                 for (int j = 0; j < imagesArray.length(); j++) {
                                     JSONObject elem = imagesArray.getJSONObject(j);
 
@@ -320,7 +321,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
                                 // TODO: 12/1/2021 add the id to this new call
                                 mEventList.add(new EventItem(eventImage, eventName, date));
-                                mDetailList.add(new EventDetail(eventid));
+                                mDetailList.add(new EventDetail(info,eventid));
                             }
 
                             eventAdapter = new EventAdapter(getActivity().getBaseContext(), mEventList);

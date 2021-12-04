@@ -12,8 +12,9 @@ public class EventDetail {
         this.id = id;
     }
 
-    public EventDetail(String Eventinfo) {
+    public EventDetail(String Eventinfo, String Eventid) {
         info = Eventinfo;
+        id = Eventid;
     }
 
     public String getInfo() {
