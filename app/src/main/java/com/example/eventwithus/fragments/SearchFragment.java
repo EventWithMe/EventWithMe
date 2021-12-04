@@ -7,6 +7,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -42,9 +44,8 @@ public class SearchFragment extends Fragment  {
     private String[] row = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
     private TextView textView;
     private static final String key = "UserInput";
-    Button searchBTN;
+    Button leftBTN;
     SearchView searchView;
-    Spinner spinner;
     String music = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
     String sports = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
     String family = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=family&locale=*";
@@ -90,11 +91,10 @@ public class SearchFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
-        searchView = v.findViewById(R.id.searchView);
-        searchBTN = v.findViewById(R.id.leftBTN);
-        spinner = v.findViewById(R.id.spinner);
+       // searchView = v.findViewById(R.id.searchView);
+        leftBTN = v.findViewById(R.id.leftBTN);
         textSwitcher = v.findViewById(R.id.textSwitcher);
-        searchBTN.setOnClickListener(new View.OnClickListener() {
+        leftBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(stringIndex == row.length-1){
@@ -103,7 +103,7 @@ public class SearchFragment extends Fragment  {
                 }else{
                     textSwitcher.setText(row[++stringIndex]);
                 }
-               CharSequence input = spinner.getSelectedItem().toString();
+               CharSequence input = textView.getText();
                 listener.onInputSearchSent(input);
 
             }
@@ -112,13 +112,14 @@ public class SearchFragment extends Fragment  {
             @Override
             public View makeView() {
                 textView = new TextView(getContext());
-                textView.setTextColor(Color.BLACK);
+                textView.setTextColor(Color.WHITE);
                 textView.setTextSize(30);
                 textView.setGravity(Gravity.CENTER_HORIZONTAL);
                 return textView;
             }
         });
         textSwitcher.setText(row[stringIndex]);
+
         // Inflate the layout for this fragment
         return v;
 
@@ -155,16 +156,6 @@ public class SearchFragment extends Fragment  {
         //Bundle bundle = new Bundle();
        // SteamFragment fragment = new StreamFragment();
 
-
-
-
-
-
-        //Creating the ArrayAdapter instance having the country list
-        ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,Categories);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(aa);
         // Intent intent = new Intent(getActivity(), LocationService.class);
      //   startActivity(intent);
         Toast.makeText(getContext(), "toast", Toast.LENGTH_LONG).show();
