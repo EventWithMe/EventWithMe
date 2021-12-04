@@ -4,20 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.regex.*;
-import com.parse.ParseUser;
 
-// TODO: 12/2/2021 save password to the DB at the end of the class
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class PasswordChangeActivity extends AppCompatActivity {
 
     public static final String TAG = "EditProfileFragment"; // tag for logging
-    public static final String PASSWORD_KEY= "password";
+    public static final String PASSWORD_KEY= "pBackup";
 
     EditText etCurrentPassPE;
     EditText etNewPasswordPE;
@@ -25,8 +27,6 @@ public class PasswordChangeActivity extends AppCompatActivity {
     Button btnSubmit;
 
     private ParseUser currentUser;
-    private // Regex to check valid password.
-    String regex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])" + "(?=.*[@#$%^&+=])" + "(?=\\S+$).{8,20}$";
     Context context;
 
     @Override
@@ -45,7 +45,7 @@ public class PasswordChangeActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                passwordValidator();
             }
         });
     }
@@ -58,7 +58,7 @@ public class PasswordChangeActivity extends AppCompatActivity {
         String truePassword = currentUser.getString(PASSWORD_KEY);
 
         if(currentPassword.equals("") || newPassword.equals("") || confirmPassword.equals("")){
-            Toast.makeText(context, "Attention: One or more password fields are empty but all are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "please fill out all the fields", Toast.LENGTH_SHORT).show();
             return;
         }
         if(!currentPassword.equals(truePassword)) {
@@ -69,6 +69,9 @@ public class PasswordChangeActivity extends AppCompatActivity {
             Toast.makeText(context, "New password does not match confirm password", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        // Regex to check valid password.
+        String regex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])" + "(?=.*[!@#$%^&+=])" + "(?=\\S+$).{8,20}$";
 
         // Compile the ReGex
         Pattern pattern = Pattern.compile(regex);
@@ -87,6 +90,19 @@ public class PasswordChangeActivity extends AppCompatActivity {
         }
 
         // save password to the DB
-        // TODO: 12/3/2021 save password to the DB and return to the previous scene
+        currentUser.setPassword(newPassword);
+        currentUser.put(PASSWORD_KEY, newPassword);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (null == e) {
+                    Log.i(TAG, "Password change saved successfully");
+                    Toast.makeText(context, "Password changed successfully!", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Log.e(TAG, "Password change failed to save");
+                }
+            }
+        });
     }
 }
