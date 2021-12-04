@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,8 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.load.engine.Initializable;
 import com.example.eventwithus.EventAdapter;
 import com.example.eventwithus.EventDetailActivity;
 import com.example.eventwithus.EventsAdapter;
@@ -41,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class StreamFragment extends Fragment  implements  EventAdapter.OnItemClickListener, SearchFragment.FragmentSearchListener {
+public class StreamFragment extends Fragment  implements  EventAdapter.OnItemClickListener, SearchFragment.FragmentSearchListener , Initializable {
     public static final String EXTRA_URL = "imageUrl";
     public static final String EXTRA_EVENT_NAME = "eventName";
     public static final String EXTRA_EVENT_TYPE = "type";
@@ -58,7 +62,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     private RecyclerView rvEvents;
     protected EventsAdapter adapter;
     protected List<Event> allEvents;
-
+    Spinner spinner2;
     final String keyword = "keyword=";
     String keyword2 = "";
     final String apikey = "apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
@@ -68,9 +72,14 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     String url2 = "https://app.ticketmaster.com/discovery/v2/events/k7vGFKzleBdwS/images.json?apikey=kdQ1Zu3hN6RX9";//images TICKETMASTER
     String url3 = "https://app.ticketmaster.com/discovery/v2/events/?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
     String url4 = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
-    String url5 = "https://app.ticketmaster.com/discovery/v2/events?+"+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
-
-
+    //String url5 = "https://app.ticketmaster.com/discovery/v2/events?+"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
+    String url6 = "https://app.ticketmaster.com/discovery/v2/events?keyword=rock&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
+    String music = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
+    String sports = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
+    String family = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=family&locale=*";
+    String film = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film";
+    String misc = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
+    String artNThr = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
     public StreamFragment() {
         // Required empty public constructor
     }
@@ -98,17 +107,25 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toast.makeText(getContext(), "onViewCreated ", Toast.LENGTH_LONG).show();
-
+        String[] Categories = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
 
 
         mEventList = new ArrayList<>();
         mDetailList = new ArrayList<>();
         //mRequestQueue = Volley.newRequestQueue(this);
        // parseJSON();
-        parseJSON2();
+
 
         searchBtn = view.findViewById(R.id.searchBtn);
-        inputET = view.findViewById(R.id.inputET);
+        //inputET = view.findViewById(R.id.inputET);\
+        spinner2 = view.findViewById(R.id.spinner2);
+
+
+        //Creating the ArrayAdapter instance having the country list
+        ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,Categories);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner2.setAdapter(aa);
         mRecyclerView = view.findViewById(R.id.rvStreamList);
         mRecyclerView.setHasFixedSize(true);
         //allEvents = new ArrayList<>();
@@ -119,9 +136,43 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                keyword2 = inputET.getText().toString();
-                Toast.makeText(getContext(), keyword2, Toast.LENGTH_LONG).show();
-                parseJSON2();
+
+                Toast.makeText(getContext(), "RefreshFragment ", Toast.LENGTH_LONG).show();
+                Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentByTag("myFragmentTag");
+
+                if (currentFragment instanceof StreamFragment) {
+                    FragmentTransaction fragTransaction =   getFragmentManager().beginTransaction();
+                    fragTransaction.detach(currentFragment);
+                    fragTransaction.attach(currentFragment);
+                    fragTransaction.commit();
+                }
+                switch (spinner2.getSelectedItem().toString()) {
+                    case "Concerts":
+                        System.out.println("Concerts");
+                        parseJSON2(music);
+                        break;
+                    case "Sports":
+                        System.out.println("Sports");
+                        parseJSON2(sports);
+                        break;
+                    case "Family":
+                        System.out.println("Family");
+                        parseJSON2(family);
+                        break;
+                    case "Film":
+                        System.out.println("Film");
+                        parseJSON2(film);
+                        break;
+                    case "Misc":
+                        System.out.println("Misc");
+                        parseJSON2(misc);
+                        break;
+                    case "Arts & Theater":
+                        System.out.println("Saturday");
+                        parseJSON2(artNThr);
+                        break;
+
+                }
             }
         });
     }
@@ -129,11 +180,11 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
 
 
-    private void parseJSON() {
+    private void parseJSON(String url) {
 
+        Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
 
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url4, null,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -186,17 +237,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
     }
 
-    private void parseJSON2() {
-        if( inputET == null){
-            url5 = eventsurl+apikey+city;
-        }
-        else{
-            url5 = eventsurl+keyword+keyword2+apikey+city;
-        }
-        Toast.makeText(getContext(), url5.toString(), Toast.LENGTH_LONG).show();
-
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url5, null,
+    private void parseJSON2(String url) {
+        Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -251,6 +294,14 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
     @Override
     public void onItemClick(int position) {
+
+        Fragment frg = null;
+        frg = getFragmentManager().findFragmentByTag("myFragmentTag");
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
+
         Intent detailIntent = new Intent(getActivity().getBaseContext(), EventDetailActivity.class );
         EventItem clickedItem = mEventList.get(position);
         EventDetail clickedItem1 = mDetailList.get(position);
@@ -268,6 +319,11 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
     @Override
     public void onInputSearchSent(CharSequence input) {
+
+    }
+
+    @Override
+    public void initialize() {
 
     }
 }

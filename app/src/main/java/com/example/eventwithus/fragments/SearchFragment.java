@@ -24,7 +24,7 @@ import com.example.eventwithus.R;
  * Use the {@link SearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment  {
     private FragmentSearchListener listener;
 
     public interface  FragmentSearchListener{
@@ -125,32 +125,13 @@ public class SearchFragment extends Fragment {
         // Intent intent = new Intent(getActivity(), LocationService.class);
      //   startActivity(intent);
         Toast.makeText(getContext(), "toast", Toast.LENGTH_LONG).show();
-        searchView.getQuery();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                Fragment fragment = new StreamFragment();
-                Toast.makeText(getContext(), "your Input "+s, Toast.LENGTH_LONG).show();
-                Bundle bundle = new Bundle();
-                bundle.putString(key, s);
-                fragment.setArguments(bundle);
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                Toast.makeText(getContext(), "your Input changed "+s, Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
 
 
     }
 
 
     public void displaySearchView(){
-        String searchinput = (String) searchView.getQuery();
-        System.out.println(searchinput);
 
     }
 

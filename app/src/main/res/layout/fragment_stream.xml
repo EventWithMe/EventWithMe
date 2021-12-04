@@ -11,6 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="600dp">
 
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="314dp"
+            android:layout_height="39dp"
+            app:layout_constraintEnd_toStartOf="@+id/searchBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/searchBtn"
             android:layout_width="wrap_content"
@@ -18,16 +26,6 @@
             android:text="Search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/inputET"
-            android:layout_width="299dp"
-            android:layout_height="45dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toStartOf="@+id/searchBtn"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

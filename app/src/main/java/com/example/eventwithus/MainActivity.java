@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements Initializable {
                         fragment = new ProfileFragment();
                         break;
                 }
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment, "myFragmentTag").commit();
                 return true;
             }
         });
