@@ -3,14 +3,10 @@ package com.example.eventwithus.fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -24,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.eventwithus.MainActivity;
 import com.example.eventwithus.R;
 
 /**
@@ -96,7 +91,7 @@ public class SearchFragment extends Fragment  {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         searchView = v.findViewById(R.id.searchView);
-        searchBTN = v.findViewById(R.id.searchBTN);
+        searchBTN = v.findViewById(R.id.leftBTN);
         spinner = v.findViewById(R.id.spinner);
         textSwitcher = v.findViewById(R.id.textSwitcher);
         searchBTN.setOnClickListener(new View.OnClickListener() {
@@ -108,8 +103,8 @@ public class SearchFragment extends Fragment  {
                 }else{
                     textSwitcher.setText(row[++stringIndex]);
                 }
-               // CharSequence input = spinner.getSelectedItem().toString();
-              //  listener.onInputSearchSent(input);
+               CharSequence input = spinner.getSelectedItem().toString();
+                listener.onInputSearchSent(input);
 
             }
         });
@@ -174,8 +169,8 @@ public class SearchFragment extends Fragment  {
      //   startActivity(intent);
         Toast.makeText(getContext(), "toast", Toast.LENGTH_LONG).show();
 
-        GestureDetector gestureDetector;
-        gestureDetector = new GestureDetector(new MyGestureDetector());
+       // GestureDetector gestureDetector;
+       /** gestureDetector = new GestureDetector(new MyGestureDetector());
         View.OnTouchListener gestureListener = new View.OnTouchListener() {
 
             @Override
@@ -188,9 +183,10 @@ public class SearchFragment extends Fragment  {
         };
         textView.setOnTouchListener(gestureListener);
 
+
+
+**/
     }
-
-
     public void displaySearchView(){
 
     }
@@ -203,7 +199,7 @@ public class SearchFragment extends Fragment  {
 
 
 
-
+/**
 
 
     class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
@@ -248,13 +244,16 @@ public class SearchFragment extends Fragment  {
         }
 
         void onHorizonTouch(Boolean toLeft) {
+
             if(!toLeft ) {
+                stringIndex = 0;
                 textSwitcher.setInAnimation(AnimationUtils.loadAnimation(
                         getContext(), android.R.anim.fade_in));
                 textSwitcher.setOutAnimation(AnimationUtils.loadAnimation(
                         getContext(), android.R.anim.fade_out));
 
-               textView.setText("Text1");
+                textSwitcher.setText(row[++stringIndex]);
+               //textView.setText("Text1");
             }
             if(toLeft) {
                 textSwitcher.setInAnimation(AnimationUtils.loadAnimation(
@@ -262,11 +261,11 @@ public class SearchFragment extends Fragment  {
                 textSwitcher.setOutAnimation(AnimationUtils.loadAnimation(
                         getContext(), android.R.anim.fade_out));
 
-                textView.setText("Text2");
+                textSwitcher.setText(row[--stringIndex]);
             }
         }
     }
-
+**/
 
 
 
