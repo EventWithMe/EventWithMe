@@ -248,7 +248,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                 JSONObject hit = jsonArray.getJSONObject(i);
 
                                 String eventName = hit.getString("name");
-                                String date = EventHelper.formatJsonDate(hit.getJSONObject("dates").getJSONObject("start").getString("localDate"));
+                                String date = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
                                 // TODO: 12/1/2021 get the unique id for an event from the Json
                                 // String id = hit.getString("");
 
@@ -304,7 +304,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                 JSONObject hit = jsonArray.getJSONObject(i);
                                 String eventid = hit.getString("id");
                                 String eventName = hit.getString("name");
-                                String date = EventHelper.formatJsonDate(hit.getJSONObject("dates").getJSONObject("start").getString("localDate"));
+                                String date = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
                                 // TODO: 12/1/2021 get the unique id for an event from the Json
                                 // String id = hit.getString("");
 
