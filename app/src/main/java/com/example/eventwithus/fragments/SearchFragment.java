@@ -11,6 +11,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextSwitcher;
@@ -33,7 +35,7 @@ public class SearchFragment extends Fragment  {
     private FragmentSearchListener listener;
 
     public interface  FragmentSearchListener{
-        void onInputSearchSent(CharSequence input);
+        void onInputSearchSent(CharSequence input, CharSequence keyword);
     }
 
     // TODO: Rename parameter arguments, choose names that match
@@ -45,6 +47,8 @@ public class SearchFragment extends Fragment  {
     private TextView textView;
     private static final String key = "UserInput";
     Button leftBTN;
+    ImageButton searchBTN;
+    EditText keywordET;
     SearchView searchView;
     String music = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
     String sports = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
@@ -92,10 +96,28 @@ public class SearchFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        CharSequence input;
+
         View v = inflater.inflate(R.layout.fragment_search, container, false);
        // searchView = v.findViewById(R.id.searchView);
         leftBTN = v.findViewById(R.id.leftBTN);
+        searchBTN = v.findViewById(R.id.searchBTN);
+        keywordET = v.findViewById(R.id.keywordET);
         textSwitcher = v.findViewById(R.id.textSwitcher);
+
+        searchBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView tv = (TextView) textSwitcher.getCurrentView();
+                CharSequence keyword = keywordET.getText().toString();
+                CharSequence input = tv.getText().toString();
+                listener.onInputSearchSent(input, keyword);
+            }
+        });
+
+
+
+
         leftBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,10 +127,10 @@ public class SearchFragment extends Fragment  {
                 }else{
                     textSwitcher.setText(row[++stringIndex]);
                 }
-                TextView tv = (TextView) textSwitcher.getCurrentView();
+               // TextView tv = (TextView) textSwitcher.getCurrentView();
 
-                    CharSequence input = tv.getText().toString();
-                    listener.onInputSearchSent(input);
+                   // CharSequence input = tv.getText().toString();
+                   // listener.onInputSearchSent(input, keyword);
 
 
 
@@ -129,6 +151,7 @@ public class SearchFragment extends Fragment  {
 
         // Inflate the layout for this fragment
         return v;
+
 
 
     }

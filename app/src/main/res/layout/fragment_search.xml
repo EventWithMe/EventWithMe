@@ -18,11 +18,23 @@
             android:id="@+id/textSwitcher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="89dp"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="37dp"
             android:layout_marginEnd="-3dp"
             android:inAnimation="@android:anim/slide_in_left"
             android:outAnimation="@android:anim/slide_out_right"></TextSwitcher>
+
+        <TextSwitcher
+            android:id="@+id/textSwitcher2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/keywordET"
+            android:layout_marginTop="105dp"
+            android:layout_marginEnd="-3dp"
+            android:inAnimation="@android:anim/slide_in_left"
+            android:outAnimation="@android:anim/slide_out_right">
+
+        </TextSwitcher>
 
         <Button
             android:id="@+id/leftBTN"
@@ -32,7 +44,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="156dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="9dp"
             android:layout_marginEnd="161dp"
             android:background="#48545454"
             android:text="Next"
@@ -42,6 +54,51 @@
             android:textStyle="bold"
             app:iconTint="#545454"
             app:rippleColor="#545454" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="126dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="125dp"
+            android:fontFamily="@font/amita_bold"
+            android:text="Select Category"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/keywordET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/leftBTN"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="47dp"
+            android:layout_marginEnd="100dp"
+            android:backgroundTint="#FFFFFF"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="#FFFFFF" />
+
+        <ImageButton
+            android:id="@+id/searchBTN"
+            android:layout_width="48dp"
+            android:layout_height="49dp"
+            android:layout_below="@+id/leftBTN"
+            android:layout_alignBottom="@+id/textSwitcher2"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="103dp"
+            android:layout_toStartOf="@+id/keywordET"
+            android:background="#00FFFFFF"
+            android:src="@android:drawable/ic_menu_search" />
 
     </RelativeLayout>
 

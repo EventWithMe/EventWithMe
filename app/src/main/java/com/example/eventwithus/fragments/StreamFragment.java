@@ -81,12 +81,12 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     String url4 = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
     //String url5 = "https://app.ticketmaster.com/discovery/v2/events?+"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
     String url6 = "https://app.ticketmaster.com/discovery/v2/events?keyword=rock&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
-    String music = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
-    String sports = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
-    String family = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=family&locale=*";
-    String film = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film";
-    String misc = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
-    String artNThr = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
+    String music = "https://app.ticketmaster.com/discovery/v2/events?keyword="+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
+    String sports = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
+    String family = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=family&locale=*";
+    String film = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film";
+    String misc = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
+    String artNThr = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
     public StreamFragment() {
         // Required empty public constructor
     }
@@ -115,7 +115,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         super.onViewCreated(view, savedInstanceState);
         Toast.makeText(getContext(), "onViewCreated ", Toast.LENGTH_LONG).show();
         String[] Categories = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
-
+        String[] Dates = {};
 
         mEventList = new ArrayList<>();
         mDetailList = new ArrayList<>();
@@ -223,8 +223,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
         }
     }
-    public void updateEditText(CharSequence newText) {
+    public void updateEditText(CharSequence newText, CharSequence newText2) {
         StreamText= (String) newText;
+        keyword2 = (String) newText2;
     }
 
 
@@ -308,12 +309,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                 String date = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
                                 // TODO: 12/1/2021 get the unique id for an event from the Json
                                 // String id = hit.getString("");
-
                                 // String type = hit.getString("type");
                                 JSONArray imagesArray = hit.getJSONArray("images");
 
-                               // String info = hit.getString("info");
-                                //String info = "";
                                 for (int j = 0; j < imagesArray.length(); j++) {
                                     JSONObject elem = imagesArray.getJSONObject(j);
 
