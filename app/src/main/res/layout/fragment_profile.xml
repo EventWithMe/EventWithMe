@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/ivPfp"
         android:layout_width="195dp"
@@ -15,7 +22,7 @@
         android:src="@drawable/ic_baseline_person_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
         android:id="@+id/tvEmailP"
@@ -32,7 +39,7 @@
         android:id="@+id/divider2"
         android:layout_width="300dp"
         android:layout_height="1dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

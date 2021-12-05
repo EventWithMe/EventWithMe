@@ -51,7 +51,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewH
         String eventDate = EventHelper.formatJsonDate(currentItem.getDate());
 
         holder.mEventName.setText(evenName);
-        holder.mEventDesc.setText("Starts on: " + eventDate);
+        holder.mEventDesc.setText(eventDate);
         Picasso.with(mContext).load(imageUrl).fit().centerInside().transform(new RoundedTransformation(50, 0)).into(holder.mImageView);
     }
 
