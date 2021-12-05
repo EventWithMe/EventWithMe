@@ -41,9 +41,7 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // StreamFragment streamFragment;
         streamFragment = new StreamFragment();
-       // streamFragment = new StreamFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
       //  PreferenceUtils.init(getApplicationContext());
 

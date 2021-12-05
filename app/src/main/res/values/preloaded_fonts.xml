@@ -2,5 +2,9 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/amita_bold</item>
+        <item>@font/arbutus_slab</item>
+        <item>@font/capriola</item>
+        <item>@font/denk_one</item>
+        <item>@font/lemon</item>
     </array>
 </resources>
