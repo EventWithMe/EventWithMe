@@ -7,18 +7,16 @@ import static com.example.eventwithus.MainActivity.EXTRA_URL;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.health.SystemHealthManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.eventwithus.fragments.RsvpFragment;
+
 import com.example.eventwithus.models.EventHelper;
-import com.example.eventwithus.models.User;
-import com.example.eventwithus.models.UserParse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;

@@ -32,4 +32,13 @@
     <string name="profile_password">Password: **********</string>
     <string name="pick_image_intent_text">Camera or gallery?</string>
     <string name="password_info">Password Requirements:\n\t- 8 to 20 characters long\n\t- At least one upper case character\n\t- at least one symbol\n\t-at least one digit</string>
+    <string name="send">Send</string>
+    <string name="message_hint">type a message</string>
+    <string name="profile_other">User Profile Picture</string>
+    <string name="profile_me">Your Profile Picture</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_stream">Stream</string>
+    <string name="menu_rsvp">RSVP</string>
+    <string name="menu_chat">Chat</string>
+    <string name="menu_profile">Profile</string>
 </resources>
