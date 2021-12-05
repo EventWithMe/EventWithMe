@@ -2,16 +2,19 @@ package com.example.eventwithus.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -20,7 +23,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -36,11 +38,9 @@ import com.example.eventwithus.models.Event;
 import com.example.eventwithus.models.EventDetail;
 import com.example.eventwithus.models.EventHelper;
 import com.example.eventwithus.models.EventItem;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,12 +58,13 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     public static final String EXTRA_EVENT_ID = "id";
 
     private Button searchBtn;
-   private EditText inputET;
+    private EditText inputET;
     private RecyclerView mRecyclerView;
     private EventAdapter eventAdapter;
     private ArrayList<EventItem> mEventList;
     private ArrayList<EventDetail> mDetailList;
     private RequestQueue mRequestQueue;
+    private Toolbar toolbar;
     public static final String TAG = "StreamFragment";
     private RecyclerView rvEvents;
     protected EventsAdapter adapter;
@@ -93,19 +94,34 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true); // for overflow menu
+
         if (getArguments() != null) {
           String  keyword = getArguments().getString("UserInput");
             Toast.makeText(getContext(), "keyword :"+keyword, Toast.LENGTH_LONG).show();
         }
-
-
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //menu.clear(); / / this sentence is useless. You don't need to add it
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_preferences) {
+            Toast.makeText(getContext(), "Preferences", Toast.LENGTH_SHORT).show();;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stream, container, false);
     }
@@ -116,6 +132,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         Toast.makeText(getContext(), "onViewCreated ", Toast.LENGTH_LONG).show();
         String[] Categories = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
         String[] Dates = {};
+        toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
         //TODO implement Dates for Search Filter
 
         mEventList = new ArrayList<>();

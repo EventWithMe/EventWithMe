@@ -1,18 +1,21 @@
 package com.example.eventwithus.fragments;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.eventwithus.R;
@@ -21,11 +24,9 @@ import com.example.eventwithus.adapters.MyEventAdapter;
 import com.example.eventwithus.models.EventHelper;
 import com.example.eventwithus.models.MyEvents;
 import com.parse.ParseUser;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,9 +40,16 @@ public class RsvpFragment extends Fragment {
     private MyEventAdapter myEventAdapter;
     private ArrayList<MyEvents> eventsList;
     private ParseUser currentUser;
+    private Toolbar toolbar;
 
     public RsvpFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true); // for overflow menu
     }
 
     @Override
@@ -52,8 +60,28 @@ public class RsvpFragment extends Fragment {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_preferences) {
+            Toast.makeText(getContext(), "Preferences", Toast.LENGTH_SHORT).show();;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //menu.clear(); / / this sentence is useless. You don't need to add it
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
         recyclerView = view.findViewById(R.id.rvMyEventsList);
         recyclerView.setHasFixedSize(true);
         EventHelper.refreshUserData();

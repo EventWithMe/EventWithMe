@@ -77,7 +77,7 @@ public class EventDetailActivity extends AppCompatActivity {
         //printEvents();
 
         // if the user has event data proceed to check if he is already rsvp'd
-        if(events == null || events.isEmpty()) {
+        if(events.size() == 1) {
             rsvp = false;
         } else {
             rsvpCheck(eventID);
@@ -91,7 +91,7 @@ public class EventDetailActivity extends AppCompatActivity {
         btnRSVP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "btnRSVP clicked date: " + eventDate);
+                Log.d(TAG, "btnRSVP clicked date: " + eventID + " at " + eventDate);
                 EventHelper.refreshUserData();
                 if(rsvp) {
                     cancelRSVP(eventID);
