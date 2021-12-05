@@ -302,6 +302,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject hit = jsonArray.getJSONObject(i);
+                                String info = jsonArray.getJSONObject(i).isNull("info") ? null : jsonArray.getJSONObject(i).getString("info");
                                 String eventid = hit.getString("id");
                                 String eventName = hit.getString("name");
                                 String date = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
@@ -310,7 +311,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
                                 // String type = hit.getString("type");
                                 JSONArray imagesArray = hit.getJSONArray("images");
-                                String info = hit.getString("info");
+
+                               // String info = hit.getString("info");
                                 //String info = "";
                                 for (int j = 0; j < imagesArray.length(); j++) {
                                     JSONObject elem = imagesArray.getJSONObject(j);

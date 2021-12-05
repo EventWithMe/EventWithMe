@@ -86,8 +86,8 @@ public class SearchFragment extends Fragment  {
 
 
     }
-
-
+    //                          0           1           2               3       4       5
+//private String[] row = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,10 +106,10 @@ public class SearchFragment extends Fragment  {
                     textSwitcher.setText(row[++stringIndex]);
                 }
                 TextView tv = (TextView) textSwitcher.getCurrentView();
-                if (tv.getText().toString().length()>0) {
+
                     CharSequence input = tv.getText().toString();
                     listener.onInputSearchSent(input);
-                }
+
 
 
 
