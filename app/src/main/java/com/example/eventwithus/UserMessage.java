@@ -1,6 +1,5 @@
 package com.example.eventwithus;
 
-import com.example.eventwithus.models.User;
 
 import java.util.Date;
 
