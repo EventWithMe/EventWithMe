@@ -116,6 +116,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         Toast.makeText(getContext(), "onViewCreated ", Toast.LENGTH_LONG).show();
         String[] Categories = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
         String[] Dates = {};
+        //TODO implement Dates for Search Filter
 
         mEventList = new ArrayList<>();
         mDetailList = new ArrayList<>();
@@ -140,6 +141,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
        // mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         populateEvents();
+
+        //keep just incase we want to implement this functionality in the stream fragment
 /**
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,7 +193,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
  **/
 
     }
-
+//choose which url to go with based on Search Filter Category
     public void populateEvents(){
 
         switch (StreamText) {
@@ -223,6 +226,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
         }
     }
+    //update edit text acts as Intent get EXTRA but for fragments, Here we are getting the results from filters passed from MainActivity.
     public void updateEditText(CharSequence newText, CharSequence newText2) {
         StreamText= (String) newText;
         keyword2 = (String) newText2;

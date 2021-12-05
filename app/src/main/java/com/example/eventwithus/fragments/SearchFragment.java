@@ -38,8 +38,8 @@ public class SearchFragment extends Fragment  {
         void onInputSearchSent(CharSequence input, CharSequence keyword);
     }
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    //TODO implement Dates for Search Filter
+
     private static final String TEXT = "text";
     private TextSwitcher textSwitcher;
     private int stringIndex = 0;
@@ -60,7 +60,7 @@ public class SearchFragment extends Fragment  {
 
     //
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
 
 
@@ -69,7 +69,7 @@ public class SearchFragment extends Fragment  {
     }
 
 
-    // TODO: Rename and change types and number of parameters
+
     public static SearchFragment newInstance(String text) {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
