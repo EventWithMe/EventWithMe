@@ -20,7 +20,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -61,4 +61,7 @@ dependencies {
 
     //for geo location services
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+
+
+
 }

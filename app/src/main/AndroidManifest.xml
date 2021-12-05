@@ -19,9 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EventWithUs">
         <activity
-            android:name=".SearchActivity"
+            android:name=".MessageListActivity"
             android:exported="false" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.codepath.fileprovider"

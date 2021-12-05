@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
@@ -33,15 +34,20 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
     public static final String TAG = "MainActivity";
     private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
-
+    private static final String APP_ID = "9DA1B1F4-0BE6-4DA8-82C5-2E81DAB56F23"; // US-1 Demo
+    public static final String VERSION = "3.0.40";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
        // StreamFragment streamFragment;
         streamFragment = new StreamFragment();
        // streamFragment = new StreamFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+      //  PreferenceUtils.init(getApplicationContext());
+
+       // SendBird.init(APP_ID, getApplicationContext());
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
