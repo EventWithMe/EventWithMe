@@ -26,7 +26,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-// TODO: 12/3/2021 on line 101 switch our rsvp for event id
 public class EventDetailActivity extends AppCompatActivity {
 
     public static final String TAG = "EventDetailActivity"; // tag for logging
@@ -83,7 +82,7 @@ public class EventDetailActivity extends AppCompatActivity {
         if(events == null || events.isEmpty()) {
             rsvp = false;
         } else {
-            rsvpCheck();
+            rsvpCheck(eventID);
         }
 
         // if the user is already rsvp'd then set the btnEditProfile to cancel
@@ -96,24 +95,23 @@ public class EventDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.d(TAG, "btnRSVP clicked date: " + eventDate);
                 EventHelper.refreshUserData();
-// TODO: 12/4/2021 here change the 2 lines to event iD
                 if(rsvp) {
-                    cancelRSVP("123");
+                    cancelRSVP(eventID);
                 } else {
-                    rsvpEvent("123", eventDate);
+                    rsvpEvent(eventID, eventDate);
                 }
             }
         });
     }
 
     // iterates through a list of events to check and see if the user has rsvp'd already
-    private void rsvpCheck() {
+    private void rsvpCheck(String eventId) {
         System.out.println("RSVP CHECK:");
         for(String s : events) {
             String[] eventInfo = s.split("_");
-            System.out.print(eventInfo[1] + " " + tvDate.getText().toString());
+            System.out.print(eventInfo[0] + " " + eventId);
             System.out.println();
-            if(eventInfo[1].equals(tvDate.getText().toString())){
+            if(eventInfo[0].equals(eventId)){
                 rsvp = true;
                 return;
             } else {
