@@ -100,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
     }
 
     @Override
-    public void onInputSearchSent(CharSequence input, CharSequence keyword) {
-       streamFragment.updateEditText(input, keyword);
+    public void onInputSearchSent(CharSequence input, CharSequence keyword, CharSequence city) {
+       streamFragment.updateEditText(input, keyword, city);
     }
 
     @Override

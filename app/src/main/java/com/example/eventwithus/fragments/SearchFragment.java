@@ -35,7 +35,7 @@ public class SearchFragment extends Fragment  {
     private FragmentSearchListener listener;
 
     public interface  FragmentSearchListener{
-        void onInputSearchSent(CharSequence input, CharSequence keyword);
+        void onInputSearchSent(CharSequence input, CharSequence keyword, CharSequence city);
     }
 
     //TODO implement Dates for Search Filter
@@ -48,7 +48,7 @@ public class SearchFragment extends Fragment  {
     private static final String key = "UserInput";
     Button leftBTN;
     ImageButton searchBTN;
-    EditText keywordET;
+    EditText keywordET, cityET;
     SearchView searchView;
     String music = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
     String sports = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
@@ -103,6 +103,7 @@ public class SearchFragment extends Fragment  {
         leftBTN = v.findViewById(R.id.leftBTN);
         searchBTN = v.findViewById(R.id.searchBTN);
         keywordET = v.findViewById(R.id.keywordET);
+        cityET = v.findViewById(R.id.cityET);
         textSwitcher = v.findViewById(R.id.textSwitcher);
 
         searchBTN.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +112,8 @@ public class SearchFragment extends Fragment  {
                 TextView tv = (TextView) textSwitcher.getCurrentView();
                 CharSequence keyword = keywordET.getText().toString();
                 CharSequence input = tv.getText().toString();
-                listener.onInputSearchSent(input, keyword);
+                CharSequence city = cityET.getText().toString();
+                listener.onInputSearchSent(input, keyword, city);
             }
         });
 
