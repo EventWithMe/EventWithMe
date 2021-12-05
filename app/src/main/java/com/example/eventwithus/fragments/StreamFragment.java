@@ -71,7 +71,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     Spinner spinner2;
     String StreamText = "";
     final String keyword = "keyword=";
-    String keyword2 = "";
+     String keyword2;
     final String apikey = "apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
     final String city = "&city=San%20Antonio";
     final String eventsurl = "https://app.ticketmaster.com/discovery/v2/events?";
@@ -226,6 +226,12 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     public void updateEditText(CharSequence newText, CharSequence newText2) {
         StreamText= (String) newText;
         keyword2 = (String) newText2;
+        music = "https://app.ticketmaster.com/discovery/v2/events?keyword="+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
+       sports = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
+       family = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=family&locale=*";
+        film = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film";
+        misc = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
+        artNThr = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
     }
 
 
@@ -289,6 +295,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 **/
     private void parseJSON2(String url) {
         Toast.makeText(getContext(),StreamText, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),keyword2, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),url, Toast.LENGTH_LONG).show();
         //Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
