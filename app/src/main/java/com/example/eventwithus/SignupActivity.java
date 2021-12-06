@@ -22,15 +22,18 @@ public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
     public static final String PASSWORD_KEY= "pBackup";
+    public static final String CITY_KEY= "city";
 
     TextInputLayout textLayoutUsername;
     TextInputLayout textLayoutDisplayName;
     TextInputLayout textLayoutEmail;
+    TextInputLayout textLayoutSignupCity;
     TextInputLayout textLayoutPassword;
     TextInputLayout textLayoutConfirmPassword;
     EditText editTextUsername;
     EditText editTextDisplayName;
     EditText editTextEmail;
+    EditText editTextSignupCity;
     EditText editTextPassword;
     EditText editTextConfirmPassword;
     Button buttonSignUp;
@@ -45,11 +48,13 @@ public class SignupActivity extends AppCompatActivity {
         textLayoutUsername = findViewById(R.id.textLayoutSignupUsername);
         textLayoutDisplayName = findViewById(R.id.textLayoutSignupDisplayName);
         textLayoutEmail = findViewById(R.id.textLayoutSignupEmail);
+        textLayoutSignupCity = findViewById(R.id.textLayoutSignupCity);
         textLayoutPassword = findViewById(R.id.textLayoutSignupPassword);
         textLayoutConfirmPassword = findViewById(R.id.textLayoutSignupConfirmPassword);
         editTextUsername = findViewById(R.id.editTextSignupUsername);
         editTextDisplayName = findViewById(R.id.editTextSignupDisplayName);
         editTextEmail = findViewById(R.id.editTextSignupEmail);
+        editTextSignupCity = findViewById(R.id.editTextSignupCity);
         editTextPassword = findViewById(R.id.editTextSignupPassword);
         editTextConfirmPassword = findViewById(R.id.editTextSignupConfirmPassword);
         buttonSignUp = findViewById(R.id.buttonSignupSignUp);
@@ -61,10 +66,11 @@ public class SignupActivity extends AppCompatActivity {
             String username = editTextUsername.getText().toString();
             String displayname = editTextDisplayName.getText().toString();
             String email = editTextEmail.getText().toString();
+            String city = editTextSignupCity.getText().toString();
             String password = editTextPassword.getText().toString();
             String confirmPassword = editTextConfirmPassword.getText().toString();
             if (password.equals(confirmPassword)) {
-                signupUser(username, displayname, email, password);
+                signupUser(username, displayname, email, city, password);
             }
             else {
                 Toast.makeText(this, getString(R.string.signup_activity_error_password_mismatch), Toast.LENGTH_SHORT).show();
@@ -183,11 +189,12 @@ public class SignupActivity extends AppCompatActivity {
         editTextConfirmPassword.setOnFocusChangeListener(onFocusChangeListener);
     }
 
-    private void signupUser(String username, String displayname, String email, String password) {
+    private void signupUser(String username, String displayname, String email, String city, String password) {
 
         ParseUser user = new ParseUser();
         user.setUsername(username);
         user.setEmail(email);
+        user.put(CITY_KEY, city);
         user.setPassword(password);
         user.put(PASSWORD_KEY, password);
 
