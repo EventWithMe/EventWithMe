@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -35,6 +36,7 @@ import com.example.eventwithus.R;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment"; // tag for logging
@@ -55,7 +57,7 @@ public class ProfileFragment extends Fragment {
     private Toolbar toolbar;
     Context context;
 
-    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+    final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<>() {
                 @Override
@@ -168,12 +170,23 @@ public class ProfileFragment extends Fragment {
     }
 
     private void populateProfileData() {
-        String firstName = getString(R.string.profile_first) + "   " + currentUser.getString(FIRSTNAME_KEY);
-        String lastName = getString(R.string.profile_last) + "   " + currentUser.getString(LASTNAME_KEY);
-        String email = getString(R.string.profile_email) + "   " + currentUser.getString(EMAIL_KEY);
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            String firstName = String.format("%s   %s",
+                    activity.getString(R.string.profile_fragment_label_first_name),
+                    currentUser.getString(FIRSTNAME_KEY));
 
-        tvFirstNameP.setText(firstName);
-        tvLastNameP.setText(lastName);
-        tvEmailP.setText(email);
+            String lastName = String.format("%s   %s",
+                    activity.getString(R.string.profile_fragment_label_last_name),
+                    currentUser.getString(LASTNAME_KEY));
+
+            String email = String.format("%s   %s",
+                    activity.getString(R.string.profile_fragment_label_email),
+                    currentUser.getString(EMAIL_KEY));
+
+            tvFirstNameP.setText(firstName);
+            tvLastNameP.setText(lastName);
+            tvEmailP.setText(email);
+        }
     }
 }

@@ -1,12 +1,10 @@
 package com.example.eventwithus;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.load.engine.Initializable;
 import com.example.eventwithus.fragments.ChatFragment;
@@ -17,6 +15,7 @@ import com.example.eventwithus.fragments.StreamFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
+@SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity implements Initializable, SearchFragment.FragmentSearchListener, StreamFragment.FragmentStreamListener {
 
     public static final String EXTRA_URL = "imageUrl";

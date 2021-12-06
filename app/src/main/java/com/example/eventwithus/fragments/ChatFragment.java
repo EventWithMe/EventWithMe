@@ -32,6 +32,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 
+@SuppressWarnings("FieldCanBeLocal")
 public class ChatFragment extends Fragment {
 
     static final String USER_ID_KEY = "userId";

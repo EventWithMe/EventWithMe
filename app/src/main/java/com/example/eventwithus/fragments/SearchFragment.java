@@ -7,14 +7,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SearchView;
-import android.widget.Spinner;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,11 +22,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.eventwithus.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
+@SuppressWarnings("FieldCanBeLocal")
 public class SearchFragment extends Fragment  {
     private FragmentSearchListener listener;
 
@@ -43,7 +36,7 @@ public class SearchFragment extends Fragment  {
     private static final String TEXT = "text";
     private TextSwitcher textSwitcher;
     private int stringIndex = 0;
-    private String[] row = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
+    private final String[] row = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
     private TextView textView;
     private static final String key = "UserInput";
     Button leftBTN;
@@ -90,8 +83,8 @@ public class SearchFragment extends Fragment  {
 
 
     }
-    //                          0           1           2               3       4       5
-//private String[] row = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
+    //                           0           1         2                 3         4       5
+    // private String[] row = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,55 +92,38 @@ public class SearchFragment extends Fragment  {
         CharSequence input;
 
         View v = inflater.inflate(R.layout.fragment_search, container, false);
-       // searchView = v.findViewById(R.id.searchView);
+        // searchView = v.findViewById(R.id.searchView);
         leftBTN = v.findViewById(R.id.leftBTN);
         searchBTN = v.findViewById(R.id.searchBTN);
         keywordET = v.findViewById(R.id.keywordET);
         cityET = v.findViewById(R.id.cityET);
         textSwitcher = v.findViewById(R.id.textSwitcher);
 
-        searchBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextView tv = (TextView) textSwitcher.getCurrentView();
-                CharSequence keyword = keywordET.getText().toString();
-                CharSequence input = tv.getText().toString();
-                CharSequence city = cityET.getText().toString();
-                listener.onInputSearchSent(input, keyword, city);
-            }
+        searchBTN.setOnClickListener(view -> {
+            TextView tv = (TextView) textSwitcher.getCurrentView();
+            CharSequence keyword = keywordET.getText().toString();
+            CharSequence input1 = tv.getText().toString();
+            CharSequence city = cityET.getText().toString();
+            listener.onInputSearchSent(input1, keyword, city);
         });
 
-
-
-
-        leftBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(stringIndex == row.length-1){
-                    stringIndex = 0;
-                    textSwitcher.setText(row[stringIndex]);
-                }else{
-                    textSwitcher.setText(row[++stringIndex]);
-                }
-               // TextView tv = (TextView) textSwitcher.getCurrentView();
-
-                   // CharSequence input = tv.getText().toString();
-                   // listener.onInputSearchSent(input, keyword);
-
-
-
-
+        leftBTN.setOnClickListener(view -> {
+            if(stringIndex == row.length-1){
+                stringIndex = 0;
+                textSwitcher.setText(row[stringIndex]);
+            }else{
+                textSwitcher.setText(row[++stringIndex]);
             }
+            // TextView tv = (TextView) textSwitcher.getCurrentView();
+            // CharSequence input = tv.getText().toString();
+            // listener.onInputSearchSent(input, keyword);
         });
-        textSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                textView = new TextView(getContext());
-                textView.setTextColor(Color.WHITE);
-                textView.setTextSize(30);
-                textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                return textView;
-            }
+        textSwitcher.setFactory(() -> {
+            textView = new TextView(getContext());
+            textView.setTextColor(Color.WHITE);
+            textView.setTextSize(30);
+            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+            return textView;
         });
         textSwitcher.setText(row[stringIndex]);
 
@@ -162,7 +138,7 @@ public class SearchFragment extends Fragment  {
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof FragmentSearchListener) {
             listener = (FragmentSearchListener) context;
@@ -185,15 +161,16 @@ public class SearchFragment extends Fragment  {
         String[] Categories = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
         String[] Dates = { "All Dates", "This Weekend"};
         String[] Distance = { "10 mi", "25 mi", "50 mi","75 mi","All (mi)"};
-        //Bundle bundle = new Bundle();
-       // SteamFragment fragment = new StreamFragment();
+        // Bundle bundle = new Bundle();
+        // SteamFragment fragment = new StreamFragment();
 
         // Intent intent = new Intent(getActivity(), LocationService.class);
-     //   startActivity(intent);
+        // startActivity(intent);
         Toast.makeText(getContext(), "toast", Toast.LENGTH_LONG).show();
 
-       // GestureDetector gestureDetector;
-       /** gestureDetector = new GestureDetector(new MyGestureDetector());
+        // GestureDetector gestureDetector;
+        /*
+        gestureDetector = new GestureDetector(new MyGestureDetector());
         View.OnTouchListener gestureListener = new View.OnTouchListener() {
 
             @Override
@@ -205,26 +182,13 @@ public class SearchFragment extends Fragment  {
             }
         };
         textView.setOnTouchListener(gestureListener);
-
-
-
-**/
+        */
     }
     public void displaySearchView(){
 
     }
 
-
-
-
-
-
-
-
-
-/**
-
-
+    /*
     class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
         final String TAG = MyGestureDetector.class.getSimpleName();
@@ -288,12 +252,6 @@ public class SearchFragment extends Fragment  {
             }
         }
     }
-**/
-
-
-
-
-
-    }
-
+    */
+}
 

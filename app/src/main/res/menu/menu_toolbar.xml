@@ -9,5 +9,5 @@
         android:id="@+id/menu_preferences"
         android:icon="@drawable/ic_settings_light"
         app:showAsAction="always"
-        android:title="@string/toolbar_settings_title" />
+        android:title="@string/toolbar_menu_settings_title" />
 </menu>

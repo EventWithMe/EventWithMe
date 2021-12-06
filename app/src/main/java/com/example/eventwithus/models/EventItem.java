@@ -27,7 +27,7 @@ public class EventItem {
         return date;
     }
 
-    public void setmImageUrl(String mImageUrl) {
+    public void setImageUrl(String mImageUrl) {
         this.mImageUrl = mImageUrl;
     }
 

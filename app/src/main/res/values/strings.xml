@@ -1,55 +1,103 @@
 <resources>
     <string name="app_name">EventWithUs</string>
-    <string name="login_button_text_log_in">Log In</string>
-    <string name="login_text_hint_password">password</string>
-    <string name="login_button_text_sign_up">No account? Sign up</string>
-    <string name="login_text_hint_username">username/email</string>
-    <string name="signup_text_hint_username">username</string>
-    <string name="signup_text_hint_password">password</string>
-    <string name="signup_button_text_sign_up">Sign Up</string>
-    <string name="signup_button_text_log_ing">Already have an account? Log In</string>
-    <string name="signup_text_hint_email">email</string>
-    <string name="signup_text_hint_confirm_password">confirm password</string>
-    <string name="errorUsernameTaken">Username is taken</string>
-    <string name="errorEmailTaken">Email already in use</string>
-    <string name="errorInvalidEmail">Please enter a valid email address</string>
-    <string name="errorUnknownSignupError">Unknown error signing up</string>
-    <string name="errorEmptyEmail">An email is required</string>
-    <string name="errorEmptyUsername">A username is required</string>
-    <string name="errorEmptyPassword">A password is required</string>
-    <string name="errorPasswordMismatch">Passwords do not match</string>
-    <string name="errorInvalidCredentials">Invalid username or password</string>
-    <string name="errorUnknownLoginError">Unknown error logging in</string>
-    <string name="errorEmptyUsernameEmail">A username or email is required</string>
-    <string name="todo">TODO</string>
-    <string name="rsvp">RSVP</string>
-    <string name="chat">CHAT</string>
-    <string name="more_info">MORE INFO</string>
-    <string name="profile_first">First name:</string>
-    <string name="profile_last">Last name:</string>
-    <string name="signup_text_hint_display_name">name (first/last)</string>
-    <string name="profile_email">Email:</string>
-    <string name="profile_password">Password: **********</string>
-    <string name="pick_image_intent_text">Camera or gallery?</string>
-    <string name="password_info">Password Requirements:\n\t- 8 to 20 characters long\n\t- At least one upper case character\n\t- at least one symbol\n\t-at least one digit</string>
-    <string name="send">Send</string>
-    <string name="message_hint">type a message</string>
-    <string name="profile_other">User Profile Picture</string>
-    <string name="profile_me">Your Profile Picture</string>
-    <string name="menu_search">Search</string>
-    <string name="menu_stream">Stream</string>
-    <string name="menu_rsvp">RSVP</string>
-    <string name="menu_chat">Chat</string>
-    <string name="menu_profile">Profile</string>
-    <string name="toolbar_settings_title">Settings</string>
-    <string name="cancel_rsvp">Cancel RSVP</string>
-    <string name="profile_saved">Profile changes saved!</string>
-    <string name="first_name_required_toast">Please input your first name it is required</string>
-    <string name="last_name_required_toast">Please input your last name it is required</string>
-    <string name="email_required_toast">Please input your email it is required</string>
-    <string name="picture_not_taken_toast">Picture wasn\'t taken!</string>
-    <string name="system_image_error_toast">System image could not be retrieved</string>
-    <string name="picture_saved_toast">New profile pic saved</string>
-    <string name="event_detail_type_label">Info: %s</string>
-    <string name="event_detail_venue_label">Venue : %s</string>
+
+    <string name="login_activity_button_log_in">Log In</string>
+    <string name="login_activity_hint_password">password</string>
+    <string name="login_activity_button_sign_up">No account? Sign up</string>
+    <string name="login_activity_hint_username">username/email</string>
+    <string name="login_activity_content_desc_app_logo">App Logo</string>
+    <string name="login_activity_error_empty_username_email">A username or email is required</string>
+    <string name="login_activity_error_empty_password">A password is required</string>
+    <string name="login_activity_error_invalid_credentials">Invalid username or password</string>
+    <string name="login_activity_error_unknown">Unknown error logging in</string>
+
+    <string name="signup_activity_hint_username">username</string>
+    <string name="signup_activity_hint_display_name">name (first/last)</string>
+    <string name="signup_activity_hint_email">email</string>
+    <string name="signup_activity_hint_password">password</string>
+    <string name="signup_activity_hint_confirm_password">confirm password</string>
+    <string name="signup_activity_button_sign_up">Sign Up</string>
+    <string name="signup_activity_button_log_in">Already have an account? Log In</string>
+    <string name="signup_activity_error_empty_username">A username is required</string>
+    <string name="signup_activity_error_empty_password">A password is required</string>
+    <string name="signup_activity_error_username_taken">Username is taken</string>
+    <string name="signup_activity_error_email_taken">Email already in use</string>
+    <string name="signup_activity_error_invalid_email">Please enter a valid email address</string>
+    <string name="signup_activity_error_unknown">Unknown error signing up</string>
+    <string name="signup_activity_error_empty_email">An email is required</string>
+    <string name="signup_activity_error_password_mismatch">Passwords do not match</string>
+
+    <string name="event_detail_activity_button_rsvp">RSVP</string>
+    <string name="event_detail_activity_type_label">Info: %s</string>
+    <string name="event_detail_activity_venue_label">Venue : %s</string>
+    <string name="event_detail_activity_content_desc_event_image">Event image</string>
+    <string name="event_detail_activity_label_date">Date</string>
+    <string name="event_detail_activity_label_venue">Venue</string>
+
+    <string name="my_event_detail_activity_button_more_info">MORE INFO</string>
+    <string name="my_event_detail_activity_button_rsvp">RSVP</string>
+    <string name="my_event_detail_activity_button_cancel_rsvp">Cancel RSVP</string>
+    <string name="my_event_detail_activity_content_desc_profile_picture">Profile picture</string>
+
+    <string name="password_change_activity_password_requirements">Password Requirements:\n\t- 8 to 20 characters long\n\t- At least one upper case character\n\t- at least one symbol\n\t-at least one digit</string>
+
+    <string name="bottom_navigation_menu_search">Search</string>
+    <string name="bottom_navigation_menu_stream">Stream</string>
+    <string name="bottom_navigation_menu_rsvp">RSVP</string>
+    <string name="bottom_navigation_menu_chat">Chat</string>
+    <string name="bottom_navigation_menu_profile">Profile</string>
+
+    <string name="toolbar_menu_settings_title">Settings</string>
+
+    <string name="event_detail_activity_cancel_rsvp">Cancel RSVP</string>
+
+    <string name="edit_profile_activity_profile_saved">Profile changes saved!</string>
+    <string name="edit_profile_activity_toast_first_name_required">Please input your first name it is required</string>
+    <string name="edit_profile_activity_toast_last_name_required">Please input your last name it is required</string>
+    <string name="edit_profile_activity_toast_email_required">Please input your email it is required</string>
+    <string name="edit_profile_activity_toast_picture_saved">New profile pic saved</string>
+
+    <string name="search_fragment_button_next">Next</string>
+    <string name="search_fragment_label_select_category">Select Category</string>
+    <string name="search_fragment_label_city_name">City Name</string>
+    <string name="search_fragment_label_keyword">Keyword</string>
+    <string name="search_fragment_content_desc_search">search</string>
+
+    <string name="stream_fragment_button_search">Search</string>
+
+    <string name="chat_fragment_button_send">Send</string>
+    <string name="chat_fragment_text_hint_message">type a message</string>
+
+    <string name="incoming_message_layout_content_desc_profile_picture">Profile Picture</string>
+
+    <string name="outgoing_message_layout_content_desc_profile_picture">Your Profile Picture</string>
+
+    <string name="profile_fragment_label_first_name">First name:</string>
+    <string name="profile_fragment_label_last_name">Last name:</string>
+    <string name="profile_fragment_label_email">Email:</string>
+    <string name="profile_fragment_button_edit_profile">Edit Profile</string>
+    <string name="profile_fragment_button_edit_password">Edit Password</string>
+    <string name="profile_fragment_button_logout">Logout</string>
+
+    <string name="edit_profile_activity_content_desc_profile_picture">Profile Picture</string>
+    <string name="edit_profile_activity_hint_email">Email</string>
+    <string name="edit_profile_activity_hint_first_name">First Name</string>
+    <string name="edit_profile_activity_hint_last_name">Last Name</string>
+    <string name="edit_profile_activity_button_save_changes">Save Changes</string>
+
+    <string name="event_card_layout_content_desc_event">Event Image</string>
+
+    <string name="event_card_with_chat_layout_content_desc_event">Event Image</string>
+    <string name="event_card_with_chat_layout_button_chat">Chat</string>
+
+    <string name="password_change_activity_hint_current_password">Current Password</string>
+    <string name="password_change_activity_hint_new_password">New Password</string>
+    <string name="password_change_activity_hint_confirm_new_password">Confirm New Password</string>
+    <string name="password_change_activity_button_save_password">Save Password</string>
+
+    <string name="image_chooser_popup_label_choices">Take a new photo or access gallery?</string>
+    <string name="image_chooser_popup_button_camera">Camera</string>
+    <string name="image_chooser_popup_button_gallery">Gallery</string>
+    <string name="profile_fragment_content_desc_profile_picture">Profile picture</string>
+
 </resources>

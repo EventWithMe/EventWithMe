@@ -15,47 +15,53 @@
         android:src="@drawable/ic_baseline_person_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/edit_profile_activity_content_desc_profile_picture" />
 
     <EditText
         android:id="@+id/etEmailPE"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:hint="Email"
+        android:hint="@string/edit_profile_activity_hint_email"
         android:inputType="textEmailAddress"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etLastNamePE" />
+        app:layout_constraintTop_toBottomOf="@id/etLastNamePE"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/etFirstNamePE"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:hint="First Name"
+        android:hint="@string/edit_profile_activity_hint_first_name"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPfpE" />
+        app:layout_constraintTop_toBottomOf="@+id/ivPfpE"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etLastNamePE"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:hint="Last Name"
+        android:hint="@string/edit_profile_activity_hint_last_name"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFirstNamePE" />
+        app:layout_constraintTop_toBottomOf="@+id/etFirstNamePE"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/btnSaveProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save Changes"
+        android:text="@string/edit_profile_activity_button_save_changes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

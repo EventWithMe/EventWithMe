@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eventwithus.models.EventHelper;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewHolder> {
-    private Context mContext;
+    private final Context mContext;
     private ArrayList<EventItem> eventItems;
     private OnItemClickListener mListener;
 
@@ -36,8 +37,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewH
         eventItems = exampleList;
     }
 
+    @NonNull
     @Override
-    public ExampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.example_item, parent, false);
         return new ExampleViewHolder(v);
     }
@@ -71,17 +73,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewH
             mEventName = itemView.findViewById(R.id.text_view_name);
             mEventDesc = itemView.findViewById(R.id.text_view_desc);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(mListener != null){}
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION) {
-                            mListener.onItemClick(position);
-
-                        }
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                if(position != RecyclerView.NO_POSITION) {
+                    mListener.onItemClick(position);
 
                 }
+
             });
         }
     }

@@ -73,8 +73,8 @@ public class EventDetailActivity extends AppCompatActivity {
         // populate the UI elements with event data
         Picasso.with(this).load(imageUrl).fit().centerInside().transform(new RoundedTransformation(50, 0)).into(imageView);
         textviewEventName.setText(eventName);
-        textviewEventType.setText(String.format(getString(R.string.event_detail_type_label), eventType));
-        textviewEventVenue.setText(String.format(getString(R.string.event_detail_venue_label), venueName));
+        textviewEventType.setText(String.format(getString(R.string.event_detail_activity_type_label), eventType));
+        textviewEventVenue.setText(String.format(getString(R.string.event_detail_activity_venue_label), venueName));
         tvDate.setText(EventHelper.formatJsonDate(eventDate));
 
 
@@ -89,7 +89,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         // if the user is already rsvp'd then set the btnEditProfile to cancel
         if(rsvp) {
-            btnRSVP.setText(R.string.cancel_rsvp);
+            btnRSVP.setText(R.string.event_detail_activity_cancel_rsvp);
         }
 
         btnRSVP.setOnClickListener(view -> {
@@ -164,7 +164,7 @@ public class EventDetailActivity extends AppCompatActivity {
         currentUser.saveInBackground(e -> {
             if (e == null) {
                 Toast.makeText(context, "You have cancelled your RSVP", Toast.LENGTH_SHORT).show();
-                btnRSVP.setText(R.string.rsvp);
+                btnRSVP.setText(R.string.event_detail_activity_button_rsvp);
                 rsvp = false;
             } else {
                 Log.e(TAG, "Error: " + e.getMessage());
@@ -183,7 +183,7 @@ public class EventDetailActivity extends AppCompatActivity {
         currentUser.saveInBackground(e -> {
             if (e == null) {
                 Toast.makeText(context, "You have RSVP'd", Toast.LENGTH_SHORT).show();
-                btnRSVP.setText(R.string.cancel_rsvp);
+                btnRSVP.setText(R.string.event_detail_activity_cancel_rsvp);
                 rsvp = true;
                 events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
             } else {

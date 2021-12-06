@@ -54,18 +54,19 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ParseUser currentUser;
     private File photoFile;
-    public String photoFileName = "photo.jpg";
+    public final String photoFileName = "photo.jpg";
     private boolean pfpChange;
     Context context;
 
-    ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
+    final ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             this::cameraResultCallback
     );
-    ActivityResultLauncher<Intent> galleryActivityResultLauncher = registerForActivityResult(
+    final ActivityResultLauncher<Intent> galleryActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             this::galleryResultCallback
     );
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,13 +98,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
             // input validation on first name, last name, and email
             if(firstName.equals("")) {
-                Toast.makeText(getApplicationContext(), getString(R.string.first_name_required_toast), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.edit_profile_activity_toast_first_name_required), Toast.LENGTH_SHORT).show();
                 return;
             } else if(lastName.equals("")) {
-                Toast.makeText(getApplicationContext(), getString(R.string.last_name_required_toast), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.edit_profile_activity_toast_last_name_required), Toast.LENGTH_SHORT).show();
                 return;
             } else if(email.equals("")) {
-                Toast.makeText(getApplicationContext(), getString(R.string.email_required_toast), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.edit_profile_activity_toast_email_required), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -116,7 +117,7 @@ public class EditProfileActivity extends AppCompatActivity {
             currentUser.put(EMAIL_KEY, email);
             currentUser.saveInBackground(e -> {
                 Log.i(TAG, "Profile changes saved");
-                Toast.makeText(context, getString(R.string.profile_saved), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.edit_profile_activity_profile_saved), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, ProfileFragment.class);
                 intent.putExtra(FIRSTNAME_KEY, firstName);
                 intent.putExtra(LASTNAME_KEY, lastName);
@@ -237,7 +238,7 @@ public class EditProfileActivity extends AppCompatActivity {
         currentUser.put(IMAGE_KEY, file);
         currentUser.saveInBackground(e -> {
             if (e == null) {
-                Toast.makeText(context, getString(R.string.picture_saved_toast), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.edit_profile_activity_toast_picture_saved), Toast.LENGTH_SHORT).show();
             } else {
                 Log.e(TAG, "Error: " + e.getMessage());
             }

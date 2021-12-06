@@ -1,13 +1,6 @@
 package com.example.eventwithus.fragments;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.eventwithus.R;
@@ -24,14 +27,16 @@ import com.example.eventwithus.adapters.MyEventAdapter;
 import com.example.eventwithus.models.EventHelper;
 import com.example.eventwithus.models.MyEvents;
 import com.parse.ParseUser;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class RsvpFragment extends Fragment {
 
     public static final String TAG = "RsvpFragment";
@@ -63,13 +68,13 @@ public class RsvpFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_preferences) {
-            Toast.makeText(getContext(), "Preferences", Toast.LENGTH_SHORT).show();;
+            Toast.makeText(getContext(), "Preferences", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         //menu.clear(); / / this sentence is useless. You don't need to add it
         inflater.inflate(R.menu.menu_toolbar, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -80,7 +85,10 @@ public class RsvpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         toolbar = view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity != null) {
+            activity.setSupportActionBar(toolbar);
+        }
 
         recyclerView = view.findViewById(R.id.rvMyEventsList);
         recyclerView.setHasFixedSize(true);
@@ -134,8 +142,10 @@ public class RsvpFragment extends Fragment {
                                 eventsList.add(new MyEvents(eventName, city, date, startTime, venueName, eventType, eventId, imageURL, eventLink));
                             }
 
-                            if(isAdded())
-                            myEventAdapter = new MyEventAdapter(getActivity().getBaseContext(), eventsList);
+                            FragmentActivity activity = getActivity();
+                            if(isAdded() && activity != null) {
+                                myEventAdapter = new MyEventAdapter(getActivity().getBaseContext(), eventsList);
+                            }
                             recyclerView.setAdapter(myEventAdapter);
                             //myEventAdapter.setOnItemClickListener(StreamFragment.this );
                         }
@@ -144,6 +154,9 @@ public class RsvpFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }, Throwable::printStackTrace);
-        RequestQueueSingleton.getInstance(getActivity().getBaseContext()).addToRequestQueue(request);
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            RequestQueueSingleton.getInstance(activity.getBaseContext()).addToRequestQueue(request);
+        }
     }
 }

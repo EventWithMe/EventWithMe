@@ -112,7 +112,10 @@ public class MyEventDetailActivity extends AppCompatActivity {
 
 
         linkBtn.setOnClickListener(view -> {
-            String url = extras.getString("eventLink");
+            String url = null;
+            if (extras != null) {
+                url = extras.getString("eventLink");
+            }
 
             Uri uri = Uri.parse(url);
             Intent intent1= new Intent(Intent.ACTION_VIEW,uri);
@@ -139,15 +142,15 @@ public class MyEventDetailActivity extends AppCompatActivity {
     // if user click the btnEditProfile when it says "cancel rsvp" then we remove the item from the list and DB
     private void cancelRSVP(String eventId) {
         System.out.println("CANCEL RSVP:");
-        String updated = "";
+        StringBuilder updated = new StringBuilder();
 
         System.out.println("EVENT LIST CHECKING:");
         for(int i = 0; i < events.size(); i++) {
             String[] format = events.get(i).split("_");
             System.out.println(format[0] + " " + eventId);
             if(format[0].equals(eventId)) {
-
                 events.remove(i);
+                break;
             }
         }
 
@@ -155,21 +158,18 @@ public class MyEventDetailActivity extends AppCompatActivity {
         System.out.println(events);
 
         for(int i = 0; i < events.size() - 1; i++) {
-            updated += events.get(i) + ", ";
+            updated.append(events.get(i)).append(", ");
         }
-        updated += events.get(events.size() - 1);
+        updated.append(events.get(events.size() - 1));
 
-        currentUser.put(PARSE_RSVP_KEY, updated);
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Toast.makeText(context, "You have cancelled your RSVP", Toast.LENGTH_SHORT).show();
-                    rsvpBtn.setText("RSVP");
-                    rsvp = false;
-                } else {
-                    Log.e(TAG, "Error: " + e.getMessage());
-                }
+        currentUser.put(PARSE_RSVP_KEY, updated.toString());
+        currentUser.saveInBackground(e -> {
+            if (e == null) {
+                Toast.makeText(context, "You have cancelled your RSVP", Toast.LENGTH_SHORT).show();
+                rsvpBtn.setText(R.string.my_event_detail_activity_button_rsvp);
+                rsvp = false;
+            } else {
+                Log.e(TAG, "Error: " + e.getMessage());
             }
         });
 
@@ -181,17 +181,14 @@ public class MyEventDetailActivity extends AppCompatActivity {
         String eventsinfo = currentUser.getString(PARSE_RSVP_KEY);
         eventsinfo += "," + eventId + "_" + date;
         currentUser.put(PARSE_RSVP_KEY, eventsinfo);
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Toast.makeText(context, "You have RSVP'd", Toast.LENGTH_SHORT).show();
-                    rsvpBtn.setText("Cancel RSVP");
-                    rsvp = true;
-                    events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
-                } else {
-                    Log.e(TAG, "Error: " + e.getMessage());
-                }
+        currentUser.saveInBackground(e -> {
+            if (e == null) {
+                Toast.makeText(context, "You have RSVP'd", Toast.LENGTH_SHORT).show();
+                rsvpBtn.setText(R.string.my_event_detail_activity_button_cancel_rsvp);
+                rsvp = true;
+                events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
+            } else {
+                Log.e(TAG, "Error: " + e.getMessage());
             }
         });
         EventHelper.refreshUserData();

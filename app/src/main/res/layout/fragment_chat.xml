@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ChatFragment">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -24,13 +22,13 @@
 
     <RelativeLayout
         android:id="@+id/rlSend"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:paddingLeft="0dp"
+        android:paddingTop="5dp"
         android:paddingRight="0dp"
-        android:layout_height="wrap_content" >
+        android:paddingBottom="10dp">
 
         <EditText
             android:id="@+id/etMessage"
@@ -40,7 +38,7 @@
             android:layout_marginBottom="0dp"
             android:layout_toStartOf="@+id/ibSend"
             android:gravity="top"
-            android:hint="@string/message_hint"
+            android:hint="@string/chat_fragment_text_hint_message"
             android:imeOptions="actionSend"
             android:importantForAutofill="no"
             android:inputType="textShortMessage"
@@ -53,7 +51,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="false"
             android:layout_marginBottom="?attr/actionBarSize"
-            android:contentDescription="@string/send"
+            android:contentDescription="@string/chat_fragment_button_send"
             android:gravity="center"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
