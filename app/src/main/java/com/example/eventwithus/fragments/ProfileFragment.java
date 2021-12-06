@@ -40,15 +40,17 @@ import com.parse.ParseUser;
 public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment"; // tag for logging
-    public static final String EMAIL_KEY = "email";
     public static final String FIRSTNAME_KEY = "firstname";
     public static final String LASTNAME_KEY = "lastname";
+    public static final String EMAIL_KEY = "email";
+    public static final String CITY_KEY = "city";
     public static final String IMAGE_KEY = "image";
 
     ImageView ivPfp;
     TextView tvFirstNameP;
     TextView tvLastNameP;
     TextView tvEmailP;
+    TextView tvCityP;
     Button btnEditProfile;
     Button btnLogout;
     Button btnEditPassword;
@@ -129,6 +131,7 @@ public class ProfileFragment extends Fragment {
         tvFirstNameP = view.findViewById(R.id.tvFirstNameP);
         tvLastNameP = view.findViewById(R.id.tvLastNameP);
         tvEmailP = view.findViewById(R.id.tvEmailP);
+        tvCityP = view.findViewById(R.id.tvCityP);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
         btnLogout = view.findViewById(R.id.btnLogout);
         btnEditPassword = view.findViewById(R.id.btnEditPassword);
@@ -184,9 +187,15 @@ public class ProfileFragment extends Fragment {
                     activity.getString(R.string.profile_fragment_label_email),
                     currentUser.getString(EMAIL_KEY));
 
+            String city = String.format("%s   %s",
+                    activity.getString(R.string.profile_fragment_label_city),
+                    currentUser.getString(CITY_KEY));
+
             tvFirstNameP.setText(firstName);
             tvLastNameP.setText(lastName);
             tvEmailP.setText(email);
+            tvCityP.setText(city);
+
         }
     }
 }

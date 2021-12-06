@@ -75,7 +75,8 @@
     <string name="profile_fragment_label_first_name">First name:</string>
     <string name="profile_fragment_label_last_name">Last name:</string>
     <string name="profile_fragment_label_email">Email:</string>
-    <string name="profile_fragment_button_edit_profile">Edit Profile</string>
+    <string name="profile_fragment_label_city">City:</string>
+    <string name="profile_fragment_button_edit_profile">Edit Account</string>
     <string name="profile_fragment_button_edit_password">Edit Password</string>
     <string name="profile_fragment_button_logout">Logout</string>
 
