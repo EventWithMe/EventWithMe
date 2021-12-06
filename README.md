@@ -26,11 +26,11 @@ App allows users to create account and chat with people going to the same events
 **Required Must-have Stories**
 
 - [x] User can create an account and login
-- [ ] User can view and change their displayed name, picture, location, etc.
+- [x] User can view and change their displayed name, picture, location, etc.
 - [x] User can view a list of nearby events
 - [x] User can rsvp to attend an event
-- [ ] User can chat with others attending the events
-- [ ] User can view events they signed up for
+- [x] User can chat with others attending the events
+- [x] User can view events they signed up for
 
 **Optional Nice-to-have Stories**
 

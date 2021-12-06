@@ -6,6 +6,9 @@ import com.example.eventwithus.models.Message;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -26,8 +29,8 @@ public class ParseApplication extends Application {
         builder.networkInterceptors().add(httpLoggingInterceptor);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("6xhT5ToW3AuefrGSdUr5PgSfEAoYT4lfuSoQbh6k")
-                .clientKey("ULywQLvdMTIEtF4NprDpyxxry89PWRRxRKY9KTZW")
+                .applicationId(BuildConfig.PARSE_APPLICATION_ID)
+                .clientKey(BuildConfig.PARSE_CLIENT_KEY)
                 .clientBuilder(builder)
                 .server("https://parseapi.back4app.com")
                 .build()

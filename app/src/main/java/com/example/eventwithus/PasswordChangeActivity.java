@@ -42,12 +42,7 @@ public class PasswordChangeActivity extends AppCompatActivity {
         currentUser = ParseUser.getCurrentUser();
         context = getApplicationContext();
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                passwordValidator();
-            }
-        });
+        btnSubmit.setOnClickListener(view -> passwordValidator());
     }
 
     private void passwordValidator() {
@@ -92,16 +87,13 @@ public class PasswordChangeActivity extends AppCompatActivity {
         // save password to the DB
         currentUser.setPassword(newPassword);
         currentUser.put(PASSWORD_KEY, newPassword);
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (null == e) {
-                    Log.i(TAG, "Password change saved successfully");
-                    Toast.makeText(context, "Password changed successfully!", Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    Log.e(TAG, "Password change failed to save");
-                }
+        currentUser.saveInBackground(e -> {
+            if (null == e) {
+                Log.i(TAG, "Password change saved successfully");
+                Toast.makeText(context, "Password changed successfully!", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Log.e(TAG, "Password change failed to save");
             }
         });
     }

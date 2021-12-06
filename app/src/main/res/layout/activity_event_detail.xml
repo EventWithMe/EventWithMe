@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context=".EventDetailActivity">
 
@@ -14,6 +13,7 @@
         android:layout_height="300dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:contentDescription="@string/event_detail_activity_content_desc_event_image"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,8 +35,8 @@
 
     <TextView
         android:id="@+id/text_view_event_desc"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="330dp"
+        android:layout_height="123dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
@@ -45,10 +45,12 @@
         android:typeface="serif"
         app:autoSizeMaxTextSize="18sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/btnRSVP"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_venue_info"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintVertical_bias="0.062"
         tools:text="Description" />
 
     <Button
@@ -56,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="RSVP"
+        android:text="@string/event_detail_activity_button_rsvp"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Date"
+        android:text="@string/event_detail_activity_label_date"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -89,5 +91,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+
+    <TextView
+        android:id="@+id/text_view_venue_info"
+        android:layout_width="292dp"
+        android:layout_height="46dp"
+        android:text="@string/event_detail_activity_label_venue"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnRSVP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

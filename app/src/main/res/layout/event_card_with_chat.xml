@@ -21,7 +21,7 @@
             android:layout_height="50dp"
             android:layout_marginEnd="5dp"
             android:backgroundTint="#AAA5A3"
-            android:text="Chat"
+            android:text="@string/event_card_with_chat_layout_button_chat"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/eventIV"
             card_view:rippleColor="#00897B" />
@@ -35,7 +35,8 @@
             android:scaleType="centerCrop"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/event_card_with_chat_layout_content_desc_event" />
 
         <TextView
             android:id="@+id/card_dateTV"

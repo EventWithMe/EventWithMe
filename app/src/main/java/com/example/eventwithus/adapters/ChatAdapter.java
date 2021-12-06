@@ -19,17 +19,14 @@ import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.util.HashMap;
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
 
     private static final String TAG = "ChatAdapter";
-    private List<Message> mMessages;
-    private Context mContext;
-    private String mUserId;
+    private final List<Message> mMessages;
+    private final Context mContext;
+    private final String mUserId;
 
     private static final int MESSAGE_OUTGOING = 123;
     private static final int MESSAGE_INCOMING = 321;
@@ -82,7 +79,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         holder.bindMessage(message);
     }
 
-    public abstract class MessageViewHolder extends RecyclerView.ViewHolder {
+    public abstract static class MessageViewHolder extends RecyclerView.ViewHolder {
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,9 +89,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
     }
 
     public class IncomingMessageViewHolder extends MessageViewHolder {
-        ImageView imageOther;
-        TextView body;
-        TextView name;
+        final ImageView imageOther;
+        final TextView body;
+        final TextView name;
 
         public IncomingMessageViewHolder(View itemView) {
             super(itemView);
@@ -138,9 +135,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
     }
 
     public class OutgoingMessageViewHolder extends MessageViewHolder {
-        ImageView imageMe;
-        TextView body;
-        TextView name;
+        final ImageView imageMe;
+        final TextView body;
+        final TextView name;
 
         public OutgoingMessageViewHolder(View itemView) {
             super(itemView);

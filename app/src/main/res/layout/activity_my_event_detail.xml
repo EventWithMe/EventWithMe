@@ -23,13 +23,13 @@
                 android:layout_marginEnd="150dp"
                 android:layout_marginStart="150dp"
                 android:layout_marginTop="16dp"
-                android:contentDescription="@string/todo"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ImageContrastCheck"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars"
+                android:contentDescription="@string/my_event_detail_activity_content_desc_profile_picture" />
 
             <TextView
                 android:id="@+id/nameTV"
@@ -116,7 +116,7 @@
                 android:layout_height="50dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="24dp"
-                android:text="Cancel RSVP"
+                android:text="@string/my_event_detail_activity_button_cancel_rsvp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/descriptionTV" />
 
@@ -126,7 +126,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:text="@string/more_info"
+                android:text="@string/my_event_detail_activity_button_more_info"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/descriptionTV" />
 

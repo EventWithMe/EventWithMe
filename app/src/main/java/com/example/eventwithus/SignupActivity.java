@@ -67,7 +67,7 @@ public class SignupActivity extends AppCompatActivity {
                 signupUser(username, displayname, email, password);
             }
             else {
-                Toast.makeText(this, getString(R.string.errorPasswordMismatch), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.signup_activity_error_password_mismatch), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -100,7 +100,7 @@ public class SignupActivity extends AppCompatActivity {
                     textLayoutUsername.setError(null);
                 else if (s == editTextEmail.getEditableText()) {
                     if (validEmail || TextUtils.equals(textLayoutEmail.getError(),
-                            getText(R.string.errorEmptyEmail)))
+                            getText(R.string.signup_activity_error_empty_email)))
                         textLayoutEmail.setError(null);
                 }
                 else if (s == editTextPassword.getEditableText()) {
@@ -108,7 +108,7 @@ public class SignupActivity extends AppCompatActivity {
                         if (passwordsMatch)
                             textLayoutConfirmPassword.setError(null);
                         else
-                            textLayoutConfirmPassword.setError(getString(R.string.errorPasswordMismatch));
+                            textLayoutConfirmPassword.setError(getString(R.string.signup_activity_error_password_mismatch));
                     }
                     textLayoutPassword.setError(null);
                 }
@@ -116,7 +116,7 @@ public class SignupActivity extends AppCompatActivity {
                     if (passwordsMatch)
                         textLayoutConfirmPassword.setError(null);
                     else
-                        textLayoutConfirmPassword.setError(getString(R.string.errorPasswordMismatch));
+                        textLayoutConfirmPassword.setError(getString(R.string.signup_activity_error_password_mismatch));
                 }
             }
         };
@@ -127,14 +127,14 @@ public class SignupActivity extends AppCompatActivity {
                 int id = view.getId();
                 if (id == R.id.editTextSignupUsername) {
                     if (TextUtils.isEmpty(editTextUsername.getText()))
-                        textLayoutUsername.setError(getString(R.string.errorEmptyUsername));
+                        textLayoutUsername.setError(getString(R.string.signup_activity_error_empty_username));
                     else {
                         ParseQuery<ParseUser> query = ParseUser.getQuery();
                         query.whereEqualTo("username", editTextUsername.getText().toString());
                         query.findInBackground((users, e) -> {
                            if (e == null) {
                                if (users.size() > 0)
-                                   textLayoutUsername.setError(getString(R.string.errorUsernameTaken));
+                                   textLayoutUsername.setError(getString(R.string.signup_activity_error_username_taken));
                            }
                            else {
                                Log.e(TAG, "Username lookup error", e);
@@ -144,16 +144,16 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 else if (id == R.id.editTextSignupEmail) {
                     if (TextUtils.isEmpty(editTextEmail.getText()))
-                        textLayoutEmail.setError(getString(R.string.errorEmptyEmail));
+                        textLayoutEmail.setError(getString(R.string.signup_activity_error_empty_email));
                     else if (!Patterns.EMAIL_ADDRESS.matcher(editTextEmail.getText().toString()).matches())
-                        textLayoutEmail.setError(getString(R.string.errorInvalidEmail));
+                        textLayoutEmail.setError(getString(R.string.signup_activity_error_invalid_email));
                     else {
                         ParseQuery<ParseUser> query = ParseUser.getQuery();
                         query.whereEqualTo("email", editTextEmail.getText().toString());
                         query.findInBackground((users, e) -> {
                             if (e == null) {
                                 if (users.size() > 0)
-                                    textLayoutEmail.setError(getString(R.string.errorEmailTaken));
+                                    textLayoutEmail.setError(getString(R.string.signup_activity_error_email_taken));
                             }
                             else {
                                 Log.e(TAG, "Email lookup error", e);
@@ -163,11 +163,11 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 else if (id == R.id.editTextSignupPassword) {
                     if (TextUtils.isEmpty(editTextPassword.getText()))
-                        textLayoutPassword.setError(getString(R.string.errorEmptyPassword));
+                        textLayoutPassword.setError(getString(R.string.signup_activity_error_empty_password));
                 }
                 else if (id == R.id.editTextSignupConfirmPassword) {
                     if (TextUtils.isEmpty(editTextConfirmPassword.getText()))
-                        textLayoutConfirmPassword.setError(getString(R.string.errorEmptyPassword));
+                        textLayoutConfirmPassword.setError(getString(R.string.signup_activity_error_empty_password));
                 }
             }
         };
@@ -205,13 +205,13 @@ public class SignupActivity extends AppCompatActivity {
             if (e != null) {
                 Log.e(TAG, "Issue signing up", e);
                 if (e.getCode() == 202)
-                    textLayoutUsername.setError(getString(R.string.errorUsernameTaken));
+                    textLayoutUsername.setError(getString(R.string.signup_activity_error_username_taken));
                 else if (e.getCode() == 203)
-                    textLayoutEmail.setError(getString(R.string.errorEmailTaken));
+                    textLayoutEmail.setError(getString(R.string.signup_activity_error_email_taken));
                 else if (e.getCode() == 125)
-                    textLayoutEmail.setError(getString(R.string.errorInvalidEmail));
+                    textLayoutEmail.setError(getString(R.string.signup_activity_error_invalid_email));
                 else
-                    Toast.makeText(this, getString(R.string.errorUnknownSignupError),
+                    Toast.makeText(this, getString(R.string.signup_activity_error_unknown),
                             Toast.LENGTH_LONG).show();
             }
             else {
