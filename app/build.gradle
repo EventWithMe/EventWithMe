@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.eventwithus"
-        minSdk 17
+        minSdk 23
         targetSdk 30
         versionCode 1
         versionName "1.0"
