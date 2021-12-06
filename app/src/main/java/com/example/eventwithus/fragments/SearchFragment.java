@@ -1,10 +1,14 @@
 package com.example.eventwithus.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -19,12 +23,20 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
-
+import android.content.Context;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.eventwithus.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,15 +51,16 @@ public class SearchFragment extends Fragment  {
     }
 
     //TODO implement Dates for Search Filter
-
+    private BottomNavigationView bottomNavigationView;
     private static final String TEXT = "text";
-    private TextSwitcher textSwitcher;
+    private TextSwitcher textSwitcher, textSwitcher2;
     private int stringIndex = 0;
     private String[] row = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
     private TextView textView;
     private static final String key = "UserInput";
     Button leftBTN;
     ImageButton searchBTN;
+    Spinner spinner;
     EditText keywordET, cityET;
     SearchView searchView;
     String music = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
@@ -58,7 +71,7 @@ public class SearchFragment extends Fragment  {
     String artNThr = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
 
 
-    //
+
 
 
     private String mParam1;
@@ -105,8 +118,18 @@ public class SearchFragment extends Fragment  {
         keywordET = v.findViewById(R.id.keywordET);
         cityET = v.findViewById(R.id.cityET);
         textSwitcher = v.findViewById(R.id.textSwitcher);
+        textSwitcher2 = v.findViewById(R.id.textSwitcher2);
+        spinner = v.findViewById(R.id.spinner);
 
+
+        ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,row);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(aa);
+
+        bottomNavigationView = v.findViewById(R.id.bottom_navigation);
         searchBTN.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(View view) {
                 TextView tv = (TextView) textSwitcher.getCurrentView();
@@ -115,9 +138,8 @@ public class SearchFragment extends Fragment  {
                 CharSequence city = cityET.getText().toString();
                 listener.onInputSearchSent(input, keyword, city);
             }
+
         });
-
-
 
 
         leftBTN.setOnClickListener(new View.OnClickListener() {
@@ -151,14 +173,143 @@ public class SearchFragment extends Fragment  {
         });
         textSwitcher.setText(row[stringIndex]);
 
+
+        textSwitcher2.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                textView = new TextView(getContext());
+                textView.setTextColor(Color.WHITE);
+                textView.setTextSize(30);
+                textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                return textView;
+            }
+        });
+        textSwitcher2.setText(row[stringIndex]);
+
+
+
+        class OnSwipeTouchListener implements OnTouchListener {
+
+            private final GestureDetector gestureDetector;
+
+            public OnSwipeTouchListener (Context ctx){
+                gestureDetector = new GestureDetector(ctx, new GestureListener());
+            }
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+
+           final class GestureListener extends SimpleOnGestureListener {
+
+                private static final int SWIPE_THRESHOLD = 100;
+                private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+                @Override
+                public boolean onDown(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                    boolean result = false;
+                    try {
+                        float diffY = e2.getY() - e1.getY();
+                        float diffX = e2.getX() - e1.getX();
+                        if (Math.abs(diffX) > Math.abs(diffY)) {
+                            if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                                if (diffX > 0) {
+                                    onSwipeRight();
+                                } else {
+                                    onSwipeLeft();
+                                }
+                                result = true;
+                            }
+                        }
+                        else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffY > 0) {
+                                onSwipeBottom();
+                            } else {
+                                onSwipeTop();
+                            }
+                            result = true;
+                        }
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                    return result;
+                }
+            }
+
+            public void onSwipeRight() {
+            }
+
+            public void onSwipeLeft() {
+            }
+
+            public void onSwipeTop() {
+            }
+
+            public void onSwipeBottom() {
+            }
+        }
+
+
+
+
+       textSwitcher2.setOnTouchListener(new OnSwipeTouchListener(getContext()){
+           public void onSwipeTop() {
+               Toast.makeText(getContext(), "top", Toast.LENGTH_SHORT).show();
+           }
+           public void onSwipeRight() {
+               textSwitcher2.setInAnimation(AnimationUtils.loadAnimation(getContext(),
+                       R.anim.slide_in_left));
+               textSwitcher2.setOutAnimation(AnimationUtils.loadAnimation(getContext(),
+                       R.anim.slide_out_right));
+               Toast.makeText(getContext(), "right", Toast.LENGTH_SHORT).show();
+               if(stringIndex == row.length-1){
+                   stringIndex = 0;
+                   textSwitcher2.setText(row[stringIndex]);
+               }else{
+                   textSwitcher2.setText(row[++stringIndex]);
+               }
+           }
+           public void onSwipeLeft() {
+               textSwitcher2.setInAnimation(AnimationUtils.loadAnimation(getContext(),
+                       R.anim.slide_in_right));
+               textSwitcher2.setOutAnimation(AnimationUtils.loadAnimation(getContext(),
+                       R.anim.slide_out_left));
+               Toast.makeText(getContext(), "left", Toast.LENGTH_SHORT).show();
+               if(stringIndex == 0){
+                   stringIndex = row.length-1;
+                   textSwitcher2.setText(row[stringIndex]);
+               }else{
+                   textSwitcher2.setText(row[--stringIndex]);
+               }
+               TextView tv = (TextView) textSwitcher2.getCurrentView();
+
+           }
+           public void onSwipeBottom() {
+               Toast.makeText(getContext(), "bottom", Toast.LENGTH_SHORT).show();
+           }
+
+
+       });
+
+
+
+
         // Inflate the layout for this fragment
         return v;
 
 
 
+
+
+
+
     }
-
-
 
 
     @Override
@@ -192,25 +343,7 @@ public class SearchFragment extends Fragment  {
      //   startActivity(intent);
         Toast.makeText(getContext(), "toast", Toast.LENGTH_LONG).show();
 
-       // GestureDetector gestureDetector;
-       /** gestureDetector = new GestureDetector(new MyGestureDetector());
-        View.OnTouchListener gestureListener = new View.OnTouchListener() {
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (gestureDetector.onTouchEvent(event)) {
-                    return true;
-                }
-                return false;
-            }
-        };
-        textView.setOnTouchListener(gestureListener);
-
-
-
-**/
-    }
-    public void displaySearchView(){
 
     }
 
@@ -222,73 +355,12 @@ public class SearchFragment extends Fragment  {
 
 
 
-/**
 
 
-    class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
-        final String TAG = MyGestureDetector.class.getSimpleName();
 
-        // for touch left or touch right events
-        private static final int SWIPE_MIN_DISTANCE = 80;   //default is 120
-        private static final int SWIPE_MAX_OFF_PATH = 400;
-        private static final int SWIPE_THRESHOLD_VELOCITY = 70;
 
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            return super.onSingleTapConfirmed(e);
-        }
 
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            Log.d(TAG, " on filing event, first velocityX :" + velocityX +
-                    " second velocityY" + velocityY);
-            try {
-                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                    return false;
-                if(e1.getX() - e2.getX()
-                        > SWIPE_MIN_DISTANCE && Math.abs(velocityX)
-                        > SWIPE_THRESHOLD_VELOCITY) {
-                    onHorizonTouch(true);  // left
-                }  else if (e2.getX() - e1.getX()
-                        > SWIPE_MIN_DISTANCE && Math.abs(velocityX)
-                        > SWIPE_THRESHOLD_VELOCITY) {
-                    onHorizonTouch(false); // right
-                }
-            } catch (Exception e) {
-                // nothing
-            }
-            return false;
-        }
-
-        void onHorizonTouch(Boolean toLeft) {
-
-            if(!toLeft ) {
-                stringIndex = 0;
-                textSwitcher.setInAnimation(AnimationUtils.loadAnimation(
-                        getContext(), android.R.anim.fade_in));
-                textSwitcher.setOutAnimation(AnimationUtils.loadAnimation(
-                        getContext(), android.R.anim.fade_out));
-
-                textSwitcher.setText(row[++stringIndex]);
-               //textView.setText("Text1");
-            }
-            if(toLeft) {
-                textSwitcher.setInAnimation(AnimationUtils.loadAnimation(
-                        getContext(), android.R.anim.fade_in));
-                textSwitcher.setOutAnimation(AnimationUtils.loadAnimation(
-                        getContext(), android.R.anim.fade_out));
-
-                textSwitcher.setText(row[--stringIndex]);
-            }
-        }
-    }
-**/
 
 
 

@@ -262,7 +262,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         keyword2 = (String) newText2;
         music = "https://app.ticketmaster.com/discovery/v2/events?keyword="+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&city="+cityName;
        sports = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&city="+cityName;
-       family = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=family&locale=*&city="+cityName;
+       family = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city="+cityName;
         film = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film&city="+cityName;
         misc = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city="+cityName;
         artNThr = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*&city="+cityName;
@@ -332,6 +332,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         Toast.makeText(getContext(),StreamText, Toast.LENGTH_LONG).show();
         Toast.makeText(getContext(),keyword2, Toast.LENGTH_LONG).show();
         Toast.makeText(getContext(),url, Toast.LENGTH_LONG).show();
+        Log.i(TAG, url );
         //Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -350,7 +351,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                 String eventid = hit.getString("id");
                                 String eventName = hit.getString("name");
                                 String date = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
-                                JSONObject _embedded2 = hit.getJSONObject("_embedded");
+                                JSONObject _embedded2 = jsonArray.getJSONObject(i).isNull("_embedded") ? null : jsonArray.getJSONObject(i).getJSONObject("_embedded");
+                                //JSONObject _embedded2 = hit.getJSONObject("_embedded");
+
                                 JSONArray venuesArray = _embedded2.getJSONArray("venues");
                                 for (int k = 0; k < venuesArray.length(); k++) {
                                     JSONObject elem = venuesArray.getJSONObject(k);

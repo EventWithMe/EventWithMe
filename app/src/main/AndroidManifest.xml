@@ -18,9 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.EventWithUs">
-        <activity
-            android:name=".MessageListActivity"
-            android:exported="false" />
+        android:name="android.support.multidex.MultiDexApplication">
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.codepath.fileprovider"

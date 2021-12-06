@@ -33,8 +33,7 @@
             android:layout_marginTop="60dp"
             android:layout_marginEnd="-3dp"
             android:layout_marginBottom="146dp"
-            android:inAnimation="@android:anim/slide_in_left"
-            android:outAnimation="@android:anim/slide_out_right">
+            android:backgroundTint="#FFFFFF">
 
         </TextSwitcher>
 
@@ -146,6 +145,15 @@
             android:layout_marginEnd="176dp"
             android:background="#00FFFFFF"
             android:src="@android:drawable/ic_menu_search" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="-1dp"
+            android:layout_marginBottom="101dp" />
 
     </RelativeLayout>
 
