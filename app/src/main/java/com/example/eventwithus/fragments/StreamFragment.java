@@ -56,6 +56,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     public static final String EXTRA_EVENT_TYPE = "type";
     public static final String EXTRA_EVENT_DATE = "date";
     public static final String EXTRA_EVENT_ID = "id";
+    public static final String EXTRA_EVENT_VENUE_NAME = "venueName";
 
     private Button searchBtn;
     private EditText inputET;
@@ -342,13 +343,21 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
                             Log.d("Main Activity","onResponseSuccess");
                             String eventImage = "";
-
+                            String venueName = "";
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject hit = jsonArray.getJSONObject(i);
                                 String info = jsonArray.getJSONObject(i).isNull("info") ? null : jsonArray.getJSONObject(i).getString("info");
                                 String eventid = hit.getString("id");
                                 String eventName = hit.getString("name");
                                 String date = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
+                                JSONObject _embedded2 = hit.getJSONObject("_embedded");
+                                JSONArray venuesArray = _embedded2.getJSONArray("venues");
+                                for (int k = 0; k < venuesArray.length(); k++) {
+                                    JSONObject elem = venuesArray.getJSONObject(k);
+
+                                     venueName = elem.getString("name");//gets the image url
+
+                                }
                                 // TODO: 12/1/2021 get the unique id for an event from the Json
                                 // String id = hit.getString("");
                                 // String type = hit.getString("type");
@@ -363,7 +372,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
                                 // TODO: 12/1/2021 add the id to this new call
                                 mEventList.add(new EventItem(eventImage, eventName, date));
-                                mDetailList.add(new EventDetail(info,eventid));
+                                mDetailList.add(new EventDetail(info,eventid, venueName));
                             }
 
                             eventAdapter = new EventAdapter(getActivity().getBaseContext(), mEventList);
@@ -405,6 +414,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         detailIntent.putExtra(EXTRA_EVENT_DATE, clickedItem.getDate());
         detailIntent.putExtra(EXTRA_EVENT_ID, clickedItem1.getId());
         detailIntent.putExtra(EXTRA_EVENT_TYPE, clickedItem1.getInfo());
+        detailIntent.putExtra(EXTRA_EVENT_VENUE_NAME, clickedItem1.getVenueName());
 
         getActivity().startActivity(detailIntent);
     }

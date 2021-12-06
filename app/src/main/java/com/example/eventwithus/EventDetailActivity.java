@@ -30,11 +30,13 @@ public class EventDetailActivity extends AppCompatActivity {
     public static final String PARSE_RSVP_KEY= "eventsinfo"; // key to get and update the eventinfo column in the User object in Parse DB
     public static final String EXTRA_EVENT_DATE = "date"; // used to extract date data from intent
     public static final String EXTRA_EVENT_ID = "id"; // used to extract date data from intent
+    public static final String EXTRA_EVENT_VENUE_NAME = "venueName"; // used to extract date data from intent
 
     // UI elements
     Button btnRSVP;
     TextView textviewEventName;
     TextView textviewEventType;
+    TextView textviewEventVenue;
     TextView tvDate;
     ImageView imageView;
 
@@ -60,11 +62,14 @@ public class EventDetailActivity extends AppCompatActivity {
         String eventType = intent.getStringExtra(EXTRA_EVENT_TYPE);
         String eventDate = intent.getStringExtra(EXTRA_EVENT_DATE);
         String eventID = intent.getStringExtra(EXTRA_EVENT_ID);
+        String venueName = intent.getStringExtra(EXTRA_EVENT_VENUE_NAME);
 
         // initialize the UI elements
         imageView = findViewById(R.id.image_view_detail);
         textviewEventName = findViewById(R.id.text_view_event_name);
         textviewEventType = findViewById(R.id.text_view_event_desc);
+        textviewEventVenue = findViewById(R.id.text_view_venue_info);
+
         tvDate = findViewById(R.id.tvDate);
         btnRSVP = findViewById(R.id.btnRSVP);
 
@@ -72,7 +77,9 @@ public class EventDetailActivity extends AppCompatActivity {
         Picasso.with(this).load(imageUrl).fit().centerInside().transform(new RoundedTransformation(50, 0)).into(imageView);
         textviewEventName.setText(eventName);
         textviewEventType.setText("Info: " + eventType);
+        textviewEventVenue.setText("Venue : "+venueName);
         tvDate.setText(EventHelper.formatJsonDate(eventDate));
+
 
         //printEvents();
 
