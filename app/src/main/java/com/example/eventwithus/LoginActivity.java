@@ -1,9 +1,5 @@
 package com.example.eventwithus;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.parse.ParseUser;
@@ -46,8 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         textLayoutPassword = findViewById(R.id.textLayoutLoginPassword);
         editTextUsername = findViewById(R.id.editTextLoginUsername);
         editTextPassword = findViewById(R.id.editTextLoginPassword);
-        buttonLogIn = findViewById(R.id.buttonLoginSignUp);
-        buttonSignUp = findViewById(R.id.buttonLoginLogIn);
+        buttonLogIn = findViewById(R.id.buttonLoginLogIn);
+        buttonSignUp = findViewById(R.id.buttonLoginSignUp);
 
         buttonLogIn.setEnabled(false);
 
@@ -89,13 +87,13 @@ public class LoginActivity extends AppCompatActivity {
                 int id = view.getId();
                 if (id == R.id.editTextLoginUsername) {
                     if (TextUtils.isEmpty(editTextUsername.getText())) {
-                        textLayoutUsername.setError(getString(R.string.errorEmptyUsernameEmail));
+                        textLayoutUsername.setError(getString(R.string.login_activity_error_empty_username_email));
                         clearErrorsOnTyping = false;
                     }
                 }
                 else if (id == R.id.editTextLoginPassword) {
                     if (TextUtils.isEmpty(editTextPassword.getText())) {
-                        textLayoutPassword.setError(getString(R.string.errorEmptyPassword));
+                        textLayoutPassword.setError(getString(R.string.login_activity_error_empty_password));
                         clearErrorsOnTyping = false;
                     }
                 }
@@ -114,12 +112,12 @@ public class LoginActivity extends AppCompatActivity {
             if (e != null) {
                 Log.e(TAG, "Issue logging in", e);
                 if (e.getCode() == 101) {
-                    textLayoutUsername.setError(getString(R.string.errorInvalidCredentials));
-                    textLayoutPassword.setError(getString(R.string.errorInvalidCredentials));
+                    textLayoutUsername.setError(getString(R.string.login_activity_error_invalid_credentials));
+                    textLayoutPassword.setError(getString(R.string.login_activity_error_invalid_credentials));
                     clearErrorsOnTyping = true;
                 }
                 else
-                    Toast.makeText(this, getString(R.string.errorUnknownLoginError), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.login_activity_error_unknown), Toast.LENGTH_LONG).show();
             }
             else {
                 startActivity(new Intent(this, MainActivity.class));

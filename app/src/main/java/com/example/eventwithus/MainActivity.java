@@ -1,18 +1,10 @@
 package com.example.eventwithus;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.SurfaceControl;
-import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.Initializable;
 import com.example.eventwithus.fragments.ChatFragment;
@@ -21,9 +13,9 @@ import com.example.eventwithus.fragments.RsvpFragment;
 import com.example.eventwithus.fragments.SearchFragment;
 import com.example.eventwithus.fragments.StreamFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parse.Parse;
-import com.parse.ParseUser;
 
+
+@SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity implements Initializable, SearchFragment.FragmentSearchListener, StreamFragment.FragmentStreamListener {
 
     public static final String EXTRA_URL = "imageUrl";
@@ -43,38 +35,29 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
         setContentView(R.layout.activity_main);
         streamFragment = new StreamFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-      //  PreferenceUtils.init(getApplicationContext());
+        // PreferenceUtils.init(getApplicationContext());
 
-       // SendBird.init(APP_ID, getApplicationContext());
+        // SendBird.init(APP_ID, getApplicationContext());
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
 
-                Fragment fragment;
-
-                switch (item.getItemId()) {
-                    case R.id.action_stream:
-                        fragment = streamFragment;
-                       // refreshFragment();
-                        break;
-                    case R.id.action_rsvp:
-                        fragment = new RsvpFragment();
-                        break;
-                    case R.id.get_location:
-                        fragment = new SearchFragment();
-                        break;
-                    case R.id.action_chat:
-                        fragment = new ChatFragment();
-                        break;
-                    case R.id.action_profile:
-                    default:
-                        fragment = new ProfileFragment();
-                        break;
-                }
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment, "myFragmentTag").commit();
-                return true;
+            Fragment fragment;
+            int id = item.getItemId();
+            if (id == R.id.action_stream) {
+                fragment = streamFragment;
+                // refreshFragment();
+            } else if (id == R.id.action_rsvp) {
+                fragment = new RsvpFragment();
+            } else if (id == R.id.get_location) {
+                fragment = new SearchFragment();
+            } else if (id == R.id.action_chat) {
+                fragment = new ChatFragment();
+            } else {
+                fragment = new ProfileFragment();
             }
+
+            fragmentManager.beginTransaction().replace(R.id.flContainer, fragment, "myFragmentTag").commit();
+            return true;
         });
 
 
@@ -82,17 +65,19 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_stream);
     }
+
+    /*
     public void refreshFragment(){
         Fragment currentFragment = null;
         Toast.makeText(this, "RefreshFragment ", Toast.LENGTH_LONG).show();
         if (currentFragment instanceof StreamFragment) {
-           FragmentTransaction trans =  fragmentManager.beginTransaction();
-            trans.detach(currentFragment);
-            trans.attach(currentFragment);
-            trans.commit();
+            FragmentTransaction transaction =  fragmentManager.beginTransaction();
+            transaction.detach(currentFragment);
+            transaction.attach(currentFragment);
+            transaction.commit();
         }
-
     }
+    */
 
     @Override
     public void initialize() {

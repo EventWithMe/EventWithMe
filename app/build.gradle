@@ -2,6 +2,13 @@ plugins {
     id 'com.android.application'
 }
 
+Properties props = new Properties()
+try {
+    props.load(file('apikey.properties').newDataInputStream())
+} catch (Exception ignored) {
+    throw new GradleException("Missing apikey.properties file")
+}
+
 android {
     compileSdk 31
     testOptions {
@@ -20,7 +27,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "PARSE_APPLICATION_ID", "\"${props.getProperty("PARSE_APPLICATION_ID")}\""
+            buildConfigField "String", "PARSE_CLIENT_KEY", "\"${props.getProperty("PARSE_CLIENT_KEY")}\""
+            buildConfigField "String", "TICKETMASTER_KEY", "\"${props.getProperty("TICKETMASTER_KEY")}\""
+            buildConfigField "String", "PIXABAY_KEY", "\"${props.getProperty("PIXABAY_KEY")}\""
+        }
         release {
+            buildConfigField "String", "PARSE_APPLICATION_ID", "\"${props.getProperty("PARSE_APPLICATION_ID")}\""
+            buildConfigField "String", "PARSE_CLIENT_KEY", "\"${props.getProperty("PARSE_CLIENT_KEY")}\""
+            buildConfigField "String", "TICKETMASTER_KEY", "\"${props.getProperty("TICKETMASTER_KEY")}\""
+            buildConfigField "String", "PIXABAY_KEY", "\"${props.getProperty("PIXABAY_KEY")}\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

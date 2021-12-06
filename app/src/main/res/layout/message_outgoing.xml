@@ -37,7 +37,7 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_alignParentEnd="true"
-        android:contentDescription="@string/profile_me"
+        android:contentDescription="@string/outgoing_message_layout_content_desc_profile_picture"
         android:src="@mipmap/ic_launcher" />
 
 </RelativeLayout>

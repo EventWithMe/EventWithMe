@@ -16,7 +16,7 @@ import java.util.List;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<Event> events;
 
     public EventsAdapter(Context context, List<Event> posts) {
@@ -42,7 +42,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         return 0;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvUsername;
         private TextView tvDescription;

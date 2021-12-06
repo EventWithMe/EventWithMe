@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHolder>{
 
-    Context context;
+    final Context context;
     List<MyEvents> events;
 
     public MyEventAdapter(Context context, List<MyEvents> events){

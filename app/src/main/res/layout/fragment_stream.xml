@@ -44,7 +44,7 @@
                 android:paddingTop="0dp"
                 android:paddingRight="0dp"
                 android:paddingBottom="0dp"
-                android:text="Search"
+                android:text="@string/stream_fragment_button_search"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/nested"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bgconcert"
     tools:context=".LoginActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -22,7 +23,8 @@
             android:id="@+id/editTextSignupUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/signup_text_hint_username" />
+            android:background="#A6FFFFFF"
+            android:hint="@string/signup_activity_hint_username" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -41,7 +43,8 @@
             android:id="@+id/editTextSignupDisplayName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/signup_text_hint_display_name" />
+            android:background="#A6FFFFFF"
+            android:hint="@string/signup_activity_hint_display_name" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -60,7 +63,8 @@
             android:id="@+id/editTextSignupEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/signup_text_hint_email"
+            android:background="#A6FFFFFF"
+            android:hint="@string/signup_activity_hint_email"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,7 +85,8 @@
             android:id="@+id/editTextSignupPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/signup_text_hint_password"
+            android:background="#A6FFFFFF"
+            android:hint="@string/signup_activity_hint_password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,7 +107,8 @@
             android:id="@+id/editTextSignupConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/signup_text_hint_confirm_password"
+            android:background="#A6FFFFFF"
+            android:hint="@string/signup_activity_hint_confirm_password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,9 +120,10 @@
         android:layout_alignStart="@+id/textLayoutSignupPassword"
         android:layout_alignEnd="@+id/textLayoutSignupPassword"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="0dp"
-        android:text="@string/signup_button_text_sign_up" />
+        android:background="#CB000000"
+        android:text="@string/signup_activity_button_sign_up" />
 
     <Button
         android:id="@+id/buttonSignupLogIn"
@@ -126,8 +133,9 @@
         android:layout_alignStart="@+id/buttonSignupSignUp"
         android:layout_alignEnd="@+id/buttonSignupSignUp"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="0dp"
-        android:text="@string/signup_button_text_log_ing" />
+        android:background="#CB000000"
+        android:text="@string/signup_activity_button_log_in" />
 
 </RelativeLayout>

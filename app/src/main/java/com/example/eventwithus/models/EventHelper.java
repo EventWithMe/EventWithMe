@@ -1,21 +1,12 @@
 package com.example.eventwithus.models;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /*
     This classes purpose is just to have one place for static methods for assisting in events
@@ -32,10 +23,14 @@ public class EventHelper {
         if(currentUser.getString(EVENTS_KEY) == null) {
             return null;
         } else {
-            System.out.println("NewData: " + currentUser.getString(EVENTS_KEY));
-            String[] events =  currentUser.getString(EVENTS_KEY).split(",");
-            System.out.println("EH EVENTS:");
-            System.out.println(Arrays.toString(events));
+            Log.d(TAG, "NewData: " + currentUser.getString(EVENTS_KEY));
+            String eventsString = currentUser.getString(EVENTS_KEY);
+            String[] events = new String[0];
+            if (eventsString != null) {
+                events = eventsString.split(",");
+            }
+            Log.d(TAG, "EH EVENTS:");
+            Log.d(TAG, Arrays.toString(events));
 
             for(String s : events) {
                 System.out.println(s);
@@ -47,14 +42,11 @@ public class EventHelper {
     }
 
     public static void refreshUserData() {
-        ParseUser.getCurrentUser().fetchInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject object, ParseException e) {
-                if (e == null) {
-                    Log.d(TAG, "User refresh successful");
-                } else {
-                    Log.e(TAG, "Error: " + e.getMessage());
-                }
+        ParseUser.getCurrentUser().fetchInBackground((object, e) -> {
+            if (e == null) {
+                Log.d(TAG, "User refresh successful");
+            } else {
+                Log.e(TAG, "Error: " + e.getMessage());
             }
         });
     }
@@ -102,6 +94,6 @@ public class EventHelper {
                 formatted += "December";
                 break;
         }
-        return  formatted += " " + arr[0];
+        return formatted += " " + arr[0];
     }
 }
