@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,9 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eventwithus.models.EventHelper;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -51,7 +48,7 @@ public class EventDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_detail);
 
         EventHelper.refreshUserData();
-        currentUser = ParseUser.getCurrentUser(); // initializes the Parseuser
+        currentUser = ParseUser.getCurrentUser(); // initializes the ParseUser
         events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY); // calls EventHelper to get list of current user event data
         context = getApplicationContext();
 
@@ -76,8 +73,8 @@ public class EventDetailActivity extends AppCompatActivity {
         // populate the UI elements with event data
         Picasso.with(this).load(imageUrl).fit().centerInside().transform(new RoundedTransformation(50, 0)).into(imageView);
         textviewEventName.setText(eventName);
-        textviewEventType.setText("Info: " + eventType);
-        textviewEventVenue.setText("Venue : "+venueName);
+        textviewEventType.setText(String.format(getString(R.string.event_detail_type_label), eventType));
+        textviewEventVenue.setText(String.format(getString(R.string.event_detail_venue_label), venueName));
         tvDate.setText(EventHelper.formatJsonDate(eventDate));
 
 
@@ -92,26 +89,23 @@ public class EventDetailActivity extends AppCompatActivity {
 
         // if the user is already rsvp'd then set the btnEditProfile to cancel
         if(rsvp) {
-            btnRSVP.setText("Cancel RSVP");
+            btnRSVP.setText(R.string.cancel_rsvp);
         }
 
-        btnRSVP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "btnRSVP clicked date: " + eventID + " at " + eventDate);
-                EventHelper.refreshUserData();
-                if(rsvp) {
-                    cancelRSVP(eventID);
-                } else {
-                    rsvpEvent(eventID, eventDate);
-                }
+        btnRSVP.setOnClickListener(view -> {
+            Log.d(TAG, "btnRSVP clicked date: " + eventID + " at " + eventDate);
+            EventHelper.refreshUserData();
+            if(rsvp) {
+                cancelRSVP(eventID);
+            } else {
+                rsvpEvent(eventID, eventDate);
             }
         });
     }
 
     // iterates through a list of events to check and see if the user has rsvp'd already
     private void rsvpCheck(String eventId) {
-        System.out.println("RSVP CHECK:");
+        Log.d(TAG, "RSVP CHECK:");
         for(String s : events) {
             String[] eventInfo = s.split("_");
             System.out.print(eventInfo[0] + " " + eventId);
@@ -128,16 +122,16 @@ public class EventDetailActivity extends AppCompatActivity {
 
     // if user click the btnEditProfile when it says "cancel rsvp" then we remove the item from the list and DB
     private void cancelRSVP(String eventId) {
-        System.out.println("CANCEL RSVP:");
-        String updated = "";
+        Log.d(TAG, "CANCEL RSVP:");
+        StringBuilder updated = new StringBuilder();
 
-        System.out.println("EVENT LIST CHECKING:");
+        Log.d(TAG, "EVENT LIST CHECKING:");
         for(int i = 0; i < events.size(); i++) {
             String[] format = events.get(i).split("_");
-            System.out.println(format[0] + " " + eventId);
+            Log.d(TAG, format[0] + " " + eventId);
             if(format[0].equals(eventId)) {
-
                 events.remove(i);
+                break;
             }
         }
 
@@ -145,11 +139,12 @@ public class EventDetailActivity extends AppCompatActivity {
         System.out.println(events);
 
         for(int i = 0; i < events.size() - 1; i++) {
-            updated += events.get(i) + ", ";
+            updated.append(events.get(i)).append(", ");
         }
-        updated += events.get(events.size() - 1);
+        updated.append(events.get(events.size() - 1));
 
-        /*currentUser.remove(PARSE_RSVP_KEY);
+        /*
+        currentUser.remove(PARSE_RSVP_KEY);
         currentUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -165,17 +160,14 @@ public class EventDetailActivity extends AppCompatActivity {
         EventHelper.refreshUserData();
         */
 
-        currentUser.put(PARSE_RSVP_KEY, updated);
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Toast.makeText(context, "You have cancelled your RSVP", Toast.LENGTH_SHORT).show();
-                    btnRSVP.setText("RSVP");
-                    rsvp = false;
-                } else {
-                    Log.e(TAG, "Error: " + e.getMessage());
-                }
+        currentUser.put(PARSE_RSVP_KEY, updated.toString());
+        currentUser.saveInBackground(e -> {
+            if (e == null) {
+                Toast.makeText(context, "You have cancelled your RSVP", Toast.LENGTH_SHORT).show();
+                btnRSVP.setText(R.string.rsvp);
+                rsvp = false;
+            } else {
+                Log.e(TAG, "Error: " + e.getMessage());
             }
         });
 
@@ -188,17 +180,14 @@ public class EventDetailActivity extends AppCompatActivity {
         String eventsinfo = currentUser.getString(PARSE_RSVP_KEY);
         eventsinfo += "," + eventId + "_" + date;
         currentUser.put(PARSE_RSVP_KEY, eventsinfo);
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Toast.makeText(context, "You have RSVP'd", Toast.LENGTH_SHORT).show();
-                    btnRSVP.setText("Cancel RSVP");
-                    rsvp = true;
-                    events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
-                } else {
-                    Log.e(TAG, "Error: " + e.getMessage());
-                }
+        currentUser.saveInBackground(e -> {
+            if (e == null) {
+                Toast.makeText(context, "You have RSVP'd", Toast.LENGTH_SHORT).show();
+                btnRSVP.setText(R.string.cancel_rsvp);
+                rsvp = true;
+                events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
+            } else {
+                Log.e(TAG, "Error: " + e.getMessage());
             }
         });
         EventHelper.refreshUserData();
@@ -206,10 +195,13 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private void printEvents() {
         events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
-        System.out.println("Printing Events:");
+        Log.d(TAG, "Printing Events:");
+        StringBuilder eventsStringBuilder = new StringBuilder();
         for(String s : events) {
-            System.out.print(s + " ");
+            eventsStringBuilder.append(s).append(" ");
         }
-        System.out.println();
+        eventsStringBuilder.append("\n");
+
+        Log.d(TAG, eventsStringBuilder.toString());
     }
 }

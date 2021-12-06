@@ -42,4 +42,14 @@
     <string name="menu_chat">Chat</string>
     <string name="menu_profile">Profile</string>
     <string name="toolbar_settings_title">Settings</string>
+    <string name="cancel_rsvp">Cancel RSVP</string>
+    <string name="profile_saved">Profile changes saved!</string>
+    <string name="first_name_required_toast">Please input your first name it is required</string>
+    <string name="last_name_required_toast">Please input your last name it is required</string>
+    <string name="email_required_toast">Please input your email it is required</string>
+    <string name="picture_not_taken_toast">Picture wasn\'t taken!</string>
+    <string name="system_image_error_toast">System image could not be retrieved</string>
+    <string name="picture_saved_toast">New profile pic saved</string>
+    <string name="event_detail_type_label">Info: %s</string>
+    <string name="event_detail_venue_label">Venue : %s</string>
 </resources>

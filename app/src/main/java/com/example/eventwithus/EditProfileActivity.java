@@ -1,13 +1,8 @@
 package com.example.eventwithus;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -15,31 +10,25 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.eventwithus.fragments.ProfileFragment;
-import com.example.eventwithus.models.EventHelper;
-import com.parse.GetCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 // TODO: 12/2/2021 write changes to the DB below
 // TODO: 12/2/2021 make a little popup window to allow the user to select using their camera or gallery for photo
@@ -54,10 +43,8 @@ public class EditProfileActivity extends AppCompatActivity {
     public static final String IMAGE_KEY= "image";
     public static final String PHOTO= "photo";
     public static final String GALLERY= "gallery";
-    public static final int EDIT_PROFILE_KEY = 99;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
-    private static final int PICK_IMAGE = 39;
-    private static final int TAKE_PHOTO = 41;
+    private static final int MAX_PROFILE_WIDTH = 180;
+    private static final int MAX_PROFILE_HEIGHT = 180;
 
     ImageView ivPfpE;
     EditText etFirstNamePE;
@@ -67,12 +54,18 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ParseUser currentUser;
     private File photoFile;
-    private String selectedImagePath;
-    private String filemanagerstring;
     public String photoFileName = "photo.jpg";
     private boolean pfpChange;
     Context context;
 
+    ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            this::cameraResultCallback
+    );
+    ActivityResultLauncher<Intent> galleryActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            this::galleryResultCallback
+    );
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,61 +85,45 @@ public class EditProfileActivity extends AppCompatActivity {
         etLastNamePE.setText(currentUser.getString(LASTNAME_KEY));
         etEmailPE.setText(currentUser.getString(EMAIL_KEY));
 
-        currentUser.fetchInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject object, ParseException e) {
-                loadProfilePic();
+        currentUser.fetchInBackground((object, e) -> loadProfilePic());
+
+        ivPfpE.setOnClickListener(view -> showDialog());
+
+        btnSaveProfile.setOnClickListener(view -> {
+
+            String firstName = etFirstNamePE.getText().toString();
+            String lastName = etLastNamePE.getText().toString();
+            String email = etEmailPE.getText().toString();
+
+            // input validation on first name, last name, and email
+            if(firstName.equals("")) {
+                Toast.makeText(getApplicationContext(), getString(R.string.first_name_required_toast), Toast.LENGTH_SHORT).show();
+                return;
+            } else if(lastName.equals("")) {
+                Toast.makeText(getApplicationContext(), getString(R.string.last_name_required_toast), Toast.LENGTH_SHORT).show();
+                return;
+            } else if(email.equals("")) {
+                Toast.makeText(getApplicationContext(), getString(R.string.email_required_toast), Toast.LENGTH_SHORT).show();
+                return;
             }
-        });
 
-        ivPfpE.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
+            if(pfpChange) {
+                saveHelper();
             }
-        });
 
-        btnSaveProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String firstName = etFirstNamePE.getText().toString();
-                String lastName = etLastNamePE.getText().toString();
-                String email = etEmailPE.getText().toString();
-
-                // input validation on first name, last name, and email
-                if(firstName.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Please input your first name it is required", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if(lastName.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Please input your last name it is required", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if(email.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Please input your email it is required", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if(pfpChange) {
-                    saveHelper();
-                }
-
-                currentUser.put(FIRSTNAME_KEY, firstName);
-                currentUser.put(LASTNAME_KEY, lastName);
-                currentUser.put(EMAIL_KEY, email);
-                currentUser.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        Log.i(TAG, "profile changes saved");
-                        Toast.makeText(context, "profile changes saved", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context, ProfileFragment.class);
-                        intent.putExtra(FIRSTNAME_KEY, firstName);
-                        intent.putExtra(LASTNAME_KEY, lastName);
-                        intent.putExtra(EMAIL_KEY, email);
-                        setResult(RESULT_OK, intent);
-                        finish();
-                    }
-                });
-            }
+            currentUser.put(FIRSTNAME_KEY, firstName);
+            currentUser.put(LASTNAME_KEY, lastName);
+            currentUser.put(EMAIL_KEY, email);
+            currentUser.saveInBackground(e -> {
+                Log.i(TAG, "Profile changes saved");
+                Toast.makeText(context, getString(R.string.profile_saved), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, ProfileFragment.class);
+                intent.putExtra(FIRSTNAME_KEY, firstName);
+                intent.putExtra(LASTNAME_KEY, lastName);
+                intent.putExtra(EMAIL_KEY, email);
+                setResult(RESULT_OK, intent);
+                finish();
+            });
         });
     }
 
@@ -163,34 +140,6 @@ public class EditProfileActivity extends AppCompatActivity {
         Glide.with(context).load(file.getUrl()).transform(new RoundedCorners(50)).into(ivPfpE);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "OnActivityResult Entered");
-
-        if (requestCode == PICK_IMAGE) {
-            if (resultCode == RESULT_OK) {
-                Uri selectedImageUri = data.getData();
-                Picasso.with(context).load(selectedImageUri).into(ivPfpE);
-                savePhoto(this.photoFile);
-
-            } else { // Result was a failure
-                Toast.makeText(context, "System image could not be retrieved", Toast.LENGTH_SHORT).show();
-            }
-        } else if(requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE){
-            if (resultCode == RESULT_OK) {
-                // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // RESIZE BITMAP, see section below
-                // Load the taken image into a preview
-                pfpChange = true;
-                Glide.with(context).load(currentUser.getParseFile(IMAGE_KEY).getUrl()).into(ivPfpE);
-            } else { // Result was a failure
-                Toast.makeText(context, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
     private void handleImageChoice(String choice) {
         Log.i(TAG, "User chose " + choice);
 
@@ -199,16 +148,48 @@ public class EditProfileActivity extends AppCompatActivity {
             photoFile = getPhotoFileUri(photoFileName);
             Uri fileProvider = FileProvider.getUriForFile(context, "com.codepath.fileprovider", photoFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-        } else if(choice.equals(GALLERY)) {
+            cameraActivityResultLauncher.launch(intent);
+        }
+        else if(choice.equals(GALLERY)) {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             photoFile = getPhotoFileUri(photoFileName);
             Uri fileProvider = FileProvider.getUriForFile(context, "com.codepath.fileprovider", photoFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
             intent.setType("image/*");
-            startActivityForResult(intent, PICK_IMAGE);
+            galleryActivityResultLauncher.launch(intent);
         }
     }
+
+    public void cameraResultCallback(ActivityResult result) {
+        Log.i(TAG, "Camera Result Received");
+
+        // by this point we have the camera photo on disk
+        Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+        // resize bitmap
+        Bitmap resizedImage = scaleBitmap(takenImage);
+        // Load the taken image into a preview
+        Glide.with(context)
+                .load(resizedImage)
+                .into(ivPfpE);
+        pfpChange = true;
+        ParseUser user = ParseUser.getCurrentUser();
+        user.add(IMAGE_KEY, resizedImage);
+        user.saveInBackground();
+    }
+
+    public void galleryResultCallback(ActivityResult result) {
+        Log.i(TAG, "Gallery Result Received");
+        Intent data = result.getData();
+        Uri selectedImageUri = null;
+        if (data != null) {
+            selectedImageUri = data.getData();
+        }
+        Picasso.with(context)
+                .load(selectedImageUri)
+                .into(ivPfpE);
+        savePhoto(this.photoFile);
+    }
+
 
     private void showDialog(){
         Dialog dialog = new Dialog(this);
@@ -219,21 +200,15 @@ public class EditProfileActivity extends AppCompatActivity {
         Button btnCamera = dialog.findViewById(R.id.btnCamera);
         Button btnGallery = dialog.findViewById(R.id.btnGallery);
 
-        btnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleImageChoice(PHOTO);
-                dialog.dismiss();
+        btnCamera.setOnClickListener(view -> {
+            handleImageChoice(PHOTO);
+            dialog.dismiss();
 
-            }
         });
 
-        btnGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleImageChoice(GALLERY);
-                dialog.dismiss();
-            }
+        btnGallery.setOnClickListener(view -> {
+            handleImageChoice(GALLERY);
+            dialog.dismiss();
         });
         dialog.show();
     }
@@ -260,15 +235,30 @@ public class EditProfileActivity extends AppCompatActivity {
         ParseFile file = new ParseFile(photoFile);
 
         currentUser.put(IMAGE_KEY, file);
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Toast.makeText(context, "New profile pic saved", Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.e(TAG, "Error: " + e.getMessage());
-                }
+        currentUser.saveInBackground(e -> {
+            if (e == null) {
+                Toast.makeText(context, getString(R.string.picture_saved_toast), Toast.LENGTH_SHORT).show();
+            } else {
+                Log.e(TAG, "Error: " + e.getMessage());
             }
         });
+    }
+
+    private Bitmap scaleBitmap(Bitmap image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        float ratioBitmap = (float) width / (float) height;
+        float ratioMax = (float) MAX_PROFILE_WIDTH / (float) MAX_PROFILE_HEIGHT;
+
+        int finalWidth = MAX_PROFILE_WIDTH;
+        int finalHeight = MAX_PROFILE_HEIGHT;
+        if (ratioMax > ratioBitmap) {
+            finalWidth = (int) ((float)MAX_PROFILE_HEIGHT * ratioBitmap);
+        } else {
+            finalHeight = (int) ((float)MAX_PROFILE_WIDTH / ratioBitmap);
+        }
+        image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+
+        return image;
     }
 }
