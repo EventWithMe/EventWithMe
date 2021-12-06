@@ -37,9 +37,10 @@ import java.io.File;
 public class EditProfileActivity extends AppCompatActivity {
 
     public static final String TAG = "EditProfileActivity"; // tag for logging
-    public static final String EMAIL_KEY= "email";
     public static final String FIRSTNAME_KEY= "firstname";
     public static final String LASTNAME_KEY= "lastname";
+    public static final String EMAIL_KEY= "email";
+    public static final String CITY_KEY = "city";
     public static final String IMAGE_KEY= "image";
     public static final String PHOTO= "photo";
     public static final String GALLERY= "gallery";
@@ -50,6 +51,7 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText etFirstNamePE;
     EditText etLastNamePE;
     EditText etEmailPE;
+    EditText etCityPE;
     Button btnSaveProfile;
 
     private ParseUser currentUser;
@@ -76,6 +78,7 @@ public class EditProfileActivity extends AppCompatActivity {
         etFirstNamePE = findViewById(R.id.etFirstNamePE);
         etLastNamePE = findViewById(R.id.etLastNamePE);
         etEmailPE = findViewById(R.id.etEmailPE);
+        etCityPE = findViewById(R.id.etCityPE);
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
 
         currentUser = ParseUser.getCurrentUser();
@@ -85,6 +88,7 @@ public class EditProfileActivity extends AppCompatActivity {
         etFirstNamePE.setText(currentUser.getString(FIRSTNAME_KEY));
         etLastNamePE.setText(currentUser.getString(LASTNAME_KEY));
         etEmailPE.setText(currentUser.getString(EMAIL_KEY));
+        etCityPE.setText(currentUser.getString(CITY_KEY));
 
         currentUser.fetchInBackground((object, e) -> loadProfilePic());
 
@@ -95,6 +99,7 @@ public class EditProfileActivity extends AppCompatActivity {
             String firstName = etFirstNamePE.getText().toString();
             String lastName = etLastNamePE.getText().toString();
             String email = etEmailPE.getText().toString();
+            String city = etCityPE.getText().toString();
 
             // input validation on first name, last name, and email
             if(firstName.equals("")) {
@@ -106,6 +111,9 @@ public class EditProfileActivity extends AppCompatActivity {
             } else if(email.equals("")) {
                 Toast.makeText(getApplicationContext(), getString(R.string.edit_profile_activity_toast_email_required), Toast.LENGTH_SHORT).show();
                 return;
+            } else if(city.equals("")) {
+                Toast.makeText(getApplicationContext(), getString(R.string.edit_profile_activity_toast_city_required), Toast.LENGTH_SHORT).show();
+                return;
             }
 
             if(pfpChange) {
@@ -115,6 +123,7 @@ public class EditProfileActivity extends AppCompatActivity {
             currentUser.put(FIRSTNAME_KEY, firstName);
             currentUser.put(LASTNAME_KEY, lastName);
             currentUser.put(EMAIL_KEY, email);
+            currentUser.put(CITY_KEY, city);
             currentUser.saveInBackground(e -> {
                 Log.i(TAG, "Profile changes saved");
                 Toast.makeText(context, getString(R.string.edit_profile_activity_profile_saved), Toast.LENGTH_SHORT).show();
@@ -122,6 +131,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 intent.putExtra(FIRSTNAME_KEY, firstName);
                 intent.putExtra(LASTNAME_KEY, lastName);
                 intent.putExtra(EMAIL_KEY, email);
+                intent.putExtra(CITY_KEY, city);
                 setResult(RESULT_OK, intent);
                 finish();
             });

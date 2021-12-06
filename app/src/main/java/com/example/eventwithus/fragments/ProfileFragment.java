@@ -72,9 +72,11 @@ public class ProfileFragment extends Fragment {
                             String firstName = intent.getStringExtra(FIRSTNAME_KEY);
                             String lastName = intent.getStringExtra(LASTNAME_KEY);
                             String email = intent.getStringExtra(EMAIL_KEY);
+                            String city = intent.getStringExtra(CITY_KEY);
                             tvFirstNameP.setText(firstName);
                             tvLastNameP.setText(lastName);
                             tvEmailP.setText(email);
+                            tvCityP.setText(city);
                         }
                     } else {
                         Log.e(TAG, "result code not OK some error: " + result.getResultCode());
