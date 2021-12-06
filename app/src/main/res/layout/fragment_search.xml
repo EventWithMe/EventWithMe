@@ -1,150 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/plain2"
-    android:orientation="vertical"
     tools:context=".fragments.SearchFragment">
 
-    <TextSwitcher
-        android:id="@+id/textSwitcher"
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="-3dp"
-        android:inAnimation="@android:anim/slide_in_left"
-        android:outAnimation="@android:anim/slide_out_right" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextSwitcher
-        android:id="@+id/textSwitcher2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/searchBTN"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="146dp"
-        android:inAnimation="@android:anim/slide_in_left"
-        android:outAnimation="@android:anim/slide_out_right">
+        <TextSwitcher
+            android:id="@+id/textSwitcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="37dp"
+            android:layout_marginEnd="-3dp"
+            android:inAnimation="@android:anim/slide_in_left"
+            android:outAnimation="@android:anim/slide_out_right"></TextSwitcher>
 
-    </TextSwitcher>
+        <TextSwitcher
+            android:id="@+id/textSwitcher2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchBTN"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="-3dp"
+            android:layout_marginBottom="146dp"
+            android:backgroundTint="#FFFFFF">
 
-    <Button
-        android:id="@+id/leftBTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textSwitcher"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentEnd="false"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="9dp"
-        android:background="#48545454"
-        android:text="@string/search_fragment_button_next"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:iconTint="#545454"
-        app:rippleColor="#545454" />
+        </TextSwitcher>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="126dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="125dp"
-        android:fontFamily="@font/amita_bold"
-        android:text="@string/search_fragment_label_select_category"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <Button
+            android:id="@+id/leftBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textSwitcher"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="156dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="161dp"
+            android:background="#48545454"
+            android:text="Next"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:iconTint="#545454"
+            app:rippleColor="#545454" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/leftBTN"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="127dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="124dp"
-        android:fontFamily="@font/amita_bold"
-        android:labelFor="@id/cityET"
-        android:text="@string/search_fragment_label_city_name"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="126dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="125dp"
+            android:fontFamily="@font/amita_bold"
+            android:text="Select Category"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cityET"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="126dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="124dp"
-        android:fontFamily="@font/amita_bold"
-        android:labelFor="@id/keywordET"
-        android:text="@string/search_fragment_label_keyword"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/leftBTN"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="127dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="124dp"
+            android:fontFamily="@font/amita_bold"
+            android:text="City Name"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/keywordET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="99dp"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cityET"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="126dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="124dp"
+            android:fontFamily="@font/amita_bold"
+            android:text="Keyword"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/cityET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="99dp"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF" />
+        <EditText
+            android:id="@+id/keywordET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="99dp"
+            android:backgroundTint="#FFFFFF"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="#FFFFFF" />
 
-    <ImageButton
-        android:id="@+id/searchBTN"
-        android:layout_width="48dp"
-        android:layout_height="49dp"
-        android:layout_below="@+id/keywordET"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="176dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/search_fragment_content_desc_search"
-        android:src="@android:drawable/ic_menu_search" />
+        <EditText
+            android:id="@+id/cityET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView3"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="99dp"
+            android:backgroundTint="#FFFFFF"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="#FFFFFF" />
 
-</RelativeLayout>
+        <ImageButton
+            android:id="@+id/searchBTN"
+            android:layout_width="48dp"
+            android:layout_height="49dp"
+            android:layout_below="@+id/keywordET"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="176dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="176dp"
+            android:background="#00FFFFFF"
+            android:src="@android:drawable/ic_menu_search" />
 
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="-1dp"
+            android:layout_marginBottom="101dp" />
+
+    </RelativeLayout>
+
+</FrameLayout>
