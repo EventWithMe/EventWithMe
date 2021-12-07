@@ -5,6 +5,7 @@
     android:id="@+id/stream_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="visible"
     tools:context=".fragments.StreamFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,12 +15,15 @@
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar"
+            android:layout_width="408dp"
+            android:layout_height="41dp"
+            tools:layout_editor_absoluteX="3dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/nested"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="414dp"
+            android:layout_height="45dp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,19 +31,22 @@
 
             <Spinner
                 android:id="@+id/spinner2"
-                android:layout_width="270dp"
-                android:layout_height="39dp"
-                android:layout_marginStart="5dp"
-                android:background="#FFFFFF"
+                android:layout_width="288dp"
+                android:layout_height="46dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.058" />
 
             <Button
                 android:id="@+id/searchBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="4dp"
                 android:paddingLeft="0dp"
                 android:paddingTop="0dp"
                 android:paddingRight="0dp"
@@ -48,19 +55,30 @@
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/nested"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/spinner2"
-                app:layout_constraintTop_toTopOf="@id/nested" />
+                app:layout_constraintTop_toTopOf="@id/nested"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/backBTN"
+                android:layout_width="34dp"
+                android:layout_height="40dp"
+                android:background="@drawable/leftarrow"
+                android:text="Button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/searchBtn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.061" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvStreamList"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="412dp"
+            android:layout_height="571dp"
             android:padding="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/nested"
-            tools:layout_editor_absoluteX="25dp" />
+            tools:layout_editor_absoluteX="-1dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

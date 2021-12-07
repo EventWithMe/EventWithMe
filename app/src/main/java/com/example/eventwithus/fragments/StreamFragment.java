@@ -1,12 +1,14 @@
 package com.example.eventwithus.fragments;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,7 +62,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     public static final String EXTRA_EVENT_ID = "id";
     public static final String EXTRA_EVENT_VENUE_NAME = "venueName";
 
-    private Button searchBtn;
+    private Button searchBtn, backBTN;
     private EditText inputET;
     private RecyclerView mRecyclerView;
     private EventAdapter eventAdapter;
@@ -73,14 +75,13 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     protected EventsAdapter adapter;
     protected List<Event> allEvents;
     Spinner spinner2;
-    String StreamText = "";
+    String CategoryText = "";
     final String keyword = "keyword=";
     String keyword2;
 
     final String apikey = "apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
     final String city = "&city=San%20Antonio";
     final String eventsurl = "https://app.ticketmaster.com/discovery/v2/events?";
-
 
 
    // String url2 = "https://app.ticketmaster.com/discovery/v2/events/k7vGFKzleBdwS/images.json?apikey=kdQ1Zu3hN6RX9";//images TICKETMASTER
@@ -90,16 +91,12 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
    // String url6 = "https://app.ticketmaster.com/discovery/v2/events?keyword=rock&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
 
 
-
-
     String music = "https://app.ticketmaster.com/discovery/v2/events?keyword="+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
     String sports = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
     String family = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=family&locale=*";
     String film = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film";
     String misc = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
     String artNThr = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
-
-
 
 
 
@@ -141,7 +138,10 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         return inflater.inflate(R.layout.fragment_stream, container, false);
     }
 
-
+    /**
+     *  Metal KnvZfZ7vAvt
+     *
+     */
 
 
     @Override
@@ -150,6 +150,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         Toast.makeText(getContext(), "onViewCreated ", Toast.LENGTH_LONG).show();
         String[] Categories = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
         String[] Dates = {};
+        String[] Genre = { "Rock", "Alternative", "Country", "Hip-Hop/Rap", "Holiday", "Jazz", "Pop","Reggae","New Age"};
         toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
@@ -160,10 +161,11 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         //mRequestQueue = Volley.newRequestQueue(this);
        // parseJSON();
 
-
+        backBTN = view.findViewById(R.id.backBTN);
         searchBtn = view.findViewById(R.id.searchBtn);
         //inputET = view.findViewById(R.id.inputET);\
         spinner2 = view.findViewById(R.id.spinner2);
+
 
 
         //Creating the ArrayAdapter instance having the country list
@@ -177,27 +179,32 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         //adapter = new EventsAdapter(getContext(), allEvents);
        // mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        populateEvents();
+       // populateEvents();
+        backBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateSpinner2(Categories);
 
-        //keep just incase we want to implement this functionality in the stream fragment
-/**
+
+            }
+        });
+
+
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                CategoryText = spinner2.getSelectedItem().toString();
+                Toast.makeText(getContext(), "searchBtn Clicked ", Toast.LENGTH_LONG).show();
+                // clear all old events displayed before displaying new ones
+                mEventList.clear();
 
-                Toast.makeText(getContext(), "RefreshFragment ", Toast.LENGTH_LONG).show();
-                Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentByTag("myFragmentTag");
 
-                if (currentFragment instanceof StreamFragment) {
-                    FragmentTransaction fragTransaction =   getFragmentManager().beginTransaction();
-                    fragTransaction.detach(currentFragment);
-                    fragTransaction.attach(currentFragment);
-                    fragTransaction.commit();
-                }
-                switch (StreamText) {
+
+                switch (CategoryText) {
                     case "Concerts":
                         System.out.println("Concerts");
                         parseJSON2(music);
+                        updateSpinner2(Genre);
                         break;
                     case "Sports":
                         System.out.println("Sports");
@@ -223,17 +230,33 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                         parseJSON2(misc);
 
                 }
+
+
             }
+
+
         });
+
+
+
+
+
+
+
+
     }
 
- **/
+    public void updateSpinner2(String[] options){
+        ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,options);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(aa);
 
     }
+
 //choose which url to go with based on Search Filter Category
     public void populateEvents(){
 
-        switch (StreamText) {
+        switch (CategoryText) {
             case "Concerts":
                 System.out.println("Concerts");
                 parseJSON2(music);
@@ -266,9 +289,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
 
     //update edit text acts as Intent get EXTRA but for fragments, Here we are getting the results from filters passed from MainActivity.
-    public void updateEditText(CharSequence newText, CharSequence newText2, CharSequence cityName) {
-        StreamText= (String) newText;
-        keyword2 = (String) newText2;
+    public void updateEditText(CharSequence category, CharSequence KeyWord, CharSequence cityName) {
+       // CategoryText= (String) category;
+        keyword2 = (String) KeyWord;
         music = "https://app.ticketmaster.com/discovery/v2/events?keyword="+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&city="+cityName;
        sports = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&city="+cityName;
        family = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city="+cityName;
@@ -344,8 +367,10 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
     }
 **/
+
+
     private void parseJSON2(String url) {
-        Toast.makeText(getContext(),StreamText, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),CategoryText, Toast.LENGTH_LONG).show();
         Toast.makeText(getContext(),keyword2, Toast.LENGTH_LONG).show();
         Toast.makeText(getContext(),url, Toast.LENGTH_LONG).show();
         Log.i(TAG, url );
@@ -415,14 +440,14 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
     @Override
     public void onItemClick(int position) {
-
+/**
         Fragment frg = null;
         frg = getFragmentManager().findFragmentByTag("myFragmentTag");
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(frg);
         ft.attach(frg);
         ft.commit();
-
+**/
         Intent detailIntent = new Intent(getActivity().getBaseContext(), EventDetailActivity.class );
         EventItem clickedItem = mEventList.get(position);
         EventDetail clickedItem1 = mDetailList.get(position);
