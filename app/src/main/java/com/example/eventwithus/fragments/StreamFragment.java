@@ -164,8 +164,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         Genresid.put("Classical", "KnvZfZ7vAeA");
         Genresid.put("Pop", "KnvZfZ7vAev");
         Genresid.put("Jazz", "KnvZfZ7vAvE");
-
-        Genresid.put("Dance/Electronic", "KnvZfZ7vAvF");
         toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
@@ -210,6 +208,12 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                        int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null) {
+                    if(spinner2.getSelectedItem().toString() == "Concerts"){
+                        String cityName = "";
+                        mEventList.clear();
+                        music = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&city="+cityName;
+                        parseJSON2(music);
+                    }
                     if(Arrays.asList(Genre).contains(spinner2.getSelectedItem().toString())){
 
                     Genreid = Genresid.get(spinner2.getSelectedItem().toString());
