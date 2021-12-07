@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EventWithUs</string>
+    <string name="app_name">EventWithMe</string>
 
     <string name="login_activity_button_log_in">Log In</string>
     <string name="login_activity_hint_password">password</string>

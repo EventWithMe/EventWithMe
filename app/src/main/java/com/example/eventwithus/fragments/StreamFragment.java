@@ -58,7 +58,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     public interface  FragmentStreamListener{
         void onInputStreamSent(CharSequence input);
     }
-    
+
     public static final String EXTRA_URL = "imageUrl";
     public static final String EXTRA_EVENT_NAME = "eventName";
     public static final String EXTRA_EVENT_TYPE = "type";
@@ -282,7 +282,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                 break;
             case "":
                 parseJSON2(misc);
-
         }
     }
 

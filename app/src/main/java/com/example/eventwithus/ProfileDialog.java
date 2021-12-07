@@ -4,12 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -38,7 +36,7 @@ public class ProfileDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.profile_dialog);
+        setContentView(R.layout.dialog_profileview);
 
         iv_dialogPfp = findViewById(R.id.iv_dialogPfp);
         tv_dialogName = findViewById(R.id.tv_dialogName);
@@ -52,4 +50,5 @@ public class ProfileDialog extends Dialog {
         tv_dialogName.setText(name);
         tv_dialogCity.setText(city);
     }
+
 }
