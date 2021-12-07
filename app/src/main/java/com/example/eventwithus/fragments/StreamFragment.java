@@ -41,6 +41,8 @@ import com.example.eventwithus.models.EventItem;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -237,6 +239,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
         }
     }
+
+
     //update edit text acts as Intent get EXTRA but for fragments, Here we are getting the results from filters passed from MainActivity.
     public void updateEditText(CharSequence newText, CharSequence newText2, CharSequence cityName) {
         StreamText= (String) newText;
@@ -247,6 +251,13 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         film = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film&city="+cityName;
         misc = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city="+cityName;
         artNThr = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*&city="+cityName;
+    }
+
+
+
+    public void updateCityDateKeywordText(CharSequence City, LocalDate date, CharSequence Keyword){
+
+
     }
 
 

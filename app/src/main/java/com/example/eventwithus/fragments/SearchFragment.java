@@ -1,9 +1,11 @@
 package com.example.eventwithus.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -15,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SearchView;
@@ -38,6 +41,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.eventwithus.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.time.LocalDate;
+import java.util.Calendar;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SearchFragment#newInstance} factory method to
@@ -47,7 +53,8 @@ public class SearchFragment extends Fragment  {
     private FragmentSearchListener listener;
 
     public interface  FragmentSearchListener{
-        void onInputSearchSent(CharSequence input, CharSequence keyword, CharSequence city);
+        void onInputSearchSent(CharSequence category, CharSequence Genre, CharSequence city);
+        void onCityDateKeywordSearchSent(CharSequence city, LocalDate Date, CharSequence KeyWord );
     }
 
     //TODO implement Dates for Search Filter
@@ -62,6 +69,13 @@ public class SearchFragment extends Fragment  {
     ImageButton searchBTN;
     Spinner spinner;
     EditText keywordET, cityET;
+
+    DatePickerDialog picker;
+    EditText eText;
+    Button btnGet;
+    TextView tvw;
+
+
     SearchView searchView;
     String music = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
     String sports = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
@@ -69,9 +83,10 @@ public class SearchFragment extends Fragment  {
     String film = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film";
     String misc = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
     String artNThr = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
-
-
-
+                                                                                                                        //          keyword         lat          long                               Startdatetime           Enddatetime
+    String coordinatesDatesKeyword="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Spurs&latlong=29.3922745,-98.7046125&locale=*&startDateTime=2021-12-06T16:53:00Z&endDateTime=2022-01-29T16:53:00Z";
+                                                                                                                        //keyword                   startDatetime               endDatetime                             cityName
+    String cityDatesKeyword ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Spurs&locale=*&startDateTime=2021-12-06T16:53:00Z&endDateTime=2022-01-29T16:53:00Z&city=San%20Antonio";
 
 
     private String mParam1;
@@ -109,9 +124,47 @@ public class SearchFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
+
         CharSequence input;
 
         View v = inflater.inflate(R.layout.fragment_search, container, false);
+
+
+
+
+
+
+        tvw=v.findViewById(R.id.textView1);
+        eText=v.findViewById(R.id.editText1);
+        eText.setInputType(InputType.TYPE_NULL);
+        eText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                picker = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
+        btnGet=v.findViewById(R.id.button1);
+        btnGet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvw.setText("Selected Date: "+ eText.getText());
+            }
+        });
        // searchView = v.findViewById(R.id.searchView);
         leftBTN = v.findViewById(R.id.leftBTN);
         searchBTN = v.findViewById(R.id.searchBTN);
@@ -134,9 +187,9 @@ public class SearchFragment extends Fragment  {
             public void onClick(View view) {
                 TextView tv = (TextView) textSwitcher.getCurrentView();
                 CharSequence keyword = keywordET.getText().toString();
-                CharSequence input = tv.getText().toString();
+                CharSequence category = tv.getText().toString();
                 CharSequence city = cityET.getText().toString();
-                listener.onInputSearchSent(input, keyword, city);
+                listener.onInputSearchSent(category, keyword, city);
             }
 
         });
@@ -274,6 +327,8 @@ public class SearchFragment extends Fragment  {
                }else{
                    textSwitcher2.setText(row[++stringIndex]);
                }
+               TextView tv = (TextView) textSwitcher2.getCurrentView(); //<--grabs the current category displayed
+               CharSequence category = tv.getText().toString();
            }
            public void onSwipeLeft() {
                textSwitcher2.setInAnimation(AnimationUtils.loadAnimation(getContext(),
@@ -287,8 +342,8 @@ public class SearchFragment extends Fragment  {
                }else{
                    textSwitcher2.setText(row[--stringIndex]);
                }
-               TextView tv = (TextView) textSwitcher2.getCurrentView();
-
+               TextView tv = (TextView) textSwitcher2.getCurrentView(); //<--grabs the current category displayed
+               CharSequence category = tv.getText().toString();
            }
            public void onSwipeBottom() {
                Toast.makeText(getContext(), "bottom", Toast.LENGTH_SHORT).show();
