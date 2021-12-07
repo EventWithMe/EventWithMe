@@ -1,16 +1,21 @@
 package com.example.eventwithus.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.eventwithus.ProfileDialog;
 import com.example.eventwithus.R;
 import com.example.eventwithus.models.Message;
 import com.parse.ParseFile;
@@ -108,6 +113,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                 if (e == null) {
                     String firstname = objects.get(0).getString("firstname");
                     String lastname = objects.get(0).getString("lastname");
+                    String city = objects.get(0).getString("city");
                     name.setText(String.format("%s %s", firstname, lastname));
 
                     ParseFile image = objects.get(0).getParseFile("image");
@@ -120,16 +126,28 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                     else {
                         Log.i(TAG, String.format("User %s seems to have no profile picture", message.getUserId()));
                     }
+
+                    imageOther.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(mContext, "clicked on user: " + firstname, Toast.LENGTH_SHORT).show();
+                            profileDialog(firstname, lastname, city, image);
+                        }
+                    });
                 }
                 else {
                     Log.e(TAG, String.format("Error retrieving profile url for user %s", message.getUserId()), e);
                 }
 
             });
-
-
             body.setText(message.getBody());
         }
+    }
+
+    private void profileDialog(String firstname, String lastname, String city, ParseFile parseFile) {
+        ProfileDialog profileDialog = new ProfileDialog(mContext, firstname + " " + lastname, city, parseFile);
+        profileDialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_border);
+        profileDialog.show();
     }
 
     public class OutgoingMessageViewHolder extends MessageViewHolder {

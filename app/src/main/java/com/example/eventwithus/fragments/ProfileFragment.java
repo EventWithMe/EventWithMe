@@ -54,6 +54,7 @@ public class ProfileFragment extends Fragment {
     Button btnEditProfile;
     Button btnLogout;
     Button btnEditPassword;
+    Toolbar toolbar;
 
     private ParseUser currentUser;
     Context context;

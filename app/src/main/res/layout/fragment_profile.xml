@@ -19,11 +19,11 @@
         android:layout_width="@dimen/profile_fragment_pfp_width"
         android:layout_height="@dimen/profile_fragment_pfp_height"
         android:layout_marginTop="20dp"
+        android:contentDescription="@string/profile_fragment_content_desc_profile_picture"
         android:src="@drawable/ic_baseline_person_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:contentDescription="@string/profile_fragment_content_desc_profile_picture" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/tvEmailP"

@@ -91,7 +91,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swDarkModePE" />
+        app:layout_constraintTop_toBottomOf="@+id/etCityPE" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -103,16 +103,5 @@
         app:layout_constraintStart_toEndOf="@+id/flPfpWrapper"
         app:layout_constraintTop_toBottomOf="@+id/flPfpWrapper"
         app:srcCompat="@mipmap/ic_pfp_camera_round" />
-
-    <Switch
-        android:id="@+id/swDarkModePE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Dark Mode:"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCityPE" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
