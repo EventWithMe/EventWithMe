@@ -56,7 +56,6 @@ public class ProfileFragment extends Fragment {
     Button btnEditPassword;
 
     private ParseUser currentUser;
-    private Toolbar toolbar;
     Context context;
 
     final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -91,7 +90,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true); // for overflow menu
     }
 
     @Override
@@ -102,30 +100,10 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        //menu.clear(); / / this sentence is useless. You don't need to add it
-        inflater.inflate(R.menu.menu_toolbar, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.menu_preferences) {
-            Toast.makeText(context, "Preferences", Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        toolbar = view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null) {
-            activity.setSupportActionBar(toolbar);
-        }
 
         currentUser = ParseUser.getCurrentUser(); // initializes the ParseUser
         context = getContext();

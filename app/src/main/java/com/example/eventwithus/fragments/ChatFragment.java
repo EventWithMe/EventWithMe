@@ -46,33 +46,14 @@ public class ChatFragment extends Fragment {
     private ArrayList<Message> mMessages;
     private boolean mFirstLoad;
     private ChatAdapter mAdapter;
-    private Toolbar toolbar;
 
     public ChatFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        //menu.clear(); / / this sentence is useless. You don't need to add it
-        inflater.inflate(R.menu.menu_toolbar, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.menu_preferences) {
-            Toast.makeText(getContext(), "Preferences", Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setHasOptionsMenu(true); // for overflow menu
 
         String websocketUrl = "wss://eventwithme.b4a.io/";
 
@@ -113,11 +94,7 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        toolbar = view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null) {
-            activity.setSupportActionBar(toolbar);
-        }
 
         etMessage = view.findViewById(R.id.etMessage);
         ibSend = view.findViewById(R.id.ibSend);
