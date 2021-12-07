@@ -42,11 +42,8 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
         MyEvents event = events.get(position);
 
         holder.chat_button.setOnClickListener(view -> {
-                // TODO connect chat with chat fragment
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.layout.fragment_rsvp,  new ChatFragment()); // give your fragment container id in first parameter
-//                transaction.addToBackStack(null);
-//                transaction.commit();
+                // TODO connect chat with chat
+
         });
 
         holder.bind(event);

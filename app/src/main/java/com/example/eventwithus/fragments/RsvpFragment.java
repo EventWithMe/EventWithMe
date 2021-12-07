@@ -99,6 +99,8 @@ public class RsvpFragment extends Fragment {
 
                             String eventNameDB = hit.getString("id") + "_" + hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
 
+
+
                             // checks if user Rsvp'd for the event
                             if (Arrays.asList(rsvpdEvents).contains(eventNameDB)) {
                                 String eventName = hit.getString("name");

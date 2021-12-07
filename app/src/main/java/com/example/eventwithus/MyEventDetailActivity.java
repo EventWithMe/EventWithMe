@@ -40,6 +40,8 @@ public class MyEventDetailActivity extends AppCompatActivity {
     TextView dateTV;
     Button rsvpBtn;
     Button linkBtn;
+    String eventID;
+    String eventDate;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -50,10 +52,6 @@ public class MyEventDetailActivity extends AppCompatActivity {
         events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
         currentUser = ParseUser.getCurrentUser();
         context = getApplicationContext();
-
-
-        Intent intent = getIntent();
-        String eventDate = intent.getStringExtra(EXTRA_EVENT_DATE);
 
         Bundle extras = getIntent().getExtras();
         imageView = findViewById(R.id.ivPfp);
@@ -75,6 +73,9 @@ public class MyEventDetailActivity extends AppCompatActivity {
             String date = extras.getString("dateTV");
             String image = extras.getString("ivPfp");
 
+            eventDate = date;
+            eventID = description;
+
             nameTV.setText(name);
             cityTV.setText("City: " + city);
             timeTV.setText("Starts At: " + time);
@@ -86,28 +87,26 @@ public class MyEventDetailActivity extends AppCompatActivity {
                 Picasso.with(this).load(image).fit().centerInside().into(imageView);
             }
         }
-//
-//        if(rsvp) {
-//            rsvpBtn.setText("Cancel RSVP");
-//        }
-//
-//        if(events == null || events.isEmpty()) {
-//            rsvp = false;
-//        } else {
-//            rsvpCheck();
-//        }
 
+        if(events.size() == 1) {
+            rsvp = false;
+        } else {
+            rsvpCheck(eventID);
+        }
+
+        // if the user is already rsvp'd then set the btnEditProfile to cancel
+        if(rsvp) {
+            rsvpBtn.setText(R.string.event_detail_activity_cancel_rsvp);
+        }
 
 
         rsvpBtn.setOnClickListener(view -> {
-//            Log.d(TAG, "btnRSVP clicked date: " + eventDate);
-//            EventHelper.refreshUserData();
-//
-//            if(rsvp) {
-//                cancelRSVP("123");
-//            } else {
-//                rsvpEvent("123", eventDate);
-//            }
+            EventHelper.refreshUserData();
+            if(rsvp) {
+                cancelRSVP(eventID);
+            } else {
+                rsvpEvent(eventID, eventDate);
+            }
         });
 
 
@@ -123,13 +122,13 @@ public class MyEventDetailActivity extends AppCompatActivity {
         });
     }
     // iterates through a list of events to check and see if the user has rsvp'd already
-    private void rsvpCheck() {
+    private void rsvpCheck(String eventId) {
         System.out.println("RSVP CHECK:");
         for(String s : events) {
             String[] eventInfo = s.split("_");
-            System.out.print(eventInfo[1] + " " + EventHelper.formatJsonDate(dateTV.getText().toString()));
+            System.out.print(eventInfo[0] + " " + eventId);
             System.out.println();
-            if(eventInfo[1].equals(EventHelper.formatJsonDate(dateTV.getText().toString()))){
+            if(eventInfo[0].equals(eventId)){
                 rsvp = true;
                 return;
             } else {
@@ -158,7 +157,7 @@ public class MyEventDetailActivity extends AppCompatActivity {
         System.out.println(events);
 
         for(int i = 0; i < events.size() - 1; i++) {
-            updated.append(events.get(i)).append(", ");
+            updated.append(events.get(i)).append(",");
         }
         updated.append(events.get(events.size() - 1));
 
