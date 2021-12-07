@@ -45,7 +45,6 @@ public class RsvpFragment extends Fragment {
     private MyEventAdapter myEventAdapter;
     private ArrayList<MyEvents> eventsList;
     private ParseUser currentUser;
-    private Toolbar toolbar;
 
     public RsvpFragment() {
         // Required empty public constructor
@@ -54,7 +53,6 @@ public class RsvpFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true); // for overflow menu
     }
 
     @Override
@@ -65,30 +63,10 @@ public class RsvpFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.menu_preferences) {
-            Toast.makeText(getContext(), "Preferences", Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        //menu.clear(); / / this sentence is useless. You don't need to add it
-        inflater.inflate(R.menu.menu_toolbar, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        toolbar = view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null) {
-            activity.setSupportActionBar(toolbar);
-        }
 
         recyclerView = view.findViewById(R.id.rvMyEventsList);
         recyclerView.setHasFixedSize(true);
