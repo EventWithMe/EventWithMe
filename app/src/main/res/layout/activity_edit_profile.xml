@@ -7,55 +7,80 @@
     android:layout_height="match_parent"
     tools:context=".EditProfileActivity">
 
-    <ImageView
-        android:id="@+id/ivPfpE"
-        android:layout_width="195dp"
-        android:layout_height="179dp"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/ic_baseline_person_24"
+    <FrameLayout
+        android:id="@+id/flPfpWrapper"
+        android:layout_width="@dimen/profile_fragment_pfp_width"
+        android:layout_height="@dimen/profile_fragment_pfp_height"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/edit_profile_activity_content_desc_profile_picture" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivPfpE"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="bottom|center_horizontal"
+            android:contentDescription="@string/edit_profile_activity_content_desc_profile_picture"
+            android:src="@drawable/ic_baseline_person_24" />
+
+    </FrameLayout>
 
     <EditText
         android:id="@+id/etEmailPE"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:hint="@string/edit_profile_activity_hint_email"
+        android:importantForAutofill="no"
         android:inputType="textEmailAddress"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etLastNamePE"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@id/etLastNamePE" />
 
     <EditText
         android:id="@+id/etFirstNamePE"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:hint="@string/edit_profile_activity_hint_first_name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPfpE"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/flPfpWrapper"
+        tools:ignore="NotSibling" />
 
     <EditText
         android:id="@+id/etLastNamePE"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:hint="@string/edit_profile_activity_hint_last_name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFirstNamePE"
+        app:layout_constraintTop_toBottomOf="@+id/etFirstNamePE" />
+
+    <EditText
+        android:id="@+id/etCityPE"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="@string/edit_profile_activity_hint_city"
         android:importantForAutofill="no"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etEmailPE" />
 
     <Button
         android:id="@+id/btnSaveProfile"
@@ -64,7 +89,30 @@
         android:text="@string/edit_profile_activity_button_save_changes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmailPE" />
+        app:layout_constraintTop_toBottomOf="@+id/swDarkModePE" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="32dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="-55dp"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/bg_circle_button"
+        app:layout_constraintStart_toEndOf="@+id/flPfpWrapper"
+        app:layout_constraintTop_toBottomOf="@+id/flPfpWrapper"
+        app:srcCompat="@mipmap/ic_pfp_camera_round" />
+
+    <Switch
+        android:id="@+id/swDarkModePE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Dark Mode:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCityPE" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
