@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="profile_fragment_pfp_height">205dp</dimen>
+    <dimen name="profile_fragment_pfp_width">230dp</dimen>
+</resources>

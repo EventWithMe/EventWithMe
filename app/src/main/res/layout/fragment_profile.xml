@@ -16,8 +16,8 @@
 
     <ImageView
         android:id="@+id/ivPfp"
-        android:layout_width="195dp"
-        android:layout_height="179dp"
+        android:layout_width="@dimen/profile_fragment_pfp_width"
+        android:layout_height="@dimen/profile_fragment_pfp_height"
         android:layout_marginTop="20dp"
         android:src="@drawable/ic_baseline_person_24"
         app:layout_constraintEnd_toEndOf="parent"
