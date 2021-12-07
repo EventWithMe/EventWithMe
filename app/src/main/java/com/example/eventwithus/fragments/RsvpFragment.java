@@ -92,16 +92,15 @@ public class RsvpFragment extends Fragment {
 
                         Log.d(TAG,"onResponseSuccess");
                         String imageURL = "";
+                        String[] rsvpdEvents = Objects.requireNonNull(currentUser.getString("eventsinfo")).split(",");
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject hit = jsonArray.getJSONObject(i);
 
-                            String rawDate = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
-                            String formattedDate = "123_" + EventHelper.formatJsonDate(rawDate);
-                            String[] rsvdEvents = Objects.requireNonNull(currentUser.getString("eventsinfo")).split(",");
+                            String eventNameDB = hit.getString("id") + "_" + hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
 
                             // checks if user Rsvp'd for the event
-                            if (Arrays.asList(rsvdEvents).contains(formattedDate)) {
+                            if (Arrays.asList(rsvpdEvents).contains(eventNameDB)) {
                                 String eventName = hit.getString("name");
                                 String city = hit.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("city").getString("name");
                                 String date = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
