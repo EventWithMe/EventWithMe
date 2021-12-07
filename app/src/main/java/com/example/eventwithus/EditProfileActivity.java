@@ -11,14 +11,18 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +46,7 @@ public class EditProfileActivity extends AppCompatActivity {
     public static final String EMAIL_KEY= "email";
     public static final String CITY_KEY = "city";
     public static final String IMAGE_KEY= "image";
+    public static final String DARKMODE_KEY= "dark";
     public static final String PHOTO= "photo";
     public static final String GALLERY= "gallery";
     private static final int MAX_PROFILE_WIDTH = 180;
