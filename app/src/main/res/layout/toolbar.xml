@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/purple_500"
     android:elevation="3dp"
+    app:logo="@drawable/ic_toolbar_logo2"
     app:title="@string/app_name"
-    app:titleTextColor="@color/white">
+    app:titleTextColor="@color/white"
+    app:titleMarginStart="23dp">
 
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:gravity="center_vertical">-->
-
-
-<!--        &lt;!&ndash;<ImageView-->
-<!--            android:id="@+id/imageview_edit"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_alignParentLeft="true"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:background="#3F51B5"-->
-<!--            android:src="@drawable/toolbar_pic" />&ndash;&gt;-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textview"-->
-<!--            style="@android:style/TextAppearance.Medium"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:fontFamily="sans-serif-medium"-->
-<!--            android:text="@string/app_name"-->
-<!--            android:textColor="#FFFFFF"-->
-<!--            android:textSize="25sp" />-->
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:gravity="center_vertical">-->
 
 
-<!--    </RelativeLayout>-->
+    <!--        &lt;!&ndash;<ImageView-->
+    <!--            android:id="@+id/imageview_edit"-->
+    <!--            android:layout_width="50dp"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:layout_alignParentLeft="true"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:background="#3F51B5"-->
+    <!--            android:src="@drawable/toolbar_pic" />&ndash;&gt;-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/textview"-->
+    <!--            style="@android:style/TextAppearance.Medium"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_alignParentStart="true"-->
+    <!--            android:fontFamily="sans-serif-medium"-->
+    <!--            android:text="@string/app_name"-->
+    <!--            android:textColor="#FFFFFF"-->
+    <!--            android:textSize="25sp" />-->
+
+
+    <!--    </RelativeLayout>-->
 
 </androidx.appcompat.widget.Toolbar>

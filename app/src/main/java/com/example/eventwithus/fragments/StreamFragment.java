@@ -52,13 +52,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class StreamFragment extends Fragment  implements  EventAdapter.OnItemClickListener , Initializable {
     private StreamFragment.FragmentStreamListener listener;
 
     public interface  FragmentStreamListener{
         void onInputStreamSent(CharSequence input);
     }
+    
     public static final String EXTRA_URL = "imageUrl";
     public static final String EXTRA_EVENT_NAME = "eventName";
     public static final String EXTRA_EVENT_TYPE = "type";
@@ -73,7 +73,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     private ArrayList<EventItem> mEventList;
     private ArrayList<EventDetail> mDetailList;
     private RequestQueue mRequestQueue;
-    private Toolbar toolbar;
     public static final String TAG = "StreamFragment";
     private RecyclerView rvEvents;
     protected EventsAdapter adapter;
@@ -87,13 +86,11 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     final String city = "&city=San%20Antonio";
     final String eventsurl = "https://app.ticketmaster.com/discovery/v2/events?";
 
-
    // String url2 = "https://app.ticketmaster.com/discovery/v2/events/k7vGFKzleBdwS/images.json?apikey=kdQ1Zu3hN6RX9";//images TICKETMASTER
     //String url3 = "https://app.ticketmaster.com/discovery/v2/events/?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
    // String url4 = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
     //String url5 = "https://app.ticketmaster.com/discovery/v2/events?+"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
    // String url6 = "https://app.ticketmaster.com/discovery/v2/events?keyword=rock&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
-
 
     String music = "https://app.ticketmaster.com/discovery/v2/events?keyword="+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
     String sports = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
@@ -103,8 +100,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     String artNThr = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
     String musicGenre ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId="+Genreid;
 
-
-
     public StreamFragment() {
         // Required empty public constructor
     }
@@ -112,28 +107,10 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setHasOptionsMenu(true); // for overflow menu
-
         if (getArguments() != null) {
           String  keyword = getArguments().getString("UserInput");
             Toast.makeText(getContext(), "keyword :"+keyword, Toast.LENGTH_LONG).show();
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        //menu.clear(); / / this sentence is useless. You don't need to add it
-        inflater.inflate(R.menu.menu_toolbar, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.menu_preferences) {
-            Toast.makeText(getContext(), "Preferences", Toast.LENGTH_SHORT).show();;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -147,8 +124,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
      *  Metal KnvZfZ7vAvt
      *
      */
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -164,8 +139,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         Genresid.put("Classical", "KnvZfZ7vAeA");
         Genresid.put("Pop", "KnvZfZ7vAev");
         Genresid.put("Jazz", "KnvZfZ7vAvE");
-        toolbar = view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         //TODO implement Dates for Search Filter
 
@@ -178,8 +151,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         searchBtn = view.findViewById(R.id.searchBtn);
         //inputET = view.findViewById(R.id.inputET);\
         spinner2 = view.findViewById(R.id.spinner2);
-
-
 
         //Creating the ArrayAdapter instance having the country list
         ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,Categories);
@@ -197,8 +168,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
             @Override
             public void onClick(View view) {
                 updateSpinner2(Categories);
-
-
             }
         });
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -226,13 +195,10 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                 }
                 Toast.makeText(getContext(), "Selected",
                         Toast.LENGTH_SHORT).show();
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 // TODO Auto-generated method stub
-
             }
         });
 
@@ -276,27 +242,14 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                         parseJSON2(misc);
 
                 }
-
-
             }
-
-
         });
-
-
-
-
-
-
-
-
     }
 
     public void updateSpinner2(String[] options){
         ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,options);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(aa);
-
     }
 
 //choose which url to go with based on Search Filter Category
@@ -333,7 +286,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         }
     }
 
-
     //update edit text acts as Intent get EXTRA but for fragments, Here we are getting the results from filters passed from MainActivity.
     public void updateEditText(CharSequence category, CharSequence KeyWord, CharSequence cityName) {
        // CategoryText= (String) category;
@@ -346,14 +298,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         artNThr = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*&city="+cityName;
     }
 
-
-
     public void updateCityDateKeywordText(CharSequence City, LocalDate date, CharSequence Keyword){
 
-
     }
-
-
 
 /**
     private void parseJSON(String url) {
@@ -410,10 +357,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
             }
         });
         RequestQueueSingleton.getInstance(getActivity().getBaseContext()).addToRequestQueue(request);
-
     }
 **/
-
 
     private void parseJSON2(String url) {
         Toast.makeText(getContext(),CategoryText, Toast.LENGTH_LONG).show();
@@ -457,7 +402,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                     JSONObject elem = imagesArray.getJSONObject(j);
 
                                     eventImage = elem.getString("url");//gets the image url
-
                                 }
 
                                 // TODO: 12/1/2021 add the id to this new call
@@ -481,7 +425,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
             }
         });
         RequestQueueSingleton.getInstance(getActivity().getBaseContext()).addToRequestQueue(request);
-
     }
 
     @Override
@@ -509,12 +452,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         getActivity().startActivity(detailIntent);
     }
 
-
-
-
     @Override
     public void initialize() {
-
 
     }
 }
