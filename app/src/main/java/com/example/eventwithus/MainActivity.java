@@ -14,6 +14,8 @@ import com.example.eventwithus.fragments.SearchFragment;
 import com.example.eventwithus.fragments.StreamFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.time.LocalDate;
+
 
 @SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity implements Initializable, SearchFragment.FragmentSearchListener, StreamFragment.FragmentStreamListener {
@@ -87,6 +89,11 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
     @Override
     public void onInputSearchSent(CharSequence input, CharSequence keyword, CharSequence city) {
        streamFragment.updateEditText(input, keyword, city);
+    }
+
+    @Override
+    public void onCityDateKeywordSearchSent(CharSequence city, LocalDate Date, CharSequence KeyWord) {
+        streamFragment.updateCityDateKeywordText(city, Date, KeyWord );
     }
 
     @Override

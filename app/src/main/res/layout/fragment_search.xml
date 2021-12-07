@@ -30,9 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/searchBTN"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="79dp"
             android:layout_marginEnd="-3dp"
-            android:layout_marginBottom="146dp"
+            android:layout_marginBottom="90dp"
             android:backgroundTint="#FFFFFF">
 
         </TextSwitcher>
@@ -56,6 +56,27 @@
             app:iconTint="#545454"
             app:rippleColor="#545454" />
 
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="116dp"
+            android:layout_height="121dp"
+            android:layout_above="@+id/textView4"
+            android:layout_below="@+id/textSwitcher"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="124dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="-4dp"
+            android:layout_toEndOf="@+id/editText1"
+            android:background="#48545454"
+            android:text="GetDate"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:iconTint="#545454"
+            app:rippleColor="#545454" />
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="160dp"
@@ -75,16 +96,47 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="160dp"
+            android:layout_width="129dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/leftBTN"
             android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="127dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="124dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="65dp"
+            android:layout_toStartOf="@+id/textView5"
             android:fontFamily="@font/amita_bold"
             android:text="City Name"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="129dp"
+            android:layout_height="31dp"
+            android:layout_above="@+id/editText1"
+            android:layout_below="@+id/leftBTN"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="99dp"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/amita_bold"
+            android:text="Enter Date"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="102dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button1"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="25dp"
+            android:fontFamily="@font/amita_bold"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
@@ -97,9 +149,9 @@
             android:layout_below="@+id/cityET"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="126dp"
-            android:layout_marginTop="29dp"
-            android:layout_marginEnd="124dp"
+            android:layout_marginStart="128dp"
+            android:layout_marginTop="79dp"
+            android:layout_marginEnd="122dp"
             android:fontFamily="@font/amita_bold"
             android:text="Keyword"
             android:textAlignment="center"
@@ -113,8 +165,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView4"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="26dp"
-            android:layout_marginEnd="99dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="97dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
             android:inputType="textPersonName"
@@ -122,12 +174,26 @@
 
         <EditText
             android:id="@+id/cityET"
-            android:layout_width="wrap_content"
+            android:layout_width="161dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView3"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="99dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#FFFFFF"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="#FFFFFF" />
+
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="91dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView3"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="1dp"
+            android:layout_toEndOf="@+id/cityET"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
             android:inputType="textPersonName"
@@ -141,7 +207,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="176dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="176dp"
             android:background="#00FFFFFF"
             android:src="@android:drawable/ic_menu_search" />
@@ -152,8 +218,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="-1dp"
-            android:layout_marginBottom="101dp" />
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="112dp" />
 
     </RelativeLayout>
 
