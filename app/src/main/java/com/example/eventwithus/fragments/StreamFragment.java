@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,7 +47,10 @@ import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class StreamFragment extends Fragment  implements  EventAdapter.OnItemClickListener , Initializable {
@@ -78,7 +82,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     String CategoryText = "";
     final String keyword = "keyword=";
     String keyword2;
-
+    String Genreid = "";
     final String apikey = "apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
     final String city = "&city=San%20Antonio";
     final String eventsurl = "https://app.ticketmaster.com/discovery/v2/events?";
@@ -97,6 +101,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     String film = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film";
     String misc = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
     String artNThr = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
+    String musicGenre ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId="+Genreid;
 
 
 
@@ -150,7 +155,17 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         Toast.makeText(getContext(), "onViewCreated ", Toast.LENGTH_LONG).show();
         String[] Categories = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
         String[] Dates = {};
-        String[] Genre = { "Rock", "Alternative", "Country", "Hip-Hop/Rap", "Holiday", "Jazz", "Pop","Reggae","New Age"};
+        String[] Genre = { "Rock", "Dance/Electronic", "Country", "Hip-Hop/Rap", "Jazz", "Pop","Classical"};
+        Map<String, String> Genresid = new HashMap<>();
+        Genresid.put("Rock", "KnvZfZ7vAvt");
+        Genresid.put("Dance/Electronic", "KnvZfZ7vAvF");
+        Genresid.put("Country", "KnvZfZ7vAv6");
+        Genresid.put("Hip-Hop/Rap", "KnvZfZ7vAv1");
+        Genresid.put("Classical", "KnvZfZ7vAeA");
+        Genresid.put("Pop", "KnvZfZ7vAev");
+        Genresid.put("Jazz", "KnvZfZ7vAvE");
+
+        Genresid.put("Dance/Electronic", "KnvZfZ7vAvF");
         toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
@@ -188,7 +203,34 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
             }
         });
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                Object item = adapterView.getItemAtPosition(position);
+                if (item != null) {
+                    if(Arrays.asList(Genre).contains(spinner2.getSelectedItem().toString())){
+
+                    Genreid = Genresid.get(spinner2.getSelectedItem().toString());
+                    musicGenre ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId="+Genreid;
+                    mEventList.clear();
+                    parseJSON2(musicGenre);
+                    }
+                    Toast.makeText(getContext(), item.toString(),
+                            Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(getContext(), "Selected",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // TODO Auto-generated method stub
+
+            }
+        });
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,12 +239,12 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                 Toast.makeText(getContext(), "searchBtn Clicked ", Toast.LENGTH_LONG).show();
                 // clear all old events displayed before displaying new ones
                 mEventList.clear();
-
-
+                String cityName = "";
 
                 switch (CategoryText) {
                     case "Concerts":
                         System.out.println("Concerts");
+                        music = "https://app.ticketmaster.com/discovery/v2/events?keyword="+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&city="+cityName;
                         parseJSON2(music);
                         updateSpinner2(Genre);
                         break;

@@ -77,8 +77,9 @@
             android:layout_height="571dp"
             android:padding="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nested"
-            tools:layout_editor_absoluteX="-1dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nested" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
