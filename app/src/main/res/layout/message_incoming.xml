@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/ivProfileOther"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/chat_fragment_pfp_width"
+        android:layout_height="@dimen/chat_fragment_pfp_height"
         android:layout_alignParentStart="true"
         android:contentDescription="@string/incoming_message_layout_content_desc_profile_picture"
         android:src="@mipmap/ic_launcher"

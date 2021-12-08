@@ -1,20 +1,18 @@
 package com.example.eventwithus.adapters;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.eventwithus.ProfileDialog;
 import com.example.eventwithus.R;
 import com.example.eventwithus.models.Message;
@@ -120,19 +118,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                     if (image != null) {
                         Glide.with(mContext)
                                 .load(image.getUrl())
-                                .transform(new RoundedCorners(50))
+                                .circleCrop()
                                 .into(imageOther);
                     }
                     else {
                         Log.i(TAG, String.format("User %s seems to have no profile picture", message.getUserId()));
                     }
 
-                    imageOther.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(mContext, "clicked on user: " + firstname, Toast.LENGTH_SHORT).show();
-                            profileDialog(firstname, lastname, city, image);
-                        }
+                    imageOther.setOnClickListener(view -> {
+                        Toast.makeText(mContext, "clicked on user: " + firstname, Toast.LENGTH_SHORT).show();
+                        profileDialog(firstname, lastname, city, image);
                     });
                 }
                 else {
@@ -171,7 +166,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
             if (profile != null) {
                 Glide.with(mContext)
                         .load(profile.getUrl())
-                        .transform(new RoundedCorners(50))
+                        .circleCrop()
                         .into(imageMe);
             }
             else {
