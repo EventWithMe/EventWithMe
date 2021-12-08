@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextSwitcher;
@@ -34,6 +35,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -69,24 +71,14 @@ public class SearchFragment extends Fragment  {
     ImageButton searchBTN;
     Spinner spinner;
     EditText keywordET, cityET;
-
+    private RadioGroup radioGroup;
+    private TextView themeTV;
     DatePickerDialog picker;
     EditText eText;
     Button btnGet;
     TextView tvw;
 
 
-    SearchView searchView;
-    String music = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
-    String sports = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
-    String family = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=family&locale=*";
-    String film = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film";
-    String misc = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
-    String artNThr = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
-                                                                                                                        //          keyword         lat          long                               Startdatetime           Enddatetime
-    String coordinatesDatesKeyword="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Spurs&latlong=29.3922745,-98.7046125&locale=*&startDateTime=2021-12-06T16:53:00Z&endDateTime=2022-01-29T16:53:00Z";
-                                                                                                                        //keyword                   startDatetime               endDatetime                             cityName
-    String cityDatesKeyword ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Spurs&locale=*&startDateTime=2021-12-06T16:53:00Z&endDateTime=2022-01-29T16:53:00Z&city=San%20Antonio";
 
 
     private String mParam1;
@@ -118,288 +110,44 @@ public class SearchFragment extends Fragment  {
 
 
     }
-    //                          0           1           2               3       4       5
-//private String[] row = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
-
-        CharSequence input;
-
         View v = inflater.inflate(R.layout.fragment_search, container, false);
+        radioGroup = v.findViewById(R.id.idRGgroup);
+        themeTV = v.findViewById(R.id.idtvTheme);
 
-
-
-
-
-
-        tvw=v.findViewById(R.id.textView1);
-        eText=v.findViewById(R.id.editText1);
-        eText.setInputType(InputType.TYPE_NULL);
-        eText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
-                // date picker dialog
-                picker = new DatePickerDialog(getContext(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                            }
-                        }, year, month, day);
-                picker.show();
-            }
-        });
-        btnGet=v.findViewById(R.id.button1);
-        btnGet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvw.setText("Selected Date: "+ eText.getText());
-            }
-        });
-       // searchView = v.findViewById(R.id.searchView);
-        leftBTN = v.findViewById(R.id.leftBTN);
-        searchBTN = v.findViewById(R.id.searchBTN);
-        keywordET = v.findViewById(R.id.keywordET);
-        cityET = v.findViewById(R.id.cityET);
-        textSwitcher = v.findViewById(R.id.textSwitcher);
-        textSwitcher2 = v.findViewById(R.id.textSwitcher2);
-        spinner = v.findViewById(R.id.spinner);
-
-
-        ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,row);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(aa);
-
-        bottomNavigationView = v.findViewById(R.id.bottom_navigation);
-        searchBTN.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceType")
-            @Override
-            public void onClick(View view) {
-                TextView tv = (TextView) textSwitcher.getCurrentView();
-                CharSequence keyword = keywordET.getText().toString();
-                CharSequence category = tv.getText().toString();
-                CharSequence city = cityET.getText().toString();
-                listener.onInputSearchSent(category, keyword, city);
-            }
-
-        });
-
-
-        leftBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(stringIndex == row.length-1){
-                    stringIndex = 0;
-                    textSwitcher.setText(row[stringIndex]);
-                }else{
-                    textSwitcher.setText(row[++stringIndex]);
-                }
-               // TextView tv = (TextView) textSwitcher.getCurrentView();
-
-                   // CharSequence input = tv.getText().toString();
-                   // listener.onInputSearchSent(input, keyword);
-
-
-
-
-            }
-        });
-        textSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                textView = new TextView(getContext());
-                textView.setTextColor(Color.WHITE);
-                textView.setTextSize(30);
-                textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                return textView;
-            }
-        });
-        textSwitcher.setText(row[stringIndex]);
-
-
-        textSwitcher2.setFactory(new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                textView = new TextView(getContext());
-                textView.setTextColor(Color.WHITE);
-                textView.setTextSize(30);
-                textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                return textView;
-            }
-        });
-        textSwitcher2.setText(row[stringIndex]);
-
-
-
-        class OnSwipeTouchListener implements OnTouchListener {
-
-            private final GestureDetector gestureDetector;
-
-            public OnSwipeTouchListener (Context ctx){
-                gestureDetector = new GestureDetector(ctx, new GestureListener());
-            }
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
-            }
-
-           final class GestureListener extends SimpleOnGestureListener {
-
-                private static final int SWIPE_THRESHOLD = 100;
-                private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-                @Override
-                public boolean onDown(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                    boolean result = false;
-                    try {
-                        float diffY = e2.getY() - e1.getY();
-                        float diffX = e2.getX() - e1.getX();
-                        if (Math.abs(diffX) > Math.abs(diffY)) {
-                            if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                                if (diffX > 0) {
-                                    onSwipeRight();
-                                } else {
-                                    onSwipeLeft();
-                                }
-                                result = true;
-                            }
-                        }
-                        else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                            if (diffY > 0) {
-                                onSwipeBottom();
-                            } else {
-                                onSwipeTop();
-                            }
-                            result = true;
-                        }
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-                    return result;
-                }
-            }
-
-            public void onSwipeRight() {
-            }
-
-            public void onSwipeLeft() {
-            }
-
-            public void onSwipeTop() {
-            }
-
-            public void onSwipeBottom() {
-            }
-        }
-
-
-
-
-       textSwitcher2.setOnTouchListener(new OnSwipeTouchListener(getContext()){
-           public void onSwipeTop() {
-               Toast.makeText(getContext(), "top", Toast.LENGTH_SHORT).show();
-           }
-           public void onSwipeRight() {
-               textSwitcher2.setInAnimation(AnimationUtils.loadAnimation(getContext(),
-                       R.anim.slide_in_left));
-               textSwitcher2.setOutAnimation(AnimationUtils.loadAnimation(getContext(),
-                       R.anim.slide_out_right));
-               Toast.makeText(getContext(), "right", Toast.LENGTH_SHORT).show();
-               if(stringIndex == row.length-1){
-                   stringIndex = 0;
-                   textSwitcher2.setText(row[stringIndex]);
-               }else{
-                   textSwitcher2.setText(row[++stringIndex]);
-               }
-               TextView tv = (TextView) textSwitcher2.getCurrentView(); //<--grabs the current category displayed
-               CharSequence category = tv.getText().toString();
-           }
-           public void onSwipeLeft() {
-               textSwitcher2.setInAnimation(AnimationUtils.loadAnimation(getContext(),
-                       R.anim.slide_in_right));
-               textSwitcher2.setOutAnimation(AnimationUtils.loadAnimation(getContext(),
-                       R.anim.slide_out_left));
-               Toast.makeText(getContext(), "left", Toast.LENGTH_SHORT).show();
-               if(stringIndex == 0){
-                   stringIndex = row.length-1;
-                   textSwitcher2.setText(row[stringIndex]);
-               }else{
-                   textSwitcher2.setText(row[--stringIndex]);
-               }
-               TextView tv = (TextView) textSwitcher2.getCurrentView(); //<--grabs the current category displayed
-               CharSequence category = tv.getText().toString();
-           }
-           public void onSwipeBottom() {
-               Toast.makeText(getContext(), "bottom", Toast.LENGTH_SHORT).show();
-           }
-
-
-       });
-
-
-
-
-        // Inflate the layout for this fragment
         return v;
 
-
-
-
-
-
-
     }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof FragmentSearchListener) {
-            listener = (FragmentSearchListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement FragmentAListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listener = null;
-    }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String[] Categories = { "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
-        String[] Dates = { "All Dates", "This Weekend"};
-        String[] Distance = { "10 mi", "25 mi", "50 mi","75 mi","All (mi)"};
-        //Bundle bundle = new Bundle();
-       // SteamFragment fragment = new StreamFragment();
 
-        // Intent intent = new Intent(getActivity(), LocationService.class);
-     //   startActivity(intent);
-        Toast.makeText(getContext(), "toast", Toast.LENGTH_LONG).show();
-
-
-
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // on radio button check change
+                switch (checkedId) {
+                    case R.id.idRBLight:
+                        // on below line we are checking the radio button with id.
+                        // on below line we are setting the text to text view as light mode.
+                        themeTV.setText("Light Theme");
+                        // on below line we are changing the theme to light mode.
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        break;
+                    case R.id.idRBDark:
+                        // this method is called when dark radio button is selected
+                        // on below line we are setting dark theme text to our text view.
+                        themeTV.setText("Dark Theme");
+                        // on below line we are changing the theme to dark mode.
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        break;
+                }
+            }
+        });
     }
 
 

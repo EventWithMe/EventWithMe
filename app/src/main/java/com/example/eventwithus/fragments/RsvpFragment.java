@@ -73,6 +73,8 @@ public class RsvpFragment extends Fragment {
         EventHelper.refreshUserData();
         currentUser = ParseUser.getCurrentUser();
 
+
+
         eventsList = new ArrayList<>();
         myEventAdapter = new MyEventAdapter(getContext(), eventsList);
 
@@ -81,6 +83,7 @@ public class RsvpFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         parseJSON();
     }
+
 
     private void parseJSON() {
         String url = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";

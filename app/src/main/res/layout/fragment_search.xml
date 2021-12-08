@@ -13,213 +13,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <TextSwitcher
-            android:id="@+id/textSwitcher"
+        <TextView
+            android:id="@+id/idTVHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView2"
-            android:layout_marginTop="37dp"
-            android:layout_marginEnd="-3dp"
-            android:inAnimation="@android:anim/slide_in_left"
-            android:outAnimation="@android:anim/slide_out_right"></TextSwitcher>
+            android:layout_marginTop="40dp"
+            android:gravity="center_horizontal"
+            android:text="Test the Theme changer out"
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
-        <TextSwitcher
-            android:id="@+id/textSwitcher2"
+        <!--text view for displaying the selected theme-->
+        <TextView
+            android:id="@+id/idtvTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/searchBTN"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="79dp"
-            android:layout_marginEnd="-3dp"
-            android:layout_marginBottom="90dp"
-            android:backgroundTint="#FFFFFF">
-
-        </TextSwitcher>
-
-        <Button
-            android:id="@+id/leftBTN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textSwitcher"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="156dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="161dp"
-            android:background="#48545454"
-            android:text="Next"
+            android:layout_below="@id/idTVHeading"
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            android:text="System Default Theme"
             android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:iconTint="#545454"
-            app:rippleColor="#545454" />
+            android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="116dp"
-            android:layout_height="121dp"
-            android:layout_above="@+id/textView4"
-            android:layout_below="@+id/textSwitcher"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="9dp"
-            android:layout_marginTop="124dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="-4dp"
-            android:layout_toEndOf="@+id/editText1"
-            android:background="#48545454"
-            android:text="GetDate"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:iconTint="#545454"
-            app:rippleColor="#545454" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="126dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="125dp"
-            android:fontFamily="@font/amita_bold"
-            android:text="Select Category"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="129dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/leftBTN"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="65dp"
-            android:layout_toStartOf="@+id/textView5"
-            android:fontFamily="@font/amita_bold"
-            android:text="City Name"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="129dp"
-            android:layout_height="31dp"
-            android:layout_above="@+id/editText1"
-            android:layout_below="@+id/leftBTN"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="22dp"
-            android:layout_marginEnd="99dp"
-            android:layout_marginBottom="3dp"
-            android:fontFamily="@font/amita_bold"
-            android:text="Enter Date"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="102dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/button1"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="29dp"
-            android:layout_marginEnd="25dp"
-            android:fontFamily="@font/amita_bold"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cityET"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="128dp"
-            android:layout_marginTop="79dp"
-            android:layout_marginEnd="122dp"
-            android:fontFamily="@font/amita_bold"
-            android:text="Keyword"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/keywordET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView4"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="97dp"
-            android:backgroundTint="#FFFFFF"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textColor="#FFFFFF" />
-
-        <EditText
-            android:id="@+id/cityET"
-            android:layout_width="161dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView3"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="-1dp"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="#FFFFFF"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textColor="#FFFFFF" />
-
-
-        <EditText
-            android:id="@+id/editText1"
-            android:layout_width="91dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView3"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="1dp"
-            android:layout_toEndOf="@+id/cityET"
-            android:backgroundTint="#FFFFFF"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textColor="#FFFFFF" />
-
-        <ImageButton
-            android:id="@+id/searchBTN"
-            android:layout_width="48dp"
-            android:layout_height="49dp"
-            android:layout_below="@+id/keywordET"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="176dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="176dp"
-            android:background="#00FFFFFF"
-            android:src="@android:drawable/ic_menu_search" />
-
-        <Spinner
-            android:id="@+id/spinner"
+        <!--radio group for switching theme-->
+        <RadioGroup
+            android:id="@+id/idRGgroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="112dp" />
+            android:layout_below="@id/idtvTheme"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <!--radio button for light theme-->
+            <RadioButton
+                android:id="@+id/idRBLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:text="Light" />
+
+            <!--radio button for dark theme-->
+            <RadioButton
+                android:id="@+id/idRBDark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Dark" />
+
+        </RadioGroup>
 
     </RelativeLayout>
 
