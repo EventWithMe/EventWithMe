@@ -33,7 +33,7 @@
     <string name="event_detail_activity_content_desc_event_image">Event image</string>
     <string name="event_detail_activity_label_date">Date</string>
     <string name="event_detail_activity_label_venue">Venue</string>
-    <string name="event_detail_activity_date_time_at"> at </string>
+    <string name="event_detail_activity_date_time_at">at</string>
 
     <string name="my_event_detail_activity_button_more_info">MORE INFO</string>
     <string name="my_event_detail_activity_button_rsvp">RSVP</string>
