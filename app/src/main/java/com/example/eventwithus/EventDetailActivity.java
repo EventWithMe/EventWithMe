@@ -63,7 +63,7 @@ public class EventDetailActivity extends AppCompatActivity {
         String eventID = intent.getStringExtra(EXTRA_EVENT_ID);
         String[] arr = intent.getStringExtra(EXTRA_VENUE_CITY).split(":");
         String venueCity = EventHelper.cityFormatter(arr[1]);
-        String venueName = intent.getStringExtra(EXTRA_EVENT_VENUE_NAME) + " in " + venueCity;;
+        String venueName = intent.getStringExtra(EXTRA_EVENT_VENUE_NAME) + " in " + venueCity;
         String startTime =  intent.getStringExtra(EXTRA_EVENT_START_TIME);
         String timeDate = EventHelper.formatJsonDate(eventDate) + " " + getResources().getString(R.string.event_detail_activity_date_time_at) + " " + EventHelper.startTimeFormatter(startTime);
 

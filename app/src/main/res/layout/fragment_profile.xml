@@ -27,20 +27,19 @@
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageViewProfilePicture"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/imageViewProfilePicture"
             android:textColor="#455A64"
-            android:textSize="20sp"
-            tools:text="Brandon Muller" />
+            android:textSize="22sp"
+            tools:text="Fred Flintstone" />
 
         <TextView
             android:id="@+id/textViewCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewEmail"
-            android:layout_alignStart="@+id/textViewName"
+            android:layout_alignStart="@+id/textViewEmail"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="5dp"
             android:textColor="#455A64"
             android:textSize="16sp"
@@ -50,33 +49,59 @@
             android:id="@+id/textViewEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewName"
-            android:layout_alignStart="@+id/textViewName"
-            android:layout_marginTop="5dp"
+            android:layout_below="@+id/imageViewProfilePicture"
+            android:layout_alignStart="@+id/imageViewProfilePicture"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="10dp"
             android:textColor="#455A64"
             android:textSize="16sp"
-            tools:text="brandon@android.com" />
-
-        <ImageButton
-            android:id="@+id/buttonEditProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:contentDescription="@string/profile_fragment_button_edit_profile"
-            android:src="@android:drawable/ic_menu_edit"
-            tools:ignore="ImageContrastCheck" />
+            tools:text="freddy@gmail.com" />
 
         <ImageView
             android:id="@+id/imageViewProfilePicture"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/profile_fragment_pfp_width"
+            android:layout_height="@dimen/profile_fragment_pfp_height"
             android:contentDescription="@string/profile_fragment_content_desc_profile_picture"
             android:src="@drawable/ic_baseline_person_24"
             tools:ignore="ImageContrastCheck"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <TextView
+            android:id="@+id/textViewProfileBio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewName"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/imageViewProfilePicture"
+            android:textColor="#455A64"
+            tools:text="Fred is the husband of Wilma Flintstone and father of Pebbles Flintstone and together the family live in their homely cave in the town of Bedrock." />
+
+        <View
+            android:id="@+id/dividerProfileBioBottom"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/textViewProfileBio"
+            android:layout_marginTop="@dimen/profile_fragment_edit_button_height"
+            android:layout_marginBottom="-20dp"
+            android:background="?android:attr/listDivider"
+            android:visibility="invisible" />
+
     </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/buttonEditProfile"
+        android:layout_width="@dimen/profile_fragment_edit_button_width"
+        android:layout_height="@dimen/profile_fragment_edit_button_height"
+        android:layout_alignBottom="@+id/layoutProfileInfo"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:contentDescription="@string/profile_fragment_content_desc_edit_profile"
+        android:src="@android:drawable/ic_menu_edit"
+        tools:ignore="ImageContrastCheck" />
 
     <RelativeLayout
         android:id="@+id/layoutProfileStats"
@@ -97,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="23"
-                android:textSize="24sp"
+                android:textSize="30sp"
                 tools:text="23" />
 
             <TextView
@@ -107,7 +132,8 @@
                 android:layout_below="@+id/textViewEventsAttendedCount"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="0dp"
-                android:text="@string/profile_fragment_label_events" />
+                android:text="@string/profile_fragment_label_events"
+                android:textSize="20sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -124,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="30"
-                android:textSize="24sp"
+                android:textSize="30sp"
                 tools:text="30" />
 
             <TextView
@@ -134,7 +160,8 @@
                 android:layout_below="@+id/textViewFollowingCount"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="0dp"
-                android:text="@string/profile_fragment_label_following" />
+                android:text="@string/profile_fragment_label_following"
+                android:textSize="20sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -152,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="14"
-                android:textSize="24sp"
+                android:textSize="30sp"
                 tools:text="14" />
 
             <TextView
@@ -162,7 +189,8 @@
                 android:layout_below="@+id/textViewFollowersCount"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="0dp"
-                android:text="@string/profile_fragment_label_followers" />
+                android:text="@string/profile_fragment_label_followers"
+                android:textSize="20sp" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -171,8 +199,10 @@
         android:id="@+id/buttonResetPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonLogout"
-        android:layout_alignStart="@+id/buttonLogout"
+        android:layout_above="@+id/dividerActionBarHeight"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/profile_fragment_button_edit_password" />
 
     <Button
@@ -180,8 +210,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/dividerActionBarHeight"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:text="@string/profile_fragment_button_logout" />
 

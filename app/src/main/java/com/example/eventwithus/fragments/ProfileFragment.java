@@ -23,7 +23,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.eventwithus.EditProfileActivity;
 import com.example.eventwithus.LoginActivity;
 import com.example.eventwithus.PasswordChangeActivity;
@@ -40,11 +39,13 @@ public class ProfileFragment extends Fragment {
     public static final String EMAIL_KEY = "email";
     public static final String CITY_KEY = "city";
     public static final String IMAGE_KEY = "image";
+    public static final String BIO_KEY = "bio";
 
     ImageView ivPfp;
     TextView tvName;
     TextView tvEmail;
     TextView tvCity;
+    TextView tvBio;
     ImageButton btnEditProfile;
     Button btnLogout;
     Button btnEditPassword;
@@ -66,9 +67,14 @@ public class ProfileFragment extends Fragment {
                             String lastName = intent.getStringExtra(LASTNAME_KEY);
                             String email = intent.getStringExtra(EMAIL_KEY);
                             String city = intent.getStringExtra(CITY_KEY);
+                            String bio = intent.getStringExtra(BIO_KEY);
                             tvName.setText(String.format("%s %s", firstName, lastName));
                             tvEmail.setText(email);
                             tvCity.setText(city);
+                            if (bio.isEmpty())
+                                tvBio.setText(R.string.profile_fragment_label_no_bio);
+                            else
+                                tvBio.setText(bio);
                         }
                     } else {
                         Log.e(TAG, "Bad result code: " + result.getResultCode());
@@ -103,6 +109,7 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.textViewName);
         tvEmail = view.findViewById(R.id.textViewEmail);
         tvCity = view.findViewById(R.id.textViewCity);
+        tvBio = view.findViewById(R.id.textViewProfileBio);
         btnEditProfile = view.findViewById(R.id.buttonEditProfile);
         btnLogout = view.findViewById(R.id.buttonLogout);
         btnEditPassword = view.findViewById(R.id.buttonResetPassword);
@@ -146,7 +153,10 @@ public class ProfileFragment extends Fragment {
             Log.i(TAG, "User has no profile picture");
             return;
         }
-        Glide.with(context).load(file.getUrl()).transform(new RoundedCorners(50)).into(ivPfp);
+        Glide.with(context)
+                .load(file.getUrl())
+                .circleCrop()
+                .into(ivPfp);
     }
 
     private void populateProfileData() {
@@ -157,10 +167,12 @@ public class ProfileFragment extends Fragment {
                     currentUser.getString(LASTNAME_KEY));
             String email = currentUser.getString(EMAIL_KEY);
             String city = currentUser.getString(CITY_KEY);
+            String bio = currentUser.getString(BIO_KEY);
 
             tvName.setText(name);
             tvEmail.setText(email);
             tvCity.setText(city);
+            tvBio.setText(bio);
         }
     }
 }
