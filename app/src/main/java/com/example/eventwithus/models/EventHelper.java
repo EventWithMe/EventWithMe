@@ -1,9 +1,16 @@
 package com.example.eventwithus.models;
 
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.parse.ParseUser;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +58,23 @@ public class EventHelper {
         });
     }
 
-    // takes string json date in the form YYYY-MM-DD and turns it into something like 06 January 2022
+    public static String cityFormatter(String city) {
+        String formatted = city.replace("\"", "");
+        formatted = formatted.replace("}", "");
+        return formatted;
+    }
+
+    public static String startTimeFormatter(String unformattedStartTime) {
+        String[] arr = unformattedStartTime.split(":");
+        String formatted = "";
+        if(Integer.parseInt(arr[0]) > 12) {
+            formatted += String.valueOf(Integer.parseInt(arr[0]) - 12) + ":" + arr[1] + " pm";
+        } else {
+            formatted += arr[0] + ":" + arr[1] + " am";
+        }
+        return formatted;
+    }
+
     public static String formatJsonDate(String rawJsonDate) {
         String formatted = "";
         String[] arr = rawJsonDate.split("-");

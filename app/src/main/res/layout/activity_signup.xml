@@ -69,7 +69,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textLayoutSignupPassword"
+        android:id="@+id/textLayoutSignupNewPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textLayoutSignupCity"
@@ -82,7 +82,7 @@
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextSignupPassword"
+            android:id="@+id/editTextSignupNewPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
@@ -91,12 +91,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textLayoutSignupConfirmPassword"
+        android:id="@+id/textLayoutSignupCurrentPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textLayoutSignupPassword"
-        android:layout_alignStart="@+id/textLayoutSignupPassword"
-        android:layout_alignEnd="@+id/textLayoutSignupPassword"
+        android:layout_below="@+id/textLayoutSignupNewPassword"
+        android:layout_alignStart="@+id/textLayoutSignupNewPassword"
+        android:layout_alignEnd="@+id/textLayoutSignupNewPassword"
         android:layout_marginStart="0dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="0dp"
@@ -104,7 +104,7 @@
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextSignupConfirmPassword"
+            android:id="@+id/editTextSignupCurrentPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
@@ -117,8 +117,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textLayoutSignupEmail"
-        android:layout_alignStart="@+id/textLayoutSignupPassword"
-        android:layout_alignEnd="@+id/textLayoutSignupPassword"
+        android:layout_alignStart="@+id/textLayoutSignupNewPassword"
+        android:layout_alignEnd="@+id/textLayoutSignupNewPassword"
         android:layout_marginStart="0dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="0dp"
@@ -129,20 +129,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
-            android:hint="city" />
+            android:hint="@string/signup_activity_hint_city" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/buttonSignupSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textLayoutSignupConfirmPassword"
-        android:layout_alignStart="@+id/textLayoutSignupPassword"
-        android:layout_alignEnd="@+id/textLayoutSignupPassword"
+        android:layout_below="@+id/textLayoutSignupCurrentPassword"
+        android:layout_alignStart="@+id/textLayoutSignupNewPassword"
+        android:layout_alignEnd="@+id/textLayoutSignupNewPassword"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:background="#000000"
+        android:enabled="false"
         android:text="@string/signup_activity_button_sign_up" />
 
     <Button

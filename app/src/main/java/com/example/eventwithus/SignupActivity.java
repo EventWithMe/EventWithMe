@@ -49,18 +49,16 @@ public class SignupActivity extends AppCompatActivity {
         textLayoutDisplayName = findViewById(R.id.textLayoutSignupDisplayName);
         textLayoutEmail = findViewById(R.id.textLayoutSignupEmail);
         textLayoutSignupCity = findViewById(R.id.textLayoutSignupCity);
-        textLayoutPassword = findViewById(R.id.textLayoutSignupPassword);
-        textLayoutConfirmPassword = findViewById(R.id.textLayoutSignupConfirmPassword);
+        textLayoutPassword = findViewById(R.id.textLayoutSignupNewPassword);
+        textLayoutConfirmPassword = findViewById(R.id.textLayoutSignupCurrentPassword);
         editTextUsername = findViewById(R.id.editTextSignupUsername);
         editTextDisplayName = findViewById(R.id.editTextSignupDisplayName);
         editTextEmail = findViewById(R.id.editTextSignupEmail);
         editTextSignupCity = findViewById(R.id.editTextSignupCity);
-        editTextPassword = findViewById(R.id.editTextSignupPassword);
-        editTextConfirmPassword = findViewById(R.id.editTextSignupConfirmPassword);
+        editTextPassword = findViewById(R.id.editTextSignupNewPassword);
+        editTextConfirmPassword = findViewById(R.id.editTextSignupCurrentPassword);
         buttonSignUp = findViewById(R.id.buttonSignupSignUp);
         buttonLogIn = findViewById(R.id.buttonSignupLogIn);
-
-        buttonSignUp.setEnabled(false);
 
         buttonSignUp.setOnClickListener(v -> {
             String username = editTextUsername.getText().toString();
@@ -73,7 +71,8 @@ public class SignupActivity extends AppCompatActivity {
                 signupUser(username, displayname, email, city, password);
             }
             else {
-                Toast.makeText(this, getString(R.string.signup_activity_error_password_mismatch), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,
+                        getString(R.string.signup_activity_error_password_mismatch), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -167,11 +166,11 @@ public class SignupActivity extends AppCompatActivity {
                         });
                     }
                 }
-                else if (id == R.id.editTextSignupPassword) {
+                else if (id == R.id.editTextSignupNewPassword) {
                     if (TextUtils.isEmpty(editTextPassword.getText()))
                         textLayoutPassword.setError(getString(R.string.signup_activity_error_empty_password));
                 }
-                else if (id == R.id.editTextSignupConfirmPassword) {
+                else if (id == R.id.editTextSignupCurrentPassword) {
                     if (TextUtils.isEmpty(editTextConfirmPassword.getText()))
                         textLayoutConfirmPassword.setError(getString(R.string.signup_activity_error_empty_password));
                 }
