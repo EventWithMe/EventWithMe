@@ -4,15 +4,25 @@ public class EventDetail {
     private String info;
     private String id;
     private String venueName;
+    private String startTime;
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
 
     public String getVenueName() {
         return venueName;
     }
 
-    public EventDetail(String info, String id, String venueName) {
+    public EventDetail(String info, String id, String venueName, String startTime) {
         this.info = info;
         this.id = id;
         this.venueName = venueName;
+        this.startTime = startTime;
     }
 
     public void setVenueName(String venueName) {

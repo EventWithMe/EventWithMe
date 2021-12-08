@@ -28,6 +28,7 @@ public class EventDetailActivity extends AppCompatActivity {
     public static final String EXTRA_EVENT_DATE = "date"; // used to extract date data from intent
     public static final String EXTRA_EVENT_ID = "id"; // used to extract date data from intent
     public static final String EXTRA_EVENT_VENUE_NAME = "venueName"; // used to extract date data from intent
+    public static final String EXTRA_EVENT_START_TIME = "startTime"; // used to extract date data from intent
 
     // UI elements
     Button btnRSVP;
@@ -60,6 +61,7 @@ public class EventDetailActivity extends AppCompatActivity {
         String eventDate = intent.getStringExtra(EXTRA_EVENT_DATE);
         String eventID = intent.getStringExtra(EXTRA_EVENT_ID);
         String venueName = intent.getStringExtra(EXTRA_EVENT_VENUE_NAME);
+        String startTime = intent.getStringExtra(EXTRA_EVENT_START_TIME);
 
         // initialize the UI elements
         imageView = findViewById(R.id.image_view_detail);
