@@ -11,9 +11,9 @@
         android:layout_width="107dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextSearch"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="12dp"
+        android:layout_toStartOf="@+id/editTextEnd"
         android:ems="10"
         android:hint="start date"
         android:inputType="textPersonName" />
@@ -23,9 +23,9 @@
         android:layout_width="107dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextSearch"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="67dp"
-        android:layout_toEndOf="@+id/editTextStart"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="end date"
         android:inputType="textPersonName" />
@@ -34,11 +34,11 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextStart"
+        android:layout_below="@+id/textViewDisplayStart"
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="158dp"
-        android:layout_marginTop="73dp"
+        android:layout_marginTop="23dp"
         android:text="Search" />
 
     <TextView
@@ -48,9 +48,9 @@
         android:layout_below="@+id/editTextStart"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="137dp"
         android:layout_marginTop="7dp"
-        android:layout_marginEnd="283dp" />
+        android:layout_marginEnd="172dp" />
 
     <EditText
         android:id="@+id/editTextSearch"
@@ -65,5 +65,19 @@
         android:layout_marginEnd="15dp"
         android:ems="10"
         android:hint="Search for artist venues and events"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="131dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextSearch"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="62dp"
+        android:layout_marginBottom="170dp"
+        android:ems="10"
+        android:hint="City/zip-code"
         android:inputType="textPersonName" />
 </RelativeLayout>

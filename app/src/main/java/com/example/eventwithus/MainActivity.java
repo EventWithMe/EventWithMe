@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.load.engine.Initializable;
 import com.example.eventwithus.fragments.ChatFragment;
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 
 
 @SuppressWarnings("FieldCanBeLocal")
-public class MainActivity extends AppCompatActivity implements Initializable, SearchFragment.FragmentSearchListener, StreamFragment.FragmentStreamListener {
+public class MainActivity extends AppCompatActivity implements Initializable, SearchFragment.FragmentSearchListener, StreamFragment.FragmentStreamListener, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String EXTRA_URL = "imageUrl";
     public static final String EXTRA_EVENT_NAME = "eventName";
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private static final String APP_ID = "9DA1B1F4-0BE6-4DA8-82C5-2E81DAB56F23"; // US-1 Demo
     public static final String VERSION = "3.0.40";
+    private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -98,6 +100,11 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
 
     @Override
     public void onInputStreamSent(CharSequence input) {
+
+    }
+
+    @Override
+    public void onRefresh() {
 
     }
 }
