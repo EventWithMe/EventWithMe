@@ -14,9 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eventwithus.models.EventHelper;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -54,7 +52,7 @@ public class MyEventDetailActivity extends AppCompatActivity {
         context = getApplicationContext();
 
         Bundle extras = getIntent().getExtras();
-        imageView = findViewById(R.id.ivPfp);
+        imageView = findViewById(R.id.imageViewProfilePicture);
         nameTV = findViewById(R.id.nameTV);
         cityTV = findViewById(R.id.cityTV);
         timeTV = findViewById(R.id.timeTV);

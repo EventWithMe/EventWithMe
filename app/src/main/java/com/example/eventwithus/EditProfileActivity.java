@@ -32,6 +32,7 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 // TODO: 12/2/2021 write changes to the DB below
@@ -189,7 +190,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 .into(ivPfpE);
         pfpChange = true;
         ParseUser user = ParseUser.getCurrentUser();
-        user.add(IMAGE_KEY, resizedImage);
+        ParseFile parseImage = parseFileConversion(resizedImage);
+        user.put(IMAGE_KEY, parseImage);
         user.saveInBackground();
     }
 
@@ -276,5 +278,12 @@ public class EditProfileActivity extends AppCompatActivity {
         image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
 
         return image;
+    }
+
+    private ParseFile parseFileConversion(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+        return new ParseFile("profile_picture", imageBytes);
     }
 }

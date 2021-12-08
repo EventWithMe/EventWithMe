@@ -6,15 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -22,8 +19,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -47,19 +42,17 @@ public class ProfileFragment extends Fragment {
     public static final String IMAGE_KEY = "image";
 
     ImageView ivPfp;
-    TextView tvFirstNameP;
-    TextView tvLastNameP;
-    TextView tvEmailP;
-    TextView tvCityP;
-    Button btnEditProfile;
+    TextView tvName;
+    TextView tvEmail;
+    TextView tvCity;
+    ImageButton btnEditProfile;
     Button btnLogout;
     Button btnEditPassword;
-    Toolbar toolbar;
 
     private ParseUser currentUser;
     Context context;
 
-    final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+    final ActivityResultLauncher<Intent> editProfileActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<>() {
                 @Override
@@ -73,13 +66,12 @@ public class ProfileFragment extends Fragment {
                             String lastName = intent.getStringExtra(LASTNAME_KEY);
                             String email = intent.getStringExtra(EMAIL_KEY);
                             String city = intent.getStringExtra(CITY_KEY);
-                            tvFirstNameP.setText(firstName);
-                            tvLastNameP.setText(lastName);
-                            tvEmailP.setText(email);
-                            tvCityP.setText(city);
+                            tvName.setText(String.format("%s %s", firstName, lastName));
+                            tvEmail.setText(email);
+                            tvCity.setText(city);
                         }
                     } else {
-                        Log.e(TAG, "result code not OK some error: " + result.getResultCode());
+                        Log.e(TAG, "Bad result code: " + result.getResultCode());
                     }
                 }
             });
@@ -96,7 +88,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -104,42 +95,47 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        FragmentActivity activity = getActivity();
 
-        currentUser = ParseUser.getCurrentUser(); // initializes the ParseUser
+        currentUser = ParseUser.getCurrentUser();
         context = getContext();
-        ivPfp = view.findViewById(R.id.ivPfp);
-        tvFirstNameP = view.findViewById(R.id.tvFirstNameP);
-        tvLastNameP = view.findViewById(R.id.tvLastNameP);
-        tvEmailP = view.findViewById(R.id.tvEmailP);
-        tvCityP = view.findViewById(R.id.tvCityP);
-        btnEditProfile = view.findViewById(R.id.btnEditProfile);
-        btnLogout = view.findViewById(R.id.btnLogout);
-        btnEditPassword = view.findViewById(R.id.btnEditPassword);
+        ivPfp = view.findViewById(R.id.imageViewProfilePicture);
+        tvName = view.findViewById(R.id.textViewName);
+        tvEmail = view.findViewById(R.id.textViewEmail);
+        tvCity = view.findViewById(R.id.textViewCity);
+        btnEditProfile = view.findViewById(R.id.buttonEditProfile);
+        btnLogout = view.findViewById(R.id.buttonLogout);
+        btnEditPassword = view.findViewById(R.id.buttonResetPassword);
 
         currentUser.fetchInBackground((object, e) -> {
             populateProfileData();
             loadProfilePic();
         });
 
+        if (activity == null) {
+            Log.e(TAG, "Could not retrieve activity");
+        }
+
         btnEditProfile.setOnClickListener(v -> {
             Log.i(TAG, "Edit Profile Button Clicked");
-            Intent intent = new Intent(getActivity().getBaseContext(), EditProfileActivity.class);
-            activityResultLauncher.launch(intent);
+            Intent intent = new Intent(context, EditProfileActivity.class);
+            editProfileActivityResultLauncher.launch(intent);
         });
 
         btnEditPassword.setOnClickListener(v -> {
             Log.i(TAG, "Edit Password Button Clicked");
-            Intent intent = new Intent(getActivity().getBaseContext(), PasswordChangeActivity.class);
-            getActivity().startActivity(intent);
+            Intent intent = new Intent(context, PasswordChangeActivity.class);
+            context.startActivity(intent);
         });
 
         btnLogout.setOnClickListener(v -> {
             Log.i(TAG, "Logout Button Clicked");
             ParseUser.logOut();
-            Intent intent = new Intent(getActivity().getBaseContext(), LoginActivity.class);
-            getActivity().startActivity(intent);
-            getActivity().finish();
+            Intent intent = new Intent(context, LoginActivity.class);
+            context.startActivity(intent);
+            if (activity != null) {
+                activity.finish();
+            }
         });
     }
 
@@ -147,7 +143,7 @@ public class ProfileFragment extends Fragment {
         Log.i(TAG, "Entering loadProfilePic");
         ParseFile file = currentUser.getParseFile(IMAGE_KEY);
         if(file == null) {
-            Log.i(TAG, "User has no pfp");
+            Log.i(TAG, "User has no profile picture");
             return;
         }
         Glide.with(context).load(file.getUrl()).transform(new RoundedCorners(50)).into(ivPfp);
@@ -156,27 +152,15 @@ public class ProfileFragment extends Fragment {
     private void populateProfileData() {
         FragmentActivity activity = getActivity();
         if (activity != null) {
-            String firstName = String.format("%s   %s",
-                    activity.getString(R.string.profile_fragment_label_first_name),
-                    currentUser.getString(FIRSTNAME_KEY));
-
-            String lastName = String.format("%s   %s",
-                    activity.getString(R.string.profile_fragment_label_last_name),
+            String name = String.format("%s %s",
+                    currentUser.getString(FIRSTNAME_KEY),
                     currentUser.getString(LASTNAME_KEY));
+            String email = currentUser.getString(EMAIL_KEY);
+            String city = currentUser.getString(CITY_KEY);
 
-            String email = String.format("%s   %s",
-                    activity.getString(R.string.profile_fragment_label_email),
-                    currentUser.getString(EMAIL_KEY));
-
-            String city = String.format("%s   %s",
-                    activity.getString(R.string.profile_fragment_label_city),
-                    currentUser.getString(CITY_KEY));
-
-            tvFirstNameP.setText(firstName);
-            tvLastNameP.setText(lastName);
-            tvEmailP.setText(email);
-            tvCityP.setText(city);
-
+            tvName.setText(name);
+            tvEmail.setText(email);
+            tvCity.setText(city);
         }
     }
 }
