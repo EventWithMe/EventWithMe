@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -44,10 +45,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StreamFragment extends Fragment  implements  EventAdapter.OnItemClickListener , Initializable {
+public class StreamFragment extends Fragment implements EventAdapter.OnItemClickListener, Initializable {
     private StreamFragment.FragmentStreamListener listener;
 
-    public interface  FragmentStreamListener{
+    public interface FragmentStreamListener {
         void onInputStreamSent(CharSequence input);
     }
 
@@ -62,13 +63,13 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     private EditText inputET;
     private RecyclerView mRecyclerView;
     private EventAdapter eventAdapter;
-    private ArrayList<EventItem> mEventList;
-    private ArrayList<EventDetail> mDetailList;
+    private ArrayList < EventItem > mEventList;
+    private ArrayList < EventDetail > mDetailList;
     private RequestQueue mRequestQueue;
     public static final String TAG = "StreamFragment";
     private RecyclerView rvEvents;
     protected EventsAdapter adapter;
-    protected List<Event> allEvents;
+    protected List < Event > allEvents;
     Spinner spinner2;
     String CategoryText = "";
     final String keyword = "keyword=";
@@ -86,12 +87,9 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     //String url5 = "https://app.ticketmaster.com/discovery/v2/events?+"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
     // String url6 = "https://app.ticketmaster.com/discovery/v2/events?keyword=rock&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio&daterange=this-weekend";
 
-
     //to get all genres by category
     String SportsGenreURL = "https://app.ticketmaster.com/discovery/v2/classifications/segments/KZFzniwnSyZfZ7v7nE?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
     String MusicGenreURL = "https://app.ticketmaster.com/discovery/v2/classifications/segments/KZFzniwnSyZfZ7v7nJ?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
-
-
 
     String music = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music";
     String sports = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports";
@@ -100,19 +98,15 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     String misc = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
     String artNThr = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
 
+    String sportsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&genreId=" + Genreid;
+    String musicGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId=" + Genreid;
+    String artsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentId=KZFzniwnSyZfZ7v7na&genreId=" + Genreid;
+    String filmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=film&genreId=" + Genreid;
 
+    String CurrCat = "";
 
-    String sportsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&genreId="+Genreid;
-    String musicGenre ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId="+Genreid;
-    String artsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentId=KZFzniwnSyZfZ7v7na&genreId="+Genreid;
-    String filmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=film&genreId="+Genreid;
-
-    String CurrCat= "";
-
-    Map<String, String> Genresid = new HashMap<>();
-    List<String> GenresList = new ArrayList<String>();
-
-
+    Map < String, String > Genresid = new HashMap < > ();
+    List < String > GenresList = new ArrayList < String > ();
 
     public StreamFragment() {
         // Required empty public constructor
@@ -122,8 +116,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            String  keyword = getArguments().getString("UserInput");
-            Toast.makeText(getContext(), "keyword :"+keyword, Toast.LENGTH_LONG).show();
+            String keyword = getArguments().getString("UserInput");
+            Toast.makeText(getContext(), "keyword :" + keyword, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -138,21 +132,73 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toast.makeText(getContext(), "onViewCreated ", Toast.LENGTH_LONG).show();
-        String[] Categories = { "All Events", "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
+        String[] Categories = {
+                "All Events",
+                "My Search",
+                "Concerts",
+                "Sports",
+                "Arts & Theater",
+                "Family",
+                "Film",
+                "Misc"
+        };
         String[] Dates = {};
-        List<String> allSports = Arrays.asList(GetGenres(SportsGenreURL));
-        List<String> allMusic = Arrays.asList(GetGenres(MusicGenreURL));
+        List < String > allSports = Arrays.asList(GetGenres(SportsGenreURL));
+        List < String > allMusic = Arrays.asList(GetGenres(MusicGenreURL));
         Log.i(TAG, String.valueOf(allSports));
         Log.i(TAG, String.valueOf(allMusic));
 
+        String[] MusicGenre = {
+                "Rock",
+                "Dance/Electronic",
+                "Country",
+                "Hip-Hop/Rap",
+                "Jazz",
+                "Pop",
+                "Classical"
+        };
+        String[] SportsGenre = {
+                "Boxing",
+                "Tennis",
+                "Swimming",
+                "Surfing",
+                "Volleyball",
+                "Aquatics",
+                "Fitness",
+                "Football",
+                "Soccer",
+                "Softball",
+                "Baseball",
+                "Basketball"
+        };
+        String[] ArtsNThtre = {
+                "Classical",
+                "Comedy",
+                "Cultural",
+                "Magic & Illusion",
+                "Miscellaneous",
+                "Miscellaneous Theatre",
+                "Music",
+                "Opera",
+                "Theatre"
+        };
+        String[] Film = {
+                "Action/Adventure",
+                "Animation",
+                "Arthouse",
+                "Comedy",
+                "Documentary",
+                "Drama",
+                "Family",
+                "Foreign",
+                "Horror",
+                "Miscellaneous",
+                "Music",
+                "Science Fiction",
+                "Urban"
+        };
 
-        String[] MusicGenre = { "Rock", "Dance/Electronic", "Country", "Hip-Hop/Rap", "Jazz", "Pop","Classical"};
-        String[] SportsGenre = { "Boxing","Tennis", "Swimming", "Surfing", "Volleyball","Aquatics","Fitness","Football","Soccer","Softball","Baseball","Basketball"};
-        String[] ArtsNThtre = {"Classical", "Comedy", "Cultural", "Magic & Illusion", "Miscellaneous","Miscellaneous Theatre","Music","Opera","Theatre"};
-        String[] Film = {"Action/Adventure","Animation","Arthouse","Comedy","Documentary","Drama","Family","Foreign","Horror","Miscellaneous","Music","Science Fiction","Urban"};
-
-
-        Map<String, String> Genresid = new HashMap<>();
+        Map < String, String > Genresid = new HashMap < > ();
         Genresid.put("Rock", "KnvZfZ7vAvt");
         Genresid.put("Dance/Electronic", "KnvZfZ7vAvF");
         Genresid.put("Country", "KnvZfZ7vAv6");
@@ -196,39 +242,27 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         Genresid.put("Miscellaneous", "KnvZfZ7vAka");
         Genresid.put("Science Fiction", "KnvZfZ7vAJa");
 
-
-
-
         Configuration configuration = new Configuration();
         int currentNightMode = configuration.uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switch (currentNightMode) {
             case Configuration.UI_MODE_NIGHT_NO:
                 // Night mode is not active, we're using the light theme
-                Log.i(TAG,"NIGHT NO");
+                Log.i(TAG, "NIGHT NO");
                 break;
             case Configuration.UI_MODE_NIGHT_YES:
                 // Night mode is active, we're using dark theme
-                Log.i(TAG,"NIGHT YES");
+                Log.i(TAG, "NIGHT YES");
                 break;
         }
 
-
-
-
-
-
-
-
-
         //TODO implement Dates for Search Filter
-        mEventList = new ArrayList<>();
-        mDetailList = new ArrayList<>();
+        mEventList = new ArrayList < > ();
+        mDetailList = new ArrayList < > ();
         backBTN = view.findViewById(R.id.backBTN);
         searchBtn = view.findViewById(R.id.searchBtn);
         spinner2 = view.findViewById(R.id.spinner2);
 
-
-       updateSpinner2(Categories);
+        updateSpinner2(Categories);
 
         mRecyclerView = view.findViewById(R.id.rvStreamList);
         mRecyclerView.setHasFixedSize(true);
@@ -243,40 +277,52 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
             }
         });
 
-
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view,
+            public void onItemSelected(AdapterView < ? > adapterView, View view,
                                        int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null) {
-                    if(spinner2.getSelectedItem() == "All Events"){
+                    if (spinner2.getSelectedItem() == "My Search") {
+
+                       StreamFilterDialog d = new StreamFilterDialog(getContext());
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.copyFrom(d.getWindow().getAttributes());
+                        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                        d.show();
+                        d.getWindow().setAttributes(lp);
+                      // Dialog.show();
+
+
+                    }
+                    if (spinner2.getSelectedItem() == "All Events") {
                         mEventList.clear();
                         parseJSON2(misc);
 
                     }
-                    if(Arrays.asList(MusicGenre).contains(spinner2.getSelectedItem().toString())){
+                    if (Arrays.asList(MusicGenre).contains(spinner2.getSelectedItem().toString())) {
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
-                        musicGenre ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId="+Genreid;
+                        musicGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId=" + Genreid;
                         mEventList.clear();
                         parseJSON2(musicGenre);
                     }
-                    if(Arrays.asList(SportsGenre).contains(spinner2.getSelectedItem().toString())){
+                    if (Arrays.asList(SportsGenre).contains(spinner2.getSelectedItem().toString())) {
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
-                        sportsGenre ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&genreId="+Genreid;
+                        sportsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&genreId=" + Genreid;
                         mEventList.clear();
                         parseJSON2(sportsGenre);
                     }
-                    if(Arrays.asList(ArtsNThtre).contains(spinner2.getSelectedItem().toString())){
+                    if (Arrays.asList(ArtsNThtre).contains(spinner2.getSelectedItem().toString())) {
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
-                        artsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentId=KZFzniwnSyZfZ7v7na&genreId="+Genreid;
+                        artsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentId=KZFzniwnSyZfZ7v7na&genreId=" + Genreid;
                         mEventList.clear();
                         parseJSON2(artsGenre);
                     }
-                    if(Arrays.asList(Film).contains(spinner2.getSelectedItem().toString())){
+                    if (Arrays.asList(Film).contains(spinner2.getSelectedItem().toString())) {
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
-                        filmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=film&genreId="+Genreid;
+                        filmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=film&genreId=" + Genreid;
                         mEventList.clear();
                         parseJSON2(filmGenre);
                     }
@@ -289,9 +335,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
             }
 
-
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onNothingSelected(AdapterView < ? > adapterView) {
 
                 // TODO Auto-generated method stub
             }
@@ -301,7 +346,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
             @Override
             public void onClick(View view) {
 
-               Toast.makeText(getContext(), "searchBtn Clicked ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "searchBtn Clicked ", Toast.LENGTH_LONG).show();
                 // clear all old events displayed before displaying new ones
                 mEventList.clear();
                 String cityName = "";
@@ -353,8 +398,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         });
     }
 
-    public void updateSpinner2(String[] options){
-        ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,options);
+    public void updateSpinner2(String[] options) {
+        ArrayAdapter aa = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, options);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(aa);
         aa.notifyDataSetChanged();
@@ -365,32 +410,31 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     public void updateEditText(CharSequence category, CharSequence KeyWord, CharSequence cityName) {
         // CategoryText= (String) category;
         keyword2 = (String) KeyWord;
-        music = "https://app.ticketmaster.com/discovery/v2/events?keyword=&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&city="+cityName;
-        sports = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&city="+cityName;
-        family = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city="+cityName;
-        film = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film&city="+cityName;
-        misc = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city="+cityName;
-        artNThr = "https://app.ticketmaster.com/discovery/v2/events?"+keyword2+"&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*&city="+cityName;
+        music = "https://app.ticketmaster.com/discovery/v2/events?keyword=&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&city=" + cityName;
+        sports = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&city=" + cityName;
+        family = "https://app.ticketmaster.com/discovery/v2/events?" + keyword2 + "&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=" + cityName;
+        film = "https://app.ticketmaster.com/discovery/v2/events?" + keyword2 + "&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film&city=" + cityName;
+        misc = "https://app.ticketmaster.com/discovery/v2/events?" + keyword2 + "&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=" + cityName;
+        artNThr = "https://app.ticketmaster.com/discovery/v2/events?" + keyword2 + "&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*&city=" + cityName;
     }
 
-    public void updateCityDateKeywordText(CharSequence City, LocalDate date, CharSequence Keyword){
+    public void updateCityDateKeywordText(CharSequence City, LocalDate date, CharSequence Keyword) {
 
     }
 
     private String[] GetGenres(String url) {
 
-
         Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener < JSONObject > () {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             GenresList.clear();
                             JSONArray jsonArray = response.getJSONObject("_embedded").getJSONArray("genres");
 
-                            Log.d("Main Activity","onResponseSuccess");
+                            Log.d("Main Activity", "onResponseSuccess");
                             String eventImage = "";
 
                             for (int i = 0; i < jsonArray.length(); i++) {
@@ -398,14 +442,14 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                 String id = hit.getString("id");
                                 String GenreName = hit.getString("name");
                                 GenresList.add(GenreName);
-                                Genresid.put(GenreName,id);
+                                Genresid.put(GenreName, id);
                             }
                         } catch (JSONException e) {
-                            Log.e(TAG,"onResponse Failure :"+e);
+                            Log.e(TAG, "onResponse Failure :" + e);
                             e.printStackTrace();
                         }
-                        Log.i(TAG,"Total Retrieved GenresList :"+GenresList);
-                        Log.i(TAG,"Total Retrieved Genresid HashMap :"+Genresid);
+                        Log.i(TAG, "Total Retrieved GenresList :" + GenresList);
+                        Log.i(TAG, "Total Retrieved Genresid HashMap :" + Genresid);
                     }
 
                 }, new Response.ErrorListener() {
@@ -419,19 +463,18 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         return strarray;
     }
 
-
     private void parseJSON2(String url) {
-        Log.i(TAG, url );
+        Log.i(TAG, url);
         //Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener < JSONObject > () {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
 
                             JSONArray jsonArray = response.getJSONObject("_embedded").getJSONArray("events");
 
-                            Log.d("Main Activity","onResponseSuccess");
+                            Log.d("Main Activity", "onResponseSuccess");
                             String eventImage = "";
                             String venueName = "";
                             String GenreName = "";
@@ -445,14 +488,13 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                 JSONObject _embedded2 = jsonArray.getJSONObject(i).isNull("_embedded") ? null : jsonArray.getJSONObject(i).getJSONObject("_embedded");
                                 //JSONObject _embedded2 = hit.getJSONObject("_embedded");
 
-                                JSONArray venuesArray = _embedded2.getJSONArray("venues");  //GET VENUES
+                                JSONArray venuesArray = _embedded2.getJSONArray("venues"); //GET VENUES
                                 for (int k = 0; k < venuesArray.length(); k++) {
                                     JSONObject elem = venuesArray.getJSONObject(k);
 
-                                    venueName = elem.getString("name");//gets the image url
+                                    venueName = elem.getString("name"); //gets the image url
 
                                 }
-
 
                                 JSONArray classifications = hit.getJSONArray("classifications"); //GET GENRES
                                 for (int count = 0; count < classifications.length(); count++) {
@@ -462,25 +504,25 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                     id = Genre.get("id").toString();
                                 }
 
-                                JSONArray imagesArray = hit.getJSONArray("images");  //GET IMAGES
+                                JSONArray imagesArray = hit.getJSONArray("images"); //GET IMAGES
 
                                 for (int j = 0; j < imagesArray.length(); j++) {
                                     JSONObject elem = imagesArray.getJSONObject(j);
 
-                                    eventImage = elem.getString("url");//gets the image url
+                                    eventImage = elem.getString("url"); //gets the image url
                                 }
 
-                               // Genresid.put(GenreName,id);
+                                // Genresid.put(GenreName,id);
                                 mEventList.add(new EventItem(eventImage, eventName, date));
-                                mDetailList.add(new EventDetail(info,eventid, venueName));
+                                mDetailList.add(new EventDetail(info, eventid, venueName));
 
                             }
                             eventAdapter = new EventAdapter(getActivity().getBaseContext(), mEventList);
                             mRecyclerView.setAdapter(eventAdapter);
-                            eventAdapter.setOnItemClickListener(StreamFragment.this );
+                            eventAdapter.setOnItemClickListener(StreamFragment.this);
 
                         } catch (JSONException e) {
-                            Log.e(TAG,"onResponse Failure :"+e);
+                            Log.e(TAG, "onResponse Failure :" + e);
                             e.printStackTrace();
                         }
                     }
@@ -496,7 +538,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
     @Override
     public void onItemClick(int position) {
 
-        Intent detailIntent = new Intent(getActivity().getBaseContext(), EventDetailActivity.class );
+        Intent detailIntent = new Intent(getActivity().getBaseContext(), EventDetailActivity.class);
         EventItem clickedItem = mEventList.get(position);
         EventDetail clickedItem1 = mDetailList.get(position);
         // JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.GET, ur)
