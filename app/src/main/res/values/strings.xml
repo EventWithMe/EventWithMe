@@ -65,6 +65,8 @@
     <string name="search_fragment_content_desc_search">search</string>
 
     <string name="stream_fragment_button_search">Search</string>
+    <string name="stream_fragment_button_back">Back</string>
+    <string name="stream_fragment_spinner_event_type">Event Type</string>
 
     <string name="chat_fragment_button_send">Send</string>
     <string name="chat_fragment_text_hint_message">type a message</string>
@@ -77,9 +79,13 @@
     <string name="profile_fragment_label_last_name">Last name:</string>
     <string name="profile_fragment_label_email">Email:</string>
     <string name="profile_fragment_label_city">City:</string>
-    <string name="profile_fragment_button_edit_profile">Edit Account</string>
-    <string name="profile_fragment_button_edit_password">Edit Password</string>
+    <string name="profile_fragment_button_edit_profile">Edit Profile</string>
+    <string name="profile_fragment_button_edit_password">Reset Password</string>
     <string name="profile_fragment_button_logout">Logout</string>
+    <string name="profile_fragment_content_desc_profile_picture">Profile picture</string>
+    <string name="profile_fragment_label_events">Events</string>
+    <string name="profile_fragment_label_following">Following</string>
+    <string name="profile_fragment_label_followers">Followers</string>
 
     <string name="edit_profile_activity_content_desc_profile_picture">Profile Picture</string>
     <string name="edit_profile_activity_hint_email">Email</string>
@@ -101,6 +107,5 @@
     <string name="image_chooser_popup_label_choices">Take a new photo or access gallery?</string>
     <string name="image_chooser_popup_button_camera">Camera</string>
     <string name="image_chooser_popup_button_gallery">Gallery</string>
-    <string name="profile_fragment_content_desc_profile_picture">Profile picture</string>
 
 </resources>

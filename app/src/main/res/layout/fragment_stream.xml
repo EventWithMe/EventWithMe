@@ -48,7 +48,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="@drawable/leftarrow"
-                android:text="Button"
+                android:contentDescription="@string/stream_fragment_button_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/searchBtn"
                 app:layout_constraintTop_toTopOf="parent"
@@ -56,10 +56,12 @@
 
             <Spinner
                 android:id="@+id/spinner2"
-                android:layout_width="278dp"
+                android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
+                android:contentDescription="@string/stream_fragment_spinner_event_type"
+                android:dropDownWidth="500dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/backBTN"
                 app:layout_constraintStart_toStartOf="parent"
