@@ -68,7 +68,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editTextCityName"
         android:layout_width="131dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextSearch"

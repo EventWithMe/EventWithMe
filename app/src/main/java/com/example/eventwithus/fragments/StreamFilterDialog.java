@@ -27,8 +27,13 @@ public class StreamFilterDialog extends Dialog  {
 
     Button btnGet;
     TextView tvw;
-    EditText editText1;
+    EditText editTextStartDate;
+    EditText editTextEndDate;
     DatePickerDialog picker;
+    EditText editTextSearch;
+    EditText editTextCityName;
+
+
     public StreamFilterDialog(@NonNull Context context) {
         super(context);
     }
@@ -42,15 +47,17 @@ public class StreamFilterDialog extends Dialog  {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_stream_filter);
-
-       editText1 = findViewById(R.id.editTextStart);
+        editTextEndDate = findViewById(R.id.editTextEnd);
+       editTextStartDate = findViewById(R.id.editTextStart);
+       editTextCityName = findViewById(R.id.editTextCityName);
+       editTextSearch = findViewById(R.id.editTextSearch);
        btnGet = findViewById(R.id.button1);
        tvw = findViewById(R.id.textViewDisplayStart);
 
 
      //  editText1.setInputType(InputType.TYPE_NULL);
 
-       editText1.setOnClickListener(new View.OnClickListener() {
+       editTextStartDate.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                final Calendar cldr = Calendar.getInstance();
@@ -62,17 +69,36 @@ public class StreamFilterDialog extends Dialog  {
                        new DatePickerDialog.OnDateSetListener() {
                            @Override
                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                               editText1.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                               editTextStartDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                            }
                        }, year, month, day);
                picker.show();
            }
        });
+        editTextEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                picker = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                editTextEndDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
+
         btnGet=findViewById(R.id.button1);
         btnGet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvw.setText("Selected Date: "+ editText1.getText());
+                tvw.setText("Selected Date: "+ editTextStartDate.getText());
             }
         });
 
