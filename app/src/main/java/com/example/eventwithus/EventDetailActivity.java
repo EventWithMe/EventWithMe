@@ -36,6 +36,7 @@ public class EventDetailActivity extends AppCompatActivity {
     TextView textviewEventType;
     TextView textviewEventVenue;
     TextView tvDate;
+    TextView tvTime;
     ImageView imageView;
 
     private boolean rsvp; // variables is used to check if user has already rsvp'd to the event
@@ -61,15 +62,15 @@ public class EventDetailActivity extends AppCompatActivity {
         String eventDate = intent.getStringExtra(EXTRA_EVENT_DATE);
         String eventID = intent.getStringExtra(EXTRA_EVENT_ID);
         String venueName = intent.getStringExtra(EXTRA_EVENT_VENUE_NAME);
-        String startTime = intent.getStringExtra(EXTRA_EVENT_START_TIME);
+        String startTime = getResources().getString(R.string.event_detail_activity_date_time_at) + intent.getStringExtra(EXTRA_EVENT_START_TIME);
 
         // initialize the UI elements
         imageView = findViewById(R.id.image_view_detail);
         textviewEventName = findViewById(R.id.text_view_event_name);
         textviewEventType = findViewById(R.id.text_view_event_desc);
         textviewEventVenue = findViewById(R.id.text_view_venue_info);
-
         tvDate = findViewById(R.id.tvDate);
+        tvTime = findViewById(R.id.tvTime);
         btnRSVP = findViewById(R.id.btnRSVP);
 
         // populate the UI elements with event data
@@ -78,6 +79,7 @@ public class EventDetailActivity extends AppCompatActivity {
         textviewEventType.setText(String.format(getString(R.string.event_detail_activity_type_label), eventDescription));
         textviewEventVenue.setText(String.format(getString(R.string.event_detail_activity_venue_label), venueName));
         tvDate.setText(EventHelper.formatJsonDate(eventDate));
+        tvTime.setText(startTime);
 
 
         //printEvents();
@@ -100,7 +102,7 @@ public class EventDetailActivity extends AppCompatActivity {
             if(rsvp) {
                 cancelRSVP(eventID);
             } else {
-                rsvpEvent(eventID, eventDate, eventDescription, eventName, venueName, imageUrl);
+                rsvpEvent(eventID, eventDate, eventDescription, eventName, venueName, imageUrl, startTime);
             }
         });
     }
@@ -176,11 +178,11 @@ public class EventDetailActivity extends AppCompatActivity {
     }
 
     // updates Parse DB User eventsinfo column
-    private void rsvpEvent(String eventId, String date, String eventDescription, String eventName, String venueName, String imageUrl) {
+    private void rsvpEvent(String eventId, String date, String eventDescription, String eventName, String venueName, String imageUrl, String startTime) {
         Log.i(TAG, "adding event Id: " + eventId + " on " + date);
         Toast.makeText(context, "Event Id:" + eventId, Toast.LENGTH_SHORT).show();
         String eventsinfo = currentUser.getString(PARSE_RSVP_KEY);
-        eventsinfo += "<" + eventId.trim() + ";" + date.trim() + ";" + eventDescription.trim() + ";" + eventName.trim() + ";" + venueName.trim() + ";" + imageUrl.trim();
+        eventsinfo += "<" + eventId.trim() + ";" + date.trim() + ";" + eventDescription.trim() + ";" + eventName.trim() + ";" + venueName.trim() + ";" + imageUrl.trim() + ";" + startTime;
         currentUser.put(PARSE_RSVP_KEY, eventsinfo);
         currentUser.saveInBackground(e -> {
             if (e == null) {
