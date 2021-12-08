@@ -47,7 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogIn = findViewById(R.id.buttonLoginLogIn);
         buttonSignUp = findViewById(R.id.buttonLoginSignUp);
 
-        buttonLogIn.setEnabled(false);
+        textLayoutUsername.setErrorIconDrawable(null);
+        textLayoutPassword.setErrorIconDrawable(null);
 
         buttonLogIn.setOnClickListener(v -> {
             String username = editTextUsername.getText().toString();

@@ -40,8 +40,6 @@
     <string name="my_event_detail_activity_button_cancel_rsvp">Cancel RSVP</string>
     <string name="my_event_detail_activity_content_desc_profile_picture">Profile picture</string>
 
-    <string name="password_change_activity_password_requirements">Password Requirements:\n\t- 8 to 20 characters long\n\t- At least one upper case character\n\t- at least one symbol\n\t-at least one digit</string>
-
     <string name="bottom_navigation_menu_search">Search</string>
     <string name="bottom_navigation_menu_stream">Stream</string>
     <string name="bottom_navigation_menu_rsvp">RSVP</string>
@@ -106,10 +104,19 @@
     <string name="password_change_activity_hint_new_password">New Password</string>
     <string name="password_change_activity_hint_confirm_new_password">Confirm New Password</string>
     <string name="password_change_activity_button_save_password">Save Password</string>
+    <string name="password_change_activity_password_requirements">Password Requirements:\n\t- 8 to 20 characters long\n\t- at least one upper case character\n\t- at least one symbol\n\t- at least one digit</string>
+    <string name="password_change_activity_error_password_mismatch">Passwords do not match</string>
+    <string name="password_change_activity_error_empty_current_password">Current password is required</string>
+    <string name="password_change_activity_error_empty_new_password">Password is required</string>
+    <string name="password_change_activity_error_password_requirements">Password does not meet password requirements</string>
+    <string name="password_change_activity_error_password_incorrect">Password is incorrect</string>
 
     <string name="image_chooser_popup_label_choices">Take a new photo or access gallery?</string>
     <string name="image_chooser_popup_button_camera">Camera</string>
     <string name="image_chooser_popup_button_gallery">Gallery</string>
     <string name="edit_profile_activity_hint_bio">Bio</string>
+    <string name="password_change_activity_error_unknown">Unknown error updating password</string>
+    <string name="password_change_activity_toast_success">Password changed successfully!</string>
+    <string name="signup_activity_hint_city">city</string>
 
 </resources>
