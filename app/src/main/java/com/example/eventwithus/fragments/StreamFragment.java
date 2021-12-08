@@ -103,6 +103,8 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
     String sportsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&genreId="+Genreid;
     String musicGenre ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId="+Genreid;
+    String artsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentId=KZFzniwnSyZfZ7v7na&genreId="+Genreid;
+    String filmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=film&genreId="+Genreid;
 
     String CurrCat= "";
 
@@ -137,8 +139,74 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
         Toast.makeText(getContext(), "onViewCreated ", Toast.LENGTH_LONG).show();
         String[] Categories = { "All Events", "Concerts", "Sports", "Arts & Theater", "Family", "Film", "Misc"};
         String[] Dates = {};
-        String[] MusicGenres = GetGenres(MusicGenreURL);
-        String[] SportGenres = GetGenres(SportsGenreURL);
+        List<String> allSports = Arrays.asList(GetGenres(SportsGenreURL));
+        List<String> allMusic = Arrays.asList(GetGenres(MusicGenreURL));
+        Log.i(TAG, String.valueOf(allSports));
+        Log.i(TAG, String.valueOf(allMusic));
+
+
+        String[] MusicGenre = { "Rock", "Dance/Electronic", "Country", "Hip-Hop/Rap", "Jazz", "Pop","Classical"};
+        String[] SportsGenre = { "Boxing","Tennis", "Swimming", "Surfing", "Volleyball","Aquatics","Fitness","Football","Soccer","Softball","Baseball","Basketball"};
+        String[] ArtsNThtre = {"Classical", "Comedy", "Cultural", "Magic & Illusion", "Miscellaneous","Miscellaneous Theatre","Music","Opera","Theatre"};
+        String[] Film = {"Action/Adventure","Animation","Arthouse","Comedy","Documentary","Drama","Family","Foreign","Horror","Miscellaneous","Music","Science Fiction","Urban"};
+
+
+        Map<String, String> Genresid = new HashMap<>();
+        Genresid.put("Rock", "KnvZfZ7vAvt");
+        Genresid.put("Dance/Electronic", "KnvZfZ7vAvF");
+        Genresid.put("Country", "KnvZfZ7vAv6");
+        Genresid.put("Hip-Hop/Rap", "KnvZfZ7vAv1");
+        Genresid.put("Classical", "KnvZfZ7vAeA");
+        Genresid.put("Pop", "KnvZfZ7vAev");
+        Genresid.put("Jazz", "KnvZfZ7vAvE");
+        //sports
+        Genresid.put("Boxing", "KnvZfZ7vAdA");
+        Genresid.put("Volleyball", "KnvZfZ7vAA7");
+        Genresid.put("Aquatics", "KnvZfZ7vAeI");
+        Genresid.put("Fitness", "KnvZfZ7vAJ7");
+        Genresid.put("Football", "KnvZfZ7vAdE");
+        Genresid.put("Soccer", "KnvZfZ7vA7E");
+        Genresid.put("Swimming", "KnvZfZ7vA7n");
+        Genresid.put("Baseball", "KnvZfZ7vAdv");
+        Genresid.put("Basketball", "KnvZfZ7vAde");
+        Genresid.put("Surfing", "KnvZfZ7vA7t");
+        Genresid.put("Tennis", "KnvZfZ7vAAv");
+        //Arts & Theater
+        Genresid.put("Classical", "KnvZfZ7v7nJ");
+        Genresid.put("Comedy", "KnvZfZ7vAe1");
+        Genresid.put("Cultural", "KnvZfZ7v7nE");
+        Genresid.put("Dance", "KnvZfZ7v7nI");
+        Genresid.put("Magic & Illusion", "KnvZfZ7v7lv");
+        Genresid.put("Miscellaneous", "KnvZfZ7v7le");
+        Genresid.put("Miscellaneous Theatre", "KnvZfZ7v7nJ");
+        Genresid.put("Music", "KnvZfZ7v7lA");
+        Genresid.put("Opera", "KnvZfZ7v7lA");
+        Genresid.put("Theatre", "KnvZfZ7v7l1");
+        //Family
+        Genresid.put("Action/Adventure", "KnvZfZ7vAke");
+        Genresid.put("Animation", "KnvZfZ7vAkd");
+        Genresid.put("Arthouse", "KnvZfZ7vAk7");
+        Genresid.put("Comedy", "KnvZfZ7vAkA");
+        Genresid.put("Documentary", "KnvZfZ7vAkk");
+        Genresid.put("Drama", "KnvZfZ7vAk6");
+        Genresid.put("Family", "KnvZfZ7vAkF");
+        Genresid.put("Foreign", "KnvZfZ7vAk1");
+        Genresid.put("Horror", "KnvZfZ7vAJk");
+        Genresid.put("Miscellaneous", "KnvZfZ7vAka");
+        Genresid.put("Science Fiction", "KnvZfZ7vAJa");
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //TODO implement Dates for Search Filter
         mEventList = new ArrayList<>();
@@ -169,68 +237,42 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
-
-
                 Object item = adapterView.getItemAtPosition(position);
-                Toast.makeText(getContext(), "item selected is :"+spinner2.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
-                Toast.makeText(getContext(), "item = "+item.toString(),
-                        Toast.LENGTH_SHORT).show();
                 if (item != null) {
-
-                    switch (CurrCat) {
-                        case "All Events":
-                            mEventList.clear();
-                            parseJSON2(misc);
-                            updateSpinner2(Categories);
-                            break;
-                        case "Concerts":
-                            Genreid = Genresid.get(spinner2.getSelectedItem().toString());
-                            musicGenre ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId="+Genreid;
-                            mEventList.clear();
-                            parseJSON2(musicGenre);
-                            break;
-                        case "Sports":
-                            Genreid = Genresid.get(spinner2.getSelectedItem().toString());
-                            sportsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&genreId="+Genreid;
-                            mEventList.clear();
-                            parseJSON2(sportsGenre);
-
-                            break;
-                        case "Family":
-                            System.out.println("Family");
-                            parseJSON2(family);
-                            break;
-                        case "Film":
-                            System.out.println("Film");
-                            parseJSON2(film);
-                            break;
-                        case "Misc":
-                            System.out.println("Misc");
-                            parseJSON2(misc);
-                            break;
-                        case "Arts & Theater":
-                            System.out.println("Saturday");
-                            parseJSON2(artNThr);
-
-                            break;
-                        default:
-                            parseJSON2(misc);
-
-                    }
-
-/**
-                    if(CurrCat =="Concerts"){
+                    if(Arrays.asList(MusicGenre).contains(spinner2.getSelectedItem().toString())){
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
                         musicGenre ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId="+Genreid;
                         mEventList.clear();
                         parseJSON2(musicGenre);
                     }
- **/
+                    if(Arrays.asList(SportsGenre).contains(spinner2.getSelectedItem().toString())){
+                        Genreid = Genresid.get(spinner2.getSelectedItem().toString());
+                        sportsGenre ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&genreId="+Genreid;
+                        mEventList.clear();
+                        parseJSON2(sportsGenre);
+                    }
+                    if(Arrays.asList(ArtsNThtre).contains(spinner2.getSelectedItem().toString())){
+                        Genreid = Genresid.get(spinner2.getSelectedItem().toString());
+                        artsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentId=KZFzniwnSyZfZ7v7na&genreId="+Genreid;
+                        mEventList.clear();
+                        parseJSON2(artsGenre);
+                    }
+                    if(Arrays.asList(Film).contains(spinner2.getSelectedItem().toString())){
+                        Genreid = Genresid.get(spinner2.getSelectedItem().toString());
+                        filmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=film&genreId="+Genreid;
+                        mEventList.clear();
+                        parseJSON2(filmGenre);
+                    }
 
+                    Toast.makeText(getContext(), item.toString(),
+                            Toast.LENGTH_SHORT).show();
                 }
-
+                Toast.makeText(getContext(), "Selected",
+                        Toast.LENGTH_SHORT).show();
 
             }
+
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 // TODO Auto-generated method stub
@@ -241,39 +283,38 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
             @Override
             public void onClick(View view) {
 
-
-               CategoryText = spinner2.getSelectedItem().toString();
                Toast.makeText(getContext(), "searchBtn Clicked ", Toast.LENGTH_LONG).show();
                 // clear all old events displayed before displaying new ones
                 mEventList.clear();
                 String cityName = "";
-                CurrCat = CategoryText;
-                switch (CategoryText) {
-                    case "All Events":
 
+                switch (spinner2.getSelectedItem().toString()) {
+                    case "All Events":
                         System.out.println("All Events");
                         parseJSON2(misc);
                         break;
                     case "Concerts":
-                        String[] MusicGenres = GetGenres(MusicGenreURL);
+                        CurrCat = "rock";
                         System.out.println("Concerts");
                         parseJSON2(music);
-                        updateSpinner2(MusicGenres);
-
+                        updateSpinner2(MusicGenre);
                         break;
                     case "Sports":
-                        String[] SportGenres = GetGenres(SportsGenreURL);
+                        CurrCat = "sportz";
+
                         System.out.println("Sports");
                         parseJSON2(sports);
-                        updateSpinner2(SportGenres);
+                        updateSpinner2(SportsGenre);
                         break;
                     case "Family":
+                        CurrCat = "family";
                         System.out.println("Family");
                         parseJSON2(family);
                         break;
                     case "Film":
                         System.out.println("Film");
                         parseJSON2(film);
+                        updateSpinner2(Film);
                         break;
                     case "Misc":
                         System.out.println("Misc");
@@ -282,6 +323,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                     case "Arts & Theater":
                         System.out.println("Saturday");
                         parseJSON2(artNThr);
+                        updateSpinner2(ArtsNThtre);
 
                         break;
                     default:
@@ -361,9 +403,6 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
 
     private void parseJSON2(String url) {
-        Toast.makeText(getContext(),CategoryText, Toast.LENGTH_LONG).show();
-        Toast.makeText(getContext(),keyword2, Toast.LENGTH_LONG).show();
-        Toast.makeText(getContext(),url, Toast.LENGTH_LONG).show();
         Log.i(TAG, url );
         //Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
