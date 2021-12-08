@@ -32,18 +32,23 @@
 
         <activity
             android:name=".PasswordChangeActivity"
+            android:configChanges="uiMode"
             android:exported="true" />
         <activity
             android:name=".EditProfileActivity"
+            android:configChanges="uiMode"
             android:exported="true" />
         <activity
             android:name=".MyEventDetailActivity"
+            android:configChanges="uiMode"
             android:exported="true" />
         <activity
             android:name=".SignupActivity"
+            android:configChanges="uiMode"
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
+            android:configChanges="uiMode"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

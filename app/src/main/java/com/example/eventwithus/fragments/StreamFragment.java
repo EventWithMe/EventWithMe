@@ -1,6 +1,7 @@
 package com.example.eventwithus.fragments;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -198,7 +199,18 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
 
 
-
+        Configuration configuration = new Configuration();
+        int currentNightMode = configuration.uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                // Night mode is not active, we're using the light theme
+                Log.i(TAG,"NIGHT NO");
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                // Night mode is active, we're using dark theme
+                Log.i(TAG,"NIGHT YES");
+                break;
+        }
 
 
 
@@ -242,6 +254,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                     if(spinner2.getSelectedItem() == "All Events"){
                         mEventList.clear();
                         parseJSON2(misc);
+
                     }
                     if(Arrays.asList(MusicGenre).contains(spinner2.getSelectedItem().toString())){
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
@@ -279,6 +292,7 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
                 // TODO Auto-generated method stub
             }
         });
