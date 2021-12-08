@@ -239,6 +239,10 @@ public class StreamFragment extends Fragment  implements  EventAdapter.OnItemCli
                                        int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null) {
+                    if(spinner2.getSelectedItem() == "All Events"){
+                        mEventList.clear();
+                        parseJSON2(misc);
+                    }
                     if(Arrays.asList(MusicGenre).contains(spinner2.getSelectedItem().toString())){
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
                         musicGenre ="https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId="+Genreid;
