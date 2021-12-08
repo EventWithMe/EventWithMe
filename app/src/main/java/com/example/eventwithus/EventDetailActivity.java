@@ -56,7 +56,7 @@ public class EventDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String imageUrl = intent.getStringExtra(EXTRA_URL);
         String eventName = intent.getStringExtra(EXTRA_EVENT_NAME);
-        String eventType = intent.getStringExtra(EXTRA_EVENT_TYPE);
+        String eventDescription = intent.getStringExtra(EXTRA_EVENT_TYPE);
         String eventDate = intent.getStringExtra(EXTRA_EVENT_DATE);
         String eventID = intent.getStringExtra(EXTRA_EVENT_ID);
         String venueName = intent.getStringExtra(EXTRA_EVENT_VENUE_NAME);
@@ -73,7 +73,7 @@ public class EventDetailActivity extends AppCompatActivity {
         // populate the UI elements with event data
         Picasso.with(this).load(imageUrl).fit().centerInside().transform(new RoundedTransformation(50, 0)).into(imageView);
         textviewEventName.setText(eventName);
-        textviewEventType.setText(String.format(getString(R.string.event_detail_activity_type_label), eventType));
+        textviewEventType.setText(String.format(getString(R.string.event_detail_activity_type_label), eventDescription));
         textviewEventVenue.setText(String.format(getString(R.string.event_detail_activity_venue_label), venueName));
         tvDate.setText(EventHelper.formatJsonDate(eventDate));
 
@@ -98,7 +98,7 @@ public class EventDetailActivity extends AppCompatActivity {
             if(rsvp) {
                 cancelRSVP(eventID);
             } else {
-                rsvpEvent(eventID, eventDate);
+                rsvpEvent(eventID, eventDate, eventDescription, eventName, venueName, imageUrl);
             }
         });
     }
@@ -107,7 +107,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private void rsvpCheck(String eventId) {
         Log.d(TAG, "RSVP CHECK:");
         for(String s : events) {
-            String[] eventInfo = s.split("_");
+            String[] eventInfo = s.split(";");
             System.out.print(eventInfo[0] + " " + eventId);
             System.out.println();
             if(eventInfo[0].equals(eventId)){
@@ -127,7 +127,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         Log.d(TAG, "EVENT LIST CHECKING:");
         for(int i = 0; i < events.size(); i++) {
-            String[] format = events.get(i).split("_");
+            String[] format = events.get(i).split(";");
             Log.d(TAG, format[0] + " " + eventId);
             if(format[0].equals(eventId)) {
                 events.remove(i);
@@ -139,7 +139,7 @@ public class EventDetailActivity extends AppCompatActivity {
         System.out.println(events);
 
         for(int i = 0; i < events.size() - 1; i++) {
-            updated.append(events.get(i)).append(", ");
+            updated.append(events.get(i)).append("<");
         }
         updated.append(events.get(events.size() - 1));
 
@@ -170,15 +170,15 @@ public class EventDetailActivity extends AppCompatActivity {
                 Log.e(TAG, "Error: " + e.getMessage());
             }
         });
-
         EventHelper.refreshUserData();
     }
 
     // updates Parse DB User eventsinfo column
-    private void rsvpEvent(String eventId, String date) {
+    private void rsvpEvent(String eventId, String date, String eventDescription, String eventName, String venueName, String imageUrl) {
         Log.i(TAG, "adding event Id: " + eventId + " on " + date);
+        Toast.makeText(context, "Event Id:" + eventId, Toast.LENGTH_SHORT).show();
         String eventsinfo = currentUser.getString(PARSE_RSVP_KEY);
-        eventsinfo += "," + eventId + "_" + date;
+        eventsinfo += "<" + eventId.trim() + ";" + date.trim() + ";" + eventDescription.trim() + ";" + eventName.trim() + ";" + venueName.trim() + ";" + imageUrl.trim();
         currentUser.put(PARSE_RSVP_KEY, eventsinfo);
         currentUser.saveInBackground(e -> {
             if (e == null) {

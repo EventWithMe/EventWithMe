@@ -27,7 +27,7 @@ public class EventHelper {
             String eventsString = currentUser.getString(EVENTS_KEY);
             String[] events = new String[0];
             if (eventsString != null) {
-                events = eventsString.split(",");
+                events = eventsString.split("<");
             }
             Log.d(TAG, "EH EVENTS:");
             Log.d(TAG, Arrays.toString(events));
