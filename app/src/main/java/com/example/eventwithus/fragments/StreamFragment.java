@@ -59,6 +59,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
     public static final String EXTRA_EVENT_ID = "id";
     public static final String EXTRA_EVENT_VENUE_NAME = "venueName";
     public static final String EXTRA_EVENT_START_TIME = "startTime";
+    public static final String EXTRA_VENUE_CITY = "venueCity";
 
     private Button searchBtn, backBTN;
     private EditText inputET;
@@ -480,6 +481,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                             String venueName = "";
                             String GenreName = "";
                             String id = "";
+                            String venueCity="";
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject hit = jsonArray.getJSONObject(i);
                                 String info = jsonArray.getJSONObject(i).isNull("info") ? null : jsonArray.getJSONObject(i).getString("info");
@@ -495,7 +497,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                                     JSONObject elem = venuesArray.getJSONObject(k);
 
                                     venueName = elem.getString("name"); //gets the image url
-
+                                    venueCity = elem.getString("city");
                                 }
 
                                 JSONArray classifications = hit.getJSONArray("classifications"); //GET GENRES
@@ -516,7 +518,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
                                 // Genresid.put(GenreName,id);
                                 mEventList.add(new EventItem(eventImage, eventName, date));
-                                mDetailList.add(new EventDetail(info, eventid, venueName, time));
+                                mDetailList.add(new EventDetail(info, eventid, venueName, time, venueCity));
 
                             }
                             eventAdapter = new EventAdapter(getActivity().getBaseContext(), mEventList);
@@ -544,6 +546,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
         EventItem clickedItem = mEventList.get(position);
         EventDetail clickedItem1 = mDetailList.get(position);
         // JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.GET, ur)
+        detailIntent.putExtra(EXTRA_VENUE_CITY,clickedItem1.getVenueCity());
         detailIntent.putExtra(EXTRA_EVENT_START_TIME, clickedItem1.getStartTime());
         detailIntent.putExtra(EXTRA_URL, clickedItem.getImageUrl());
         detailIntent.putExtra(EXTRA_EVENT_NAME, clickedItem.getCreator());

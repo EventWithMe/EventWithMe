@@ -21,6 +21,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import retrofit2.http.HEAD;
+
 public class EventDetailActivity extends AppCompatActivity {
 
     public static final String TAG = "EventDetailActivity"; // tag for logging
@@ -29,6 +31,7 @@ public class EventDetailActivity extends AppCompatActivity {
     public static final String EXTRA_EVENT_ID = "id"; // used to extract date data from intent
     public static final String EXTRA_EVENT_VENUE_NAME = "venueName"; // used to extract date data from intent
     public static final String EXTRA_EVENT_START_TIME = "startTime"; // used to extract date data from intent
+    public static final String EXTRA_VENUE_CITY = "venueCity"; // used to extract date data from intent
 
     // UI elements
     Button btnRSVP;
@@ -63,6 +66,7 @@ public class EventDetailActivity extends AppCompatActivity {
         String eventID = intent.getStringExtra(EXTRA_EVENT_ID);
         String venueName = intent.getStringExtra(EXTRA_EVENT_VENUE_NAME);
         String startTime = getResources().getString(R.string.event_detail_activity_date_time_at) + intent.getStringExtra(EXTRA_EVENT_START_TIME);
+        String venueCity = intent.getStringExtra(EXTRA_VENUE_CITY);
 
         // initialize the UI elements
         imageView = findViewById(R.id.image_view_detail);
