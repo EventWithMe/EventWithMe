@@ -9,43 +9,27 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/idTVHeading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:gravity="center_horizontal"
-            android:text="Test the Theme changer out"
-            android:textAlignment="center"
-            android:textSize="20sp" />
 
         <!--text view for displaying the selected theme-->
-        <TextView
-            android:id="@+id/idtvTheme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/idTVHeading"
-            android:layout_marginTop="30dp"
-            android:gravity="center_horizontal"
-            android:text="System Default Theme"
-            android:textAlignment="center"
-            android:textSize="20sp" />
 
         <!--radio group for switching theme-->
         <RadioGroup
             android:id="@+id/idRGgroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/idtvTheme"
+            android:layout_width="165dp"
+            android:layout_height="109dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="3dp"
             android:layout_marginTop="30dp"
             android:orientation="vertical"
             android:padding="4dp">
 
             <!--radio button for light theme-->
+
+            <!--radio button for dark theme-->
             <RadioButton
                 android:id="@+id/idRBLight"
                 android:layout_width="wrap_content"
@@ -55,7 +39,6 @@
                 android:padding="5dp"
                 android:text="Light" />
 
-            <!--radio button for dark theme-->
             <RadioButton
                 android:id="@+id/idRBDark"
                 android:layout_width="wrap_content"
@@ -67,7 +50,19 @@
                 android:text="Dark" />
 
         </RadioGroup>
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
-    </RelativeLayout>
+        <Button
+            android:id="@+id/btnCurrentCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Current City" />
+    </LinearLayout>
 
 </FrameLayout>

@@ -118,5 +118,6 @@
     <string name="password_change_activity_error_unknown">Unknown error updating password</string>
     <string name="password_change_activity_toast_success">Password changed successfully!</string>
     <string name="signup_activity_hint_city">city</string>
+    <string name="gmap_key">AIzaSyBsIph2bE1JAqVIQq5cM3LIcNzNUyG7ZP8</string>
 
 </resources>

@@ -3,6 +3,7 @@ package com.example.eventwithus.fragments;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
@@ -40,6 +41,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.eventwithus.GetLocation;
 import com.example.eventwithus.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -116,7 +118,7 @@ public class SearchFragment extends Fragment  {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         radioGroup = v.findViewById(R.id.idRGgroup);
-        themeTV = v.findViewById(R.id.idtvTheme);
+
 
         return v;
 
@@ -125,7 +127,8 @@ public class SearchFragment extends Fragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Intent intent = new Intent(getActivity(), GetLocation.class);
+        startActivity(intent);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

@@ -9,6 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.load.engine.Initializable;
 import com.example.eventwithus.fragments.ChatFragment;
+import com.example.eventwithus.fragments.MapViewFragment;
 import com.example.eventwithus.fragments.ProfileFragment;
 import com.example.eventwithus.fragments.RsvpFragment;
 import com.example.eventwithus.fragments.SearchFragment;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
             } else if (id == R.id.action_rsvp) {
                 fragment = new RsvpFragment();
             } else if (id == R.id.get_location) {
-                fragment = new SearchFragment();
+                fragment = new MapViewFragment();
             } else if (id == R.id.action_chat) {
                 fragment = new ChatFragment();
             } else {

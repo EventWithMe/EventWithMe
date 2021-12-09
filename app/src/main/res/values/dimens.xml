@@ -6,4 +6,6 @@
     <dimen name="profile_fragment_edit_button_height">50dp</dimen>
     <dimen name="chat_fragment_pfp_height">64dp</dimen>
     <dimen name="chat_fragment_pfp_width">64dp</dimen>
+    <dimen name="dialog_width">400dp</dimen>
+    <dimen name="dialog_height">400dp</dimen>
 </resources>
