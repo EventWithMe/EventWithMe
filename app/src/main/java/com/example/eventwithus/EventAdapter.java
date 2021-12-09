@@ -40,7 +40,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewH
     @NonNull
     @Override
     public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.example_item, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.card_stream, parent, false);
         return new ExampleViewHolder(v);
     }
 

@@ -82,7 +82,6 @@ public class EventDetailActivity extends AppCompatActivity {
         textviewEventVenue.setText(venueName);
         tvTimeDate.setText(timeDate);
 
-
         //printEvents();
 
         // if the user has event data proceed to check if he is already rsvp'd

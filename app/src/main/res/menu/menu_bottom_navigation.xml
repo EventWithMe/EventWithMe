@@ -18,11 +18,6 @@
         android:title="@string/bottom_navigation_menu_rsvp"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_chat"
-        android:icon="@drawable/ic_baseline_chat_24"
-        android:title="@string/bottom_navigation_menu_chat"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/action_profile"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/bottom_navigation_menu_profile"

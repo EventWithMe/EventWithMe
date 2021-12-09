@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
                 fragment = new RsvpFragment();
             } else if (id == R.id.get_location) {
                 fragment = new MapViewFragment();
-            } else if (id == R.id.action_chat) {
-                fragment = new ChatFragment();
             } else {
                 fragment = new ProfileFragment();
             }

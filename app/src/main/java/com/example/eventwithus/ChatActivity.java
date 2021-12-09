@@ -1,23 +1,19 @@
-package com.example.eventwithus.fragments;
+package com.example.eventwithus;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.eventwithus.R;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.EditText;
+import android.widget.ImageButton;
+
 import com.example.eventwithus.adapters.ChatAdapter;
+import com.example.eventwithus.fragments.ChatFragment;
 import com.example.eventwithus.models.Message;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -28,9 +24,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-
-@SuppressWarnings("FieldCanBeLocal")
-public class ChatFragment extends Fragment {
+public class ChatActivity extends AppCompatActivity {
 
     static final String USER_ID_KEY = "userId";
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
@@ -43,16 +37,14 @@ public class ChatFragment extends Fragment {
     private ArrayList<Message> mMessages;
     private boolean mFirstLoad;
     private ChatAdapter mAdapter;
-
-    public ChatFragment() {
-        // Required empty public constructor
-    }
+    Context context;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_chat);
         String websocketUrl = "wss://eventwithme.b4a.io/";
+        context = this.getApplicationContext();
 
         try {
             ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI(websocketUrl));
@@ -67,7 +59,7 @@ public class ChatFragment extends Fragment {
                 mMessages.add(0, object);
                 Log.i(TAG, String.format("New message: %s", object.getBody()));
                 // RecyclerView updates need to be run on the UI thread
-                Activity activity = ChatFragment.this.getActivity();
+                Activity activity = ChatActivity.this;
                 if (activity != null) {
                     activity.runOnUiThread(() -> {
                         mAdapter.notifyItemInserted(0);
@@ -78,30 +70,18 @@ public class ChatFragment extends Fragment {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_chat, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        etMessage = view.findViewById(R.id.etMessage);
-        ibSend = view.findViewById(R.id.ibSend);
-        rvChat = view.findViewById(R.id.rvChat);
+        etMessage = findViewById(R.id.etMessage);
+        ibSend = findViewById(R.id.ibSend);
+        rvChat = findViewById(R.id.rvChat);
         mMessages = new ArrayList<>();
         mFirstLoad = true;
         final String userId = ParseUser.getCurrentUser().getObjectId();
-        mAdapter = new ChatAdapter(getContext(), userId, mMessages);
+        mAdapter = new ChatAdapter(context, userId, mMessages);
         rvChat.setAdapter(mAdapter);
 
         // associate the LayoutManager with the RecyclerView
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setReverseLayout(true);
         rvChat.setLayoutManager(linearLayoutManager);
 
