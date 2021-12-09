@@ -1,6 +1,8 @@
 package com.example.eventwithus;
 
-public class EventMarker {
+import java.io.Serializable;
+
+public class EventMarker implements Serializable {
     private String EventName;
     private String longitude;
     private String latitude;
@@ -33,5 +35,14 @@ public class EventMarker {
         EventName = eventName;
         this.longitude = longitude;
         this.latitude = latitude;
+    }
+
+    @Override
+    public String toString() {
+        return "EventMarker{" +
+                "EventName='" + EventName + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                '}';
     }
 }

@@ -7,6 +7,7 @@ import static android.content.Context.LOCATION_SERVICE;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -27,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.load.engine.Initializable;
 import com.example.eventwithus.EventMarker;
 import com.example.eventwithus.GetLocation;
 import com.example.eventwithus.R;
@@ -51,8 +53,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class MapViewFragment extends Fragment implements OnMapReadyCallback{
 
+
+public class MapViewFragment extends Fragment implements OnMapReadyCallback, Initializable {
+    public static final String MapViewKey = "key";
     MapView mMapView;
     private GoogleMap googleMap;
     private Marker marker;
@@ -60,7 +64,12 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
     LocationManager locationManager;
     private LocationCallback mLocationCallback;
     private FusedLocationProviderClient mFusedLocationClient;
-    ArrayList<EventMarker> eventMarkers2;
+    ArrayList<EventMarker> eventMarkers2 = new ArrayList<>();
+    ArrayList<EventMarker> eventMarkers3 = new ArrayList<>();
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.location_fragment, container, false);
@@ -69,6 +78,11 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
         mMapView.onCreate(savedInstanceState);
         btnButton = rootView.findViewById(R.id.btnCurrentCity);
         mMapView.onResume(); // needed to get the map to display immediately
+        if (getArguments() != null) {
+            ArrayList<EventMarker> eventMarkers3 = (ArrayList<EventMarker>) getArguments().getSerializable(MapViewKey);
+        }
+        int count = 0;
+        Log.i("onCreateView initiated ", String.valueOf(count++));
 
 
 
@@ -95,6 +109,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
 
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
+
+
+
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
@@ -111,8 +128,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
                     return;
                 }
                 googleMap.setMyLocationEnabled(true);
-
-                if(eventMarkers2 != null) {
+                Log.i("getMapAsync geteventMarkers2 : ", getEventMarkers2().toString());
+                Log.i("getMapAsync geteventMarkers3 : ", eventMarkers3.toString());
+                if(eventMarkers3 != null) {
                     for (int i = 0; i < eventMarkers2.size(); i++) {
                         String NAME = eventMarkers2.get(i).getEventName();
                         double LONG = Double.parseDouble(eventMarkers2.get(i).getLongitude());
@@ -201,11 +219,30 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
             mFusedLocationClient.requestLocationUpdates(locationRequest,
                     mLocationCallback, Looper.myLooper());
         }
+
+
+
+
+    }
+
+    public ArrayList<EventMarker> getEventMarkers2() {
+        return eventMarkers2;
+    }
+
+    public void setEventMarkers2(ArrayList<EventMarker> eventMarkers2) {
+        this.eventMarkers2 = eventMarkers2;
     }
 
     public void updateEventMarkers(ArrayList<EventMarker> eventMarkers){
-        Collections.copy(eventMarkers,eventMarkers2);
+       // Collections.copy(eventMarkers,eventMarkers2);
+        setEventMarkers2(eventMarkers);
+       eventMarkers2 = eventMarkers;
+        Log.i("MapViewFragment : updateEventMarkers eventMarkers2 : ", eventMarkers2.toString());
+        Log.i("MapViewFragment : updateEventMarkers eventMarkers : ", eventMarkers.toString());
+
     }
+
+
 
     @Override
     public void onResume() {
@@ -233,6 +270,12 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+
+    }
+
+    @Override
+    public void initialize() {
+
 
     }
 }

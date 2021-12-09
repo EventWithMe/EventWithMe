@@ -1,5 +1,6 @@
 package com.example.eventwithus.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.SurfaceControl;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -47,8 +49,8 @@ import java.util.List;
 import java.util.Map;
 
 public class StreamFragment extends Fragment implements EventAdapter.OnItemClickListener, Initializable , StreamDialogFragment.OnInputSelected{
-    private StreamFragment.FragmentStreamListener listener;
-    private FragmentStreamListener listener2;
+   // private StreamFragment.FragmentStreamListener listener;
+    private FragmentStreamListener listener;
 
 
 
@@ -64,7 +66,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
     public static final String EXTRA_EVENT_VENUE_NAME = "venueName";
     public static final String EXTRA_EVENT_START_TIME = "startTime";
     public static final String EXTRA_VENUE_CITY = "venueCity";
-
+    public static final String MapViewKey = "key";
     private Button searchBtn, backBTN;
     private EditText inputET;
     private RecyclerView mRecyclerView;
@@ -86,6 +88,8 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
     final String eventsurl = "https://app.ticketmaster.com/discovery/v2/events?";
     String[] MusicGenres;
     String[] SportGenres;
+    Fragment fragment = new Fragment();
+    Bundle bundle = new Bundle();
 
     Map<String, String> Eventcoord = new HashMap<>();
     // String url2 = "https://app.ticketmaster.com/discovery/v2/events/k7vGFKzleBdwS/images.json?apikey=kdQ1Zu3hN6RX9";//images TICKETMASTER
@@ -109,7 +113,8 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
     String musicGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId=" + Genreid;
     String artsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentId=KZFzniwnSyZfZ7v7na&genreId=" + Genreid;
     String filmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=film&genreId=" + Genreid;
-    ArrayList<EventMarker> eventMarkers;
+    ArrayList<EventMarker> eventMarkers = new ArrayList<EventMarker>();
+    ArrayList<SurfaceControl.Transaction> transactionList = new ArrayList<>();
     @Override
     public void sendInput(String searchInput, String startDate, String endDate, String city) {
         Log.i(TAG,"sent info :"+searchInput+" "+startDate+" "+endDate+" "+city);
@@ -122,6 +127,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
     Map < String, String > Genresid = new HashMap < > ();
     List < String > GenresList = new ArrayList < String > ();
+    //ArrayList<EventMarker> eventMarkers = new ArrayList<>();
 
     public StreamFragment() {
         // Required empty public constructor
@@ -287,6 +293,8 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
             }
         });
 
+
+
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -423,6 +431,17 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
         });
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentStreamListener) {
+            listener = (FragmentStreamListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement FragmentAListener");
+        }
+    }
+
     public void updateSpinner2(String[] options) {
         ArrayAdapter aa = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, options);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -501,7 +520,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
  **/
 
     private void parseJSON2(String url) {
-        ArrayList<EventMarker> eventMarkers = new ArrayList<>();
+
         //eventMarkers.clear();
         Log.i(TAG, url);
         //Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
@@ -526,8 +545,8 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                                 String info = jsonArray.getJSONObject(i).isNull("info") ? null : jsonArray.getJSONObject(i).getString("info");
                                 String eventid = hit.getString("id");
                                 String eventName = hit.getString("name");
-                                String date = hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
-                                String time = hit.getJSONObject("dates").getJSONObject("start").getString("localTime");
+                                String date = hit.getJSONObject("dates").getJSONObject("start").isNull("localDate") ? null : hit.getJSONObject("dates").getJSONObject("start").getString("localDate");
+                                String time = hit.getJSONObject("dates").getJSONObject("start").isNull("localTime") ? null : hit.getJSONObject("dates").getJSONObject("start").getString("localTime");
                                 JSONObject _embedded2 = jsonArray.getJSONObject(i).isNull("_embedded") ? null : jsonArray.getJSONObject(i).getJSONObject("_embedded");
                                 //JSONObject _embedded2 = hit.getJSONObject("_embedded");
 
@@ -554,7 +573,9 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                                 EventMarker eventMarker = new EventMarker(eventName, longitude,latitude);
                                 if(eventMarker!= null) {
                                     eventMarkers.add(eventMarker);
+                                    listener.onInputStreamSent(eventMarkers);
                                 }
+
                                 Eventcoord.put(longitude,latitude);//storing coordinates into SET
                                 mEventList.add(new EventItem(eventImage, eventName, date));
                                 mDetailList.add(new EventDetail(info, eventid, venueName, time, venueCity));
@@ -568,7 +589,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                             Log.e(TAG, "onResponse Failure :" + e);
                             e.printStackTrace();
                         }
-                        Log.i(TAG, Eventcoord.toString());
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -576,8 +597,18 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                 error.printStackTrace();
             }
         });
+        Log.i(TAG, "Eventcoord: "+Eventcoord.toString());
+        Log.i(TAG, "eventMarkers: "+eventMarkers.toString());
+        bundle.putSerializable(MapViewKey, eventMarkers);
+        fragment.setArguments(bundle);
         RequestQueueSingleton.getInstance(getActivity().getBaseContext()).addToRequestQueue(request);
     }
+public void startMapView(){
+    Intent intent = new Intent(getActivity(), MapViewFragment.class);
+    startActivity(intent);
+}
+
+
 
     @Override
     public void onItemClick(int position) {
