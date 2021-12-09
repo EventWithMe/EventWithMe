@@ -30,10 +30,9 @@ import com.example.eventwithus.R;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
-@SuppressWarnings("FieldCanBeLocal")
 public class ProfileFragment extends Fragment {
 
-    public static final String TAG = "ProfileFragment"; // tag for logging
+    public static final String TAG = "ProfileFragment";
     public static final String FIRSTNAME_KEY = "firstname";
     public static final String LASTNAME_KEY = "lastname";
     public static final String EMAIL_KEY = "email";
@@ -172,7 +171,10 @@ public class ProfileFragment extends Fragment {
             tvName.setText(name);
             tvEmail.setText(email);
             tvCity.setText(city);
-            tvBio.setText(bio);
+            if (bio == null || bio.isEmpty())
+                tvBio.setText(R.string.profile_fragment_label_no_bio);
+            else
+                tvBio.setText(bio);
         }
     }
 }

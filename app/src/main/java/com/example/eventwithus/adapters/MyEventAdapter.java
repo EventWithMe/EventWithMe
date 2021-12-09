@@ -117,16 +117,13 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
             tvTime_f2.setText(EventHelper.startTimeFormatter(formatted[6]));
             tvVenue_f2.setText(formatted[4]);
             tvCity_f2.setText(formatted[7]);
-                Picasso.with(context).load(formatted[5]).fit().centerInside().into(ivImage_f2);
+            Picasso.with(context).load(formatted[5]).fit().centerInside().into(ivImage_f2);
 
-                favorites_card2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(context, "on click works", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context, ChatActivity.class);
-                        context.startActivity(intent);
-                    }
-                });
+            favorites_card2.setOnClickListener(view -> {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("eventId", formatted[0]);
+                context.startActivity(intent);
+            });
         }
     }
 }
