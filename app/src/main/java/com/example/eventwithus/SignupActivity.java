@@ -1,5 +1,6 @@
 package com.example.eventwithus;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -21,8 +22,8 @@ import com.parse.ParseUser;
 public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
-    public static final String PASSWORD_KEY= "pBackup";
-    public static final String CITY_KEY= "city";
+    public static final String PASSWORD_KEY = "pBackup";
+    public static final String CITY_KEY = "city";
 
     TextInputLayout textLayoutUsername;
     TextInputLayout textLayoutDisplayName;
@@ -49,16 +50,23 @@ public class SignupActivity extends AppCompatActivity {
         textLayoutDisplayName = findViewById(R.id.textLayoutSignupDisplayName);
         textLayoutEmail = findViewById(R.id.textLayoutSignupEmail);
         textLayoutSignupCity = findViewById(R.id.textLayoutSignupCity);
-        textLayoutPassword = findViewById(R.id.textLayoutSignupNewPassword);
-        textLayoutConfirmPassword = findViewById(R.id.textLayoutSignupCurrentPassword);
+        textLayoutPassword = findViewById(R.id.textLayoutSignupPassword);
+        textLayoutConfirmPassword = findViewById(R.id.textLayoutSignupConfirmPassword);
         editTextUsername = findViewById(R.id.editTextSignupUsername);
         editTextDisplayName = findViewById(R.id.editTextSignupDisplayName);
         editTextEmail = findViewById(R.id.editTextSignupEmail);
         editTextSignupCity = findViewById(R.id.editTextSignupCity);
-        editTextPassword = findViewById(R.id.editTextSignupNewPassword);
-        editTextConfirmPassword = findViewById(R.id.editTextSignupCurrentPassword);
+        editTextPassword = findViewById(R.id.editTextSignupPassword);
+        editTextConfirmPassword = findViewById(R.id.editTextSignupConfirmPassword);
         buttonSignUp = findViewById(R.id.buttonSignupSignUp);
         buttonLogIn = findViewById(R.id.buttonSignupLogIn);
+
+        textLayoutUsername.setErrorIconDrawable(null);
+        textLayoutDisplayName.setErrorIconDrawable(null);
+        textLayoutEmail.setErrorIconDrawable(null);
+        textLayoutSignupCity.setErrorIconDrawable(null);
+        textLayoutPassword.setErrorIconDrawable(null);
+        textLayoutConfirmPassword.setErrorIconDrawable(null);
 
         buttonSignUp.setOnClickListener(v -> {
             String username = editTextUsername.getText().toString();
@@ -69,8 +77,7 @@ public class SignupActivity extends AppCompatActivity {
             String confirmPassword = editTextConfirmPassword.getText().toString();
             if (password.equals(confirmPassword)) {
                 signupUser(username, displayname, email, city, password);
-            }
-            else {
+            } else {
                 Toast.makeText(this,
                         getString(R.string.signup_activity_error_password_mismatch), Toast.LENGTH_SHORT).show();
             }
@@ -85,10 +92,12 @@ public class SignupActivity extends AppCompatActivity {
         // Also updates displayed errors as necessary
         TextWatcher textWatcher = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -97,32 +106,48 @@ public class SignupActivity extends AppCompatActivity {
                 boolean validEmail = Patterns.EMAIL_ADDRESS.matcher(editTextEmail.getText()
                         .toString()).matches();
 
-                buttonSignUp.setEnabled(!TextUtils.isEmpty(editTextUsername.getText()) &&
-                        !TextUtils.isEmpty(editTextPassword.getText()) &&
-                        passwordsMatch && validEmail);
-
                 if (s == editTextUsername.getEditableText())
-                    textLayoutUsername.setError(null);
+                    if (editTextUsername.getText().toString().contains(" "))
+                        textLayoutUsername.setError(getString(R.string.signup_activity_error_username_space));
+                    else
+                        textLayoutUsername.setErrorEnabled(false);
                 else if (s == editTextEmail.getEditableText()) {
                     if (validEmail || TextUtils.equals(textLayoutEmail.getError(),
                             getText(R.string.signup_activity_error_empty_email)))
-                        textLayoutEmail.setError(null);
-                }
-                else if (s == editTextPassword.getEditableText()) {
+                        textLayoutEmail.setErrorEnabled(false);
+                } else if (s == editTextPassword.getEditableText()) {
                     if (!TextUtils.isEmpty(editTextConfirmPassword.getText())) {
                         if (passwordsMatch)
-                            textLayoutConfirmPassword.setError(null);
+                            textLayoutConfirmPassword.setErrorEnabled(false);
                         else
                             textLayoutConfirmPassword.setError(getString(R.string.signup_activity_error_password_mismatch));
                     }
-                    textLayoutPassword.setError(null);
-                }
-                else if (s == editTextConfirmPassword.getEditableText()) {
+                    CharSequence error = textLayoutPassword.getError();
+                    if (error == null || error.equals(getString(R.string.signup_activity_error_empty_password))) {
+                        textLayoutPassword.setErrorEnabled(false);
+                    }
+                    else {
+                        String e = getPasswordErrors(editTextPassword.getText().toString());
+                        if (e == null)
+                            textLayoutPassword.setErrorEnabled(false);
+                        else
+                            textLayoutPassword.setError(e);
+                    }
+                } else if (s == editTextConfirmPassword.getEditableText()) {
                     if (passwordsMatch)
-                        textLayoutConfirmPassword.setError(null);
+                        textLayoutConfirmPassword.setErrorEnabled(false);
                     else
                         textLayoutConfirmPassword.setError(getString(R.string.signup_activity_error_password_mismatch));
                 }
+
+                buttonSignUp.setEnabled(!TextUtils.isEmpty(editTextUsername.getText()) &&
+                        !TextUtils.isEmpty(editTextEmail.getText()) &&
+                        !TextUtils.isEmpty(editTextPassword.getText()) &&
+                        !TextUtils.isEmpty(editTextConfirmPassword.getText()) &&
+                        TextUtils.isEmpty(textLayoutUsername.getError()) &&
+                        TextUtils.isEmpty(textLayoutEmail.getError()) &&
+                        TextUtils.isEmpty(textLayoutPassword.getError()) &&
+                        TextUtils.isEmpty(textLayoutConfirmPassword.getError()));
             }
         };
 
@@ -137,17 +162,15 @@ public class SignupActivity extends AppCompatActivity {
                         ParseQuery<ParseUser> query = ParseUser.getQuery();
                         query.whereEqualTo("username", editTextUsername.getText().toString());
                         query.findInBackground((users, e) -> {
-                           if (e == null) {
-                               if (users.size() > 0)
-                                   textLayoutUsername.setError(getString(R.string.signup_activity_error_username_taken));
-                           }
-                           else {
-                               Log.e(TAG, "Username lookup error", e);
-                           }
+                            if (e == null) {
+                                if (users.size() > 0)
+                                    textLayoutUsername.setError(getString(R.string.signup_activity_error_username_taken));
+                            } else {
+                                Log.e(TAG, "Username lookup error", e);
+                            }
                         });
                     }
-                }
-                else if (id == R.id.editTextSignupEmail) {
+                } else if (id == R.id.editTextSignupEmail) {
                     if (TextUtils.isEmpty(editTextEmail.getText()))
                         textLayoutEmail.setError(getString(R.string.signup_activity_error_empty_email));
                     else if (!Patterns.EMAIL_ADDRESS.matcher(editTextEmail.getText().toString()).matches())
@@ -159,18 +182,22 @@ public class SignupActivity extends AppCompatActivity {
                             if (e == null) {
                                 if (users.size() > 0)
                                     textLayoutEmail.setError(getString(R.string.signup_activity_error_email_taken));
-                            }
-                            else {
+                            } else {
                                 Log.e(TAG, "Email lookup error", e);
                             }
                         });
                     }
-                }
-                else if (id == R.id.editTextSignupNewPassword) {
+                } else if (id == R.id.editTextSignupPassword) {
                     if (TextUtils.isEmpty(editTextPassword.getText()))
                         textLayoutPassword.setError(getString(R.string.signup_activity_error_empty_password));
-                }
-                else if (id == R.id.editTextSignupCurrentPassword) {
+                    else {
+                        String error = getPasswordErrors(editTextPassword.getText().toString());
+                        if (error == null)
+                            textLayoutPassword.setErrorEnabled(false);
+                        else
+                            textLayoutPassword.setError(error);
+                    }
+                } else if (id == R.id.editTextSignupConfirmPassword) {
                     if (TextUtils.isEmpty(editTextConfirmPassword.getText()))
                         textLayoutConfirmPassword.setError(getString(R.string.signup_activity_error_empty_password));
                 }
@@ -200,8 +227,7 @@ public class SignupActivity extends AppCompatActivity {
         if (displayname.isEmpty()) {
             user.put("firstname", username);
             user.put("lastname", "");
-        }
-        else {
+        } else {
             String[] first_last = displayname.split(" ", 2);
             user.put("firstname", first_last[0]);
             user.put("lastname", first_last[1]);
@@ -219,11 +245,33 @@ public class SignupActivity extends AppCompatActivity {
                 else
                     Toast.makeText(this, getString(R.string.signup_activity_error_unknown),
                             Toast.LENGTH_LONG).show();
-            }
-            else {
+            } else {
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
             }
         });
     }
+
+    @Nullable
+    private String getPasswordErrors(String password) {
+        StringBuilder errorBuilder = new StringBuilder();
+        if (!password.matches(".*[a-z].*"))
+            errorBuilder.append("Password must contain a lowercase letter\n");
+        if (!password.matches(".*[A-Z].*"))
+            errorBuilder.append("Password must contain an uppercase letter\n");
+        if (!password.matches(".*[0-9].*"))
+            errorBuilder.append("Password must contain a number\n");
+        if (!password.matches(".*[^a-zA-Z0-9].*"))
+            errorBuilder.append("Password must contain a symbol\n");
+        if (!(password.length() >= 8 && password.length() <= 20))
+            errorBuilder.append("Password must be between 8 and 20 characters\n");
+
+        if (errorBuilder.length() == 0)
+            return null;
+
+        // remove trailing '\n'
+        errorBuilder.deleteCharAt(errorBuilder.length() - 1);
+        return errorBuilder.toString();
+    }
+
 }
