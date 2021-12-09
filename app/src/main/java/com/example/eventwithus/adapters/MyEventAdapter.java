@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.eventwithus.ChatActivity;
+import com.example.eventwithus.EventDetailActivity;
 import com.example.eventwithus.MyEventDetailActivity;
 import com.example.eventwithus.R;
 import com.squareup.picasso.Picasso;
@@ -80,7 +82,7 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
 //            card_timeTV = itemView.findViewById(R.id.card_timeTV);
 //            card_venueTV = itemView.findViewById(R.id.card_venueTV);
 //            card_cityTV = itemView.findViewById(R.id.card_cityTV);
-            btnChatRsvp = itemView.findViewById(R.id.chat_button);
+            btnChatRsvp = itemView.findViewById(R.id.btnChatRsvp);
 
             itemView.setOnClickListener(this);
         }
@@ -115,6 +117,14 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
 //            card_venueTV.setText("Venue: " + event.getVenueName());
 //            card_cityTV.setText("City: " + event.getCity());
                 Picasso.with(context).load(formatted[5]).fit().centerInside().into(ivRsvpImage);
+
+                btnChatRsvp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, ChatActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
         }
     }
 }

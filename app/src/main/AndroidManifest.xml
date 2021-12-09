@@ -26,9 +26,14 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.EventWithUs">
+        <activity
+            android:name=".ChatActivity"
+            android:exported="true" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/gmap_key" />
+
         <activity
             android:name=".GetLocation"
             android:exported="false" />
