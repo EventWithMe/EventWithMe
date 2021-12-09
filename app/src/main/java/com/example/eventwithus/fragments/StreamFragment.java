@@ -570,7 +570,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                                 }
 
                                 // Genresid.put(GenreName,id);
-                                EventMarker eventMarker = new EventMarker(eventName, longitude,latitude);
+                                EventMarker eventMarker = new EventMarker(eventName, venueName,longitude,latitude);
                                 if(eventMarker!= null) {
                                     eventMarkers.add(eventMarker);
                                     listener.onInputStreamSent(eventMarkers);

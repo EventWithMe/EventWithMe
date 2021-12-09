@@ -133,10 +133,11 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                 if(eventMarkers3 != null) {
                     for (int i = 0; i < eventMarkers2.size(); i++) {
                         String NAME = eventMarkers2.get(i).getEventName();
+                        String VENUE_NAME = eventMarkers2.get(i).getVenueName();
                         double LONG = Double.parseDouble(eventMarkers2.get(i).getLongitude());
                         double LAT = Double.parseDouble(eventMarkers2.get(i).getLatitude());
                         LatLng marker = new LatLng(LAT, LONG);
-                        googleMap.addMarker(new MarkerOptions().position(marker).title(NAME).snippet("Marker Description"));
+                        googleMap.addMarker(new MarkerOptions().position(marker).title(NAME).snippet(VENUE_NAME));
                         CameraPosition cameraPosition = new CameraPosition.Builder().target(marker).zoom(12).build();
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                     }

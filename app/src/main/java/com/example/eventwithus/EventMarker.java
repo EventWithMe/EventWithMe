@@ -6,6 +6,15 @@ public class EventMarker implements Serializable {
     private String EventName;
     private String longitude;
     private String latitude;
+    private String VenueName;
+
+    public String getVenueName() {
+        return VenueName;
+    }
+
+    public void setVenueName(String venueName) {
+        VenueName = venueName;
+    }
 
     public String getEventName() {
         return EventName;
@@ -31,10 +40,11 @@ public class EventMarker implements Serializable {
         this.latitude = latitude;
     }
 
-    public EventMarker(String eventName, String longitude, String latitude) {
+    public EventMarker(String eventName,String venueName, String longitude, String latitude) {
         EventName = eventName;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.VenueName = venueName;
     }
 
     @Override
