@@ -156,10 +156,10 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                 "Misc"
         };
         String[] Dates = {};
-        List < String > allSports = Arrays.asList(GetGenres(SportsGenreURL));
-        List < String > allMusic = Arrays.asList(GetGenres(MusicGenreURL));
-        Log.i(TAG, String.valueOf(allSports));
-        Log.i(TAG, String.valueOf(allMusic));
+       // List < String > allSports = Arrays.asList(GetGenres(SportsGenreURL));
+      //  List < String > allMusic = Arrays.asList(GetGenres(MusicGenreURL));
+       // Log.i(TAG, String.valueOf(allSports));
+       // Log.i(TAG, String.valueOf(allMusic));
 
         String[] MusicGenre = {
                 "Rock",
@@ -302,9 +302,13 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
 
 
-                        StreamDialogFragment dialog = new StreamDialogFragment();
-                        dialog.setTargetFragment(StreamFragment.this, 1);
-                        dialog.show(getFragmentManager(), "MyCustomDialog");
+                        StreamDialogFragment d = new StreamDialogFragment();
+                        d.setTargetFragment(StreamFragment.this, 1);
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.dimAmount = 0.0f;//Dim Level 0.0 - no dim, 1.0 - completely opaque
+                        lp.width = 400;
+                        lp.height = 600;
+                        d.show(getFragmentManager(), "MyCustomDialog");
 
                         Log.i(TAG, "RETURNED FROM DIALOG");
                         /**
@@ -452,7 +456,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
         parseJSON2(searchFilerURL);
     }
 
-
+/**
 
 
     private String[] GetGenres(String url) {
@@ -495,6 +499,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
         String[] strarray = GenresList.toArray(new String[0]);
         return strarray;
     }
+ **/
 
     private void parseJSON2(String url) {
         Log.i(TAG, url);
@@ -530,7 +535,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                                     venueName = elem.getString("name"); //gets the image url
                                     venueCity = elem.getString("city");
                                 }
-                                
+
                                 JSONArray imagesArray = hit.getJSONArray("images"); //GET IMAGES
 
                                 for (int j = 0; j < imagesArray.length(); j++) {
