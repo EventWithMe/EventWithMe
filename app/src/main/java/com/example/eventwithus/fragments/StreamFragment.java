@@ -501,7 +501,8 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
  **/
 
     private void parseJSON2(String url) {
-        eventMarkers.clear();
+        ArrayList<EventMarker> eventMarkers = new ArrayList<>();
+        //eventMarkers.clear();
         Log.i(TAG, url);
         //Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -551,7 +552,9 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
                                 // Genresid.put(GenreName,id);
                                 EventMarker eventMarker = new EventMarker(eventName, longitude,latitude);
-                                eventMarkers.add(eventMarker);
+                                if(eventMarker!= null) {
+                                    eventMarkers.add(eventMarker);
+                                }
                                 Eventcoord.put(longitude,latitude);//storing coordinates into SET
                                 mEventList.add(new EventItem(eventImage, eventName, date));
                                 mDetailList.add(new EventDetail(info, eventid, venueName, time, venueCity));

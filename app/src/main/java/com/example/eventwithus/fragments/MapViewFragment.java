@@ -1,5 +1,6 @@
 package com.example.eventwithus.fragments;
 
+import static android.content.ContentValues.TAG;
 import static android.content.Context.LOCATION_SERVICE;
 
 
@@ -110,22 +111,27 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
                     return;
                 }
                 googleMap.setMyLocationEnabled(true);
-                for( int i = 0; i < eventMarkers2.size(); i++){
-                    String NAME = eventMarkers2.get(i).getEventName();
-                    double LONG = Double.parseDouble(eventMarkers2.get(i).getLongitude());
-                    double LAT = Double.parseDouble(eventMarkers2.get(i).getLatitude());
-                    LatLng marker = new LatLng(LAT, LONG);
-                    googleMap.addMarker(new MarkerOptions().position(marker).title(NAME).snippet("Marker Description"));
+
+                if(eventMarkers2 != null) {
+                    for (int i = 0; i < eventMarkers2.size(); i++) {
+                        String NAME = eventMarkers2.get(i).getEventName();
+                        double LONG = Double.parseDouble(eventMarkers2.get(i).getLongitude());
+                        double LAT = Double.parseDouble(eventMarkers2.get(i).getLatitude());
+                        LatLng marker = new LatLng(LAT, LONG);
+                        googleMap.addMarker(new MarkerOptions().position(marker).title(NAME).snippet("Marker Description"));
+                        CameraPosition cameraPosition = new CameraPosition.Builder().target(marker).zoom(12).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    }
+                }else {
+                    // For dropping a marker at a point on the Map
+                    LatLng sydney = new LatLng(-34, 151);
+                    // LatLng sydney = new LatLng(29.392456469494878, -98.7045790417612);
+                    googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
+
+                    // For zooming automatically to the location of the marker
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
+                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
-                // For dropping a marker at a point on the Map
-                LatLng sydney = new LatLng(-34, 151);
-               // LatLng sydney = new LatLng(29.392456469494878, -98.7045790417612);
-                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
             }
         });
         locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
