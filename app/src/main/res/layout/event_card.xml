@@ -15,7 +15,7 @@
         android:layout_margin="8dp">
 
         <TextView
-            android:id="@+id/card_NameTV"
+            android:id="@+id/tvName_f2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -25,7 +25,7 @@
             tools:text="Brooklyn Nets vs. Phoenix Suns " />
 
         <ImageView
-            android:id="@+id/eventIV"
+            android:id="@+id/ivImage_f2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -36,33 +36,33 @@
             android:contentDescription="@string/event_card_layout_content_desc_event" />
 
         <TextView
-            android:id="@+id/card_dateTV"
+            android:id="@+id/tvDate_f2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/card_NameTV"
+            card_view:layout_constraintTop_toBottomOf="@+id/tvName_f2"
             tools:text="Date: 2021-11-27" />
 
         <TextView
-            android:id="@+id/card_timeTV"
+            android:id="@+id/tvTime_f2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/card_dateTV"
+            card_view:layout_constraintTop_toBottomOf="@+id/tvDate_f2"
             tools:text="Doors Open: 7pm" />
 
         <TextView
-            android:id="@+id/card_venueTV"
+            android:id="@+id/tvVenue_f2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/card_timeTV"
+            card_view:layout_constraintTop_toBottomOf="@+id/tvTime_f2"
             tools:text="Venue: Barclays Center" />
 
         <TextView
@@ -72,7 +72,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/card_venueTV"
+            card_view:layout_constraintTop_toBottomOf="@+id/tvVenue_f2"
             tools:text="Basketball game where 2 teams go at it" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

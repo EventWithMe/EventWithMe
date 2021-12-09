@@ -14,7 +14,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/action_rsvp"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@drawable/ic_favorites"
         android:title="@string/bottom_navigation_menu_rsvp"
         app:showAsAction="always" />
     <item

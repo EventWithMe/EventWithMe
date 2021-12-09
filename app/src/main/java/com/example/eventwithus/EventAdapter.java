@@ -69,9 +69,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ExampleViewH
 
         public ExampleViewHolder(View itemView) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.image_view);
-            mEventName = itemView.findViewById(R.id.text_view_name);
-            mEventDesc = itemView.findViewById(R.id.text_view_desc);
+            mImageView = itemView.findViewById(R.id.ivImage_f1);
+            mEventName = itemView.findViewById(R.id.tvName_f1);
+            mEventDesc = itemView.findViewById(R.id.tvDate_f1);
 
             itemView.setOnClickListener(view -> {
                 int position = getAdapterPosition();

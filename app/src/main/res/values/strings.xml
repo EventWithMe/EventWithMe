@@ -42,7 +42,7 @@
 
     <string name="bottom_navigation_menu_search">Search</string>
     <string name="bottom_navigation_menu_stream">Stream</string>
-    <string name="bottom_navigation_menu_rsvp">RSVP</string>
+    <string name="bottom_navigation_menu_rsvp">Favorites</string>
     <string name="bottom_navigation_menu_chat">Chat</string>
     <string name="bottom_navigation_menu_profile">Profile</string>
 
