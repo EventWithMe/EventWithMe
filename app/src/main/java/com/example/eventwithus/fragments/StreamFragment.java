@@ -540,6 +540,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                             String venueCity="";
                             String longitude = "";
                             String latitude = "";
+                            String venueImageURL = "";
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject hit = jsonArray.getJSONObject(i);
                                 String info = jsonArray.getJSONObject(i).isNull("info") ? null : jsonArray.getJSONObject(i).getString("info");
@@ -559,6 +560,11 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                                     JSONObject location = elem.getJSONObject("location");
                                     longitude = location.getString("longitude");
                                     latitude = location.getString("latitude");
+                                    JSONArray VenueImages = elem.getJSONArray("images");
+                                    for(int start = 0; start< VenueImages.length(); start++){
+                                        JSONObject element = VenueImages.getJSONObject(start);
+                                        venueImageURL = element.getString("url");
+                                    }
                                 }
 
                                 JSONArray imagesArray = hit.getJSONArray("images"); //GET IMAGES
@@ -578,13 +584,14 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
                                 Eventcoord.put(longitude,latitude);//storing coordinates into SET
                                 mEventList.add(new EventItem(eventImage, eventName, date));
+                                Log.i("VENUE NAMES : ",venueName);
                                 mDetailList.add(new EventDetail(info, eventid, venueName, time, venueCity));
 
                             }
                             eventAdapter = new EventAdapter(getActivity().getBaseContext(), mEventList);
                             mRecyclerView.setAdapter(eventAdapter);
                             eventAdapter.setOnItemClickListener(StreamFragment.this);
-
+                            Log.i(TAG, "venueImageURL: "+venueImageURL);
                         } catch (JSONException e) {
                             Log.e(TAG, "onResponse Failure :" + e);
                             e.printStackTrace();
@@ -599,6 +606,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
         });
         Log.i(TAG, "Eventcoord: "+Eventcoord.toString());
         Log.i(TAG, "eventMarkers: "+eventMarkers.toString());
+     
         bundle.putSerializable(MapViewKey, eventMarkers);
         fragment.setArguments(bundle);
         RequestQueueSingleton.getInstance(getActivity().getBaseContext()).addToRequestQueue(request);
