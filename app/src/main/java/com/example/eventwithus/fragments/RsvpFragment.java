@@ -34,16 +34,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class RsvpFragment extends Fragment {
 
     public static final String TAG = "RsvpFragment";
+    public static final String PARSE_RSVP_KEY= "eventsinfo"; // key to get and update the eventinfo column in the User object in Parse DB
 
     private RecyclerView recyclerView;
     private MyEventAdapter myEventAdapter;
-    private ArrayList<MyEvents> eventsList;
+    private List<String> eventsList;
     private ParseUser currentUser;
 
     public RsvpFragment() {
@@ -73,19 +75,16 @@ public class RsvpFragment extends Fragment {
         EventHelper.refreshUserData();
         currentUser = ParseUser.getCurrentUser();
 
-
-
-        eventsList = new ArrayList<>();
+        eventsList = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
+        eventsList.remove(0);
         myEventAdapter = new MyEventAdapter(getContext(), eventsList);
-
 
         recyclerView.setAdapter(myEventAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        parseJSON();
+        //parseJSON();
     }
 
-
-    private void parseJSON() {
+    /*private void parseJSON() {
         String url = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
@@ -140,5 +139,5 @@ public class RsvpFragment extends Fragment {
         if (activity != null) {
             RequestQueueSingleton.getInstance(activity.getBaseContext()).addToRequestQueue(request);
         }
-    }
+    }*/
 }

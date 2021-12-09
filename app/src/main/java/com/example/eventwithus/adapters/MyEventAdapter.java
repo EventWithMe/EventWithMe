@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.example.eventwithus.MyEventDetailActivity;
 import com.example.eventwithus.R;
-import com.example.eventwithus.models.MyEvents;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -23,9 +23,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHolder>{
 
     final Context context;
-    List<MyEvents> events;
+    List<String> events;
 
-    public MyEventAdapter(Context context, List<MyEvents> events){
+    public MyEventAdapter(Context context, List<String> events){
         this.context = context;
         this.events = events;
     }
@@ -33,18 +33,18 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.event_card_with_chat, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_rsvp, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MyEvents event = events.get(position);
+        String event = events.get(position);
 
-        holder.chat_button.setOnClickListener(view -> {
+        /*holder.btnChatRsvp.setOnClickListener(view -> {
                 // TODO connect chat with chat
 
-        });
+        });*/
 
         holder.bind(event);
     }
@@ -60,13 +60,13 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        private final ImageView eventIV;
-        private final TextView card_NameTV;
-        private final TextView card_dateTV;
-        private final TextView card_timeTV;
-        private final TextView card_venueTV;
-        private final TextView card_cityTV;
-        private final Button chat_button;
+        private  ImageView ivRsvpImage;
+        private  TextView tvEventNameRSVP;
+        private  TextView tvDateRSVP;
+        private  TextView card_timeTV;
+        private  TextView card_venueTV;
+        private  TextView card_cityTV;
+        private  Button btnChatRsvp;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -74,22 +74,22 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            eventIV = itemView.findViewById(R.id.eventIV);
-            card_NameTV = itemView.findViewById(R.id.card_NameTV);
-            card_dateTV = itemView.findViewById(R.id.card_dateTV);
-            card_timeTV = itemView.findViewById(R.id.card_timeTV);
-            card_venueTV = itemView.findViewById(R.id.card_venueTV);
-            card_cityTV = itemView.findViewById(R.id.card_cityTV);
-            chat_button = itemView.findViewById(R.id.chat_button);
+            ivRsvpImage = itemView.findViewById(R.id.image_view);
+            tvEventNameRSVP = itemView.findViewById(R.id.text_view_name);
+            tvDateRSVP = itemView.findViewById(R.id.text_view_desc);
+//            card_timeTV = itemView.findViewById(R.id.card_timeTV);
+//            card_venueTV = itemView.findViewById(R.id.card_venueTV);
+//            card_cityTV = itemView.findViewById(R.id.card_cityTV);
+            btnChatRsvp = itemView.findViewById(R.id.chat_button);
 
             itemView.setOnClickListener(this);
         }
 
         public void onClick(View v) {
             //get position of movie clicked
-            int position = getAdapterPosition();
+            /*int position = getAdapterPosition();
             //get movie at the position
-            MyEvents event = events.get(position);
+            String event = events.get(position);
             //create new intent
             Intent intent = new Intent(context, MyEventDetailActivity.class);
             //pass data
@@ -104,19 +104,17 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
 
             //show the activity
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+            context.startActivity(intent);*/
         }
 
-        @SuppressLint("SetTextI18n")
-        public void bind(MyEvents event) {
-            card_NameTV.setText(event.getEventName());
-            card_dateTV.setText("Date: " + event.getDate());
-            card_timeTV.setText("Time: " + event.getStartTime());
-            card_venueTV.setText("Venue: " + event.getVenueName());
-            card_cityTV.setText("City: " + event.getCity());
-            if(event.getImageURL() != null){
-                Picasso.with(context).load(event.getImageURL()).fit().centerInside().into(eventIV);
-            }
+        public void bind(String event) {
+            String[] formatted = event.split(";");
+            tvEventNameRSVP.setText(formatted[3]);
+            tvDateRSVP.setText(formatted[1]);
+//            card_timeTV.setText("Time: " + event.getStartTime());
+//            card_venueTV.setText("Venue: " + event.getVenueName());
+//            card_cityTV.setText("City: " + event.getCity());
+                Picasso.with(context).load(formatted[5]).fit().centerInside().into(ivRsvpImage);
         }
     }
 }
