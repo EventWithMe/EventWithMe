@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.eventwithus.EventMarker;
 import com.example.eventwithus.GetLocation;
 import com.example.eventwithus.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -44,6 +45,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -56,6 +59,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
     LocationManager locationManager;
     private LocationCallback mLocationCallback;
     private FusedLocationProviderClient mFusedLocationClient;
+    ArrayList<EventMarker> eventMarkers2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.location_fragment, container, false);
@@ -64,6 +68,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
         mMapView.onCreate(savedInstanceState);
         btnButton = rootView.findViewById(R.id.btnCurrentCity);
         mMapView.onResume(); // needed to get the map to display immediately
+
 
 
         try {
@@ -105,9 +110,16 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
                     return;
                 }
                 googleMap.setMyLocationEnabled(true);
-
+                for( int i = 0; i < eventMarkers2.size(); i++){
+                    String NAME = eventMarkers2.get(i).getEventName();
+                    double LONG = Double.parseDouble(eventMarkers2.get(i).getLongitude());
+                    double LAT = Double.parseDouble(eventMarkers2.get(i).getLatitude());
+                    LatLng marker = new LatLng(LAT, LONG);
+                    googleMap.addMarker(new MarkerOptions().position(marker).title(NAME).snippet("Marker Description"));
+                }
                 // For dropping a marker at a point on the Map
                 LatLng sydney = new LatLng(-34, 151);
+               // LatLng sydney = new LatLng(29.392456469494878, -98.7045790417612);
                 googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
 
                 // For zooming automatically to the location of the marker
@@ -138,6 +150,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
         String myCity = "";
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
         try {
+
             List<Address> addresses = geocoder.getFromLocation(myCoordinates.latitude, myCoordinates.longitude, 1);
             String address = addresses.get(0).getAddressLine(0);
             myCity = addresses.get(0).getLocality();
@@ -184,7 +197,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback{
         }
     }
 
-
+    public void updateEventMarkers(ArrayList<EventMarker> eventMarkers){
+        Collections.copy(eventMarkers,eventMarkers2);
+    }
 
     @Override
     public void onResume() {

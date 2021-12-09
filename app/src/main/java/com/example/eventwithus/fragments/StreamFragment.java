@@ -27,6 +27,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.load.engine.Initializable;
 import com.example.eventwithus.EventAdapter;
 import com.example.eventwithus.EventDetailActivity;
+import com.example.eventwithus.EventMarker;
 import com.example.eventwithus.EventsAdapter;
 import com.example.eventwithus.R;
 import com.example.eventwithus.RequestQueueSingleton;
@@ -47,12 +48,12 @@ import java.util.Map;
 
 public class StreamFragment extends Fragment implements EventAdapter.OnItemClickListener, Initializable , StreamDialogFragment.OnInputSelected{
     private StreamFragment.FragmentStreamListener listener;
-
+    private FragmentStreamListener listener2;
 
 
 
     public interface FragmentStreamListener {
-        void onInputStreamSent(CharSequence input);
+        void onInputStreamSent(ArrayList<EventMarker> eventMarkers);
     }
 
     public static final String EXTRA_URL = "imageUrl";
@@ -86,6 +87,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
     String[] MusicGenres;
     String[] SportGenres;
 
+    Map<String, String> Eventcoord = new HashMap<>();
     // String url2 = "https://app.ticketmaster.com/discovery/v2/events/k7vGFKzleBdwS/images.json?apikey=kdQ1Zu3hN6RX9";//images TICKETMASTER
     //String url3 = "https://app.ticketmaster.com/discovery/v2/events/?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*";
     // String url4 = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
@@ -107,7 +109,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
     String musicGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId=" + Genreid;
     String artsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentId=KZFzniwnSyZfZ7v7na&genreId=" + Genreid;
     String filmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=film&genreId=" + Genreid;
-
+    ArrayList<EventMarker> eventMarkers;
     @Override
     public void sendInput(String searchInput, String startDate, String endDate, String city) {
         Log.i(TAG,"sent info :"+searchInput+" "+startDate+" "+endDate+" "+city);
@@ -155,11 +157,6 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                 "Film",
                 "Misc"
         };
-        String[] Dates = {};
-       // List < String > allSports = Arrays.asList(GetGenres(SportsGenreURL));
-      //  List < String > allMusic = Arrays.asList(GetGenres(MusicGenreURL));
-       // Log.i(TAG, String.valueOf(allSports));
-       // Log.i(TAG, String.valueOf(allMusic));
 
         String[] MusicGenre = {
                 "Rock",
@@ -311,6 +308,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                         d.show(getFragmentManager(), "MyCustomDialog");
 
                         Log.i(TAG, "RETURNED FROM DIALOG");
+
                         /**
                        StreamFilterDialog d = new StreamFilterDialog(getContext());
                         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -371,6 +369,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
                 Toast.makeText(getContext(), "searchBtn Clicked ", Toast.LENGTH_LONG).show();
                 // clear all old events displayed before displaying new ones
@@ -502,6 +501,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
  **/
 
     private void parseJSON2(String url) {
+        eventMarkers.clear();
         Log.i(TAG, url);
         //Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -518,6 +518,8 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                             String GenreName = "";
                             String id = "";
                             String venueCity="";
+                            String longitude = "";
+                            String latitude = "";
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject hit = jsonArray.getJSONObject(i);
                                 String info = jsonArray.getJSONObject(i).isNull("info") ? null : jsonArray.getJSONObject(i).getString("info");
@@ -534,6 +536,9 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
                                     venueName = elem.getString("name"); //gets the image url
                                     venueCity = elem.getString("city");
+                                    JSONObject location = elem.getJSONObject("location");
+                                    longitude = location.getString("longitude");
+                                    latitude = location.getString("latitude");
                                 }
 
                                 JSONArray imagesArray = hit.getJSONArray("images"); //GET IMAGES
@@ -545,6 +550,9 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                                 }
 
                                 // Genresid.put(GenreName,id);
+                                EventMarker eventMarker = new EventMarker(eventName, longitude,latitude);
+                                eventMarkers.add(eventMarker);
+                                Eventcoord.put(longitude,latitude);//storing coordinates into SET
                                 mEventList.add(new EventItem(eventImage, eventName, date));
                                 mDetailList.add(new EventDetail(info, eventid, venueName, time, venueCity));
 
@@ -557,6 +565,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                             Log.e(TAG, "onResponse Failure :" + e);
                             e.printStackTrace();
                         }
+                        Log.i(TAG, Eventcoord.toString());
                     }
                 }, new Response.ErrorListener() {
             @Override

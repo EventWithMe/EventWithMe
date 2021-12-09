@@ -17,6 +17,7 @@ import com.example.eventwithus.fragments.StreamFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
     public static final String EXTRA_EVENT_TYPE = "type";
 
     private StreamFragment streamFragment;
+    private MapViewFragment mapViewFragment;
     public static final String TAG = "MainActivity";
     private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         streamFragment = new StreamFragment();
+        mapViewFragment = new MapViewFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         // PreferenceUtils.init(getApplicationContext());
 
@@ -99,13 +102,15 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
         streamFragment.updateCityDateKeywordText(city, Date, KeyWord );
     }
 
-    @Override
-    public void onInputStreamSent(CharSequence input) {
 
-    }
 
     @Override
     public void onRefresh() {
 
+    }
+
+    @Override
+    public void onInputStreamSent(ArrayList<EventMarker> eventMarkers) {
+        mapViewFragment.updateEventMarkers(eventMarkers);
     }
 }
