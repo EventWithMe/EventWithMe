@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eventwithus.ChatActivity;
 import com.example.eventwithus.R;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHolder>{
@@ -59,13 +61,14 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        private  ImageView ivImage_f2;
-        private  TextView tvName_f2;
-        private  TextView tvDate_f2;
-        private  TextView tvTime_f2;
-        private  TextView tvVenue_f2;
-        private  TextView tvCity_f2;
-        private  Button btnChatRsvp;
+        private ImageView ivImage_f2;
+        private TextView tvName_f2;
+        private TextView tvDate_f2;
+        private TextView tvTime_f2;
+        private TextView tvVenue_f2;
+        private TextView tvCity_f2;
+        private Button btnChatRsvp;
+        private CardView favorites_card2;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -80,6 +83,7 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
             tvVenue_f2 = itemView.findViewById(R.id.tvVenue_f2);
             tvCity_f2 = itemView.findViewById(R.id.tvCity_f2);
             btnChatRsvp = itemView.findViewById(R.id.btnChatRsvp);
+            favorites_card2 = itemView.findViewById(R.id.favorites_card2);
 
             itemView.setOnClickListener(this);
         }
@@ -115,13 +119,14 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
             tvCity_f2.setText(formatted[7]);
                 Picasso.with(context).load(formatted[5]).fit().centerInside().into(ivImage_f2);
 
-                /*btnChatRsvp.setOnClickListener(new View.OnClickListener() {
+                favorites_card2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Toast.makeText(context, "on click works", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(context, ChatActivity.class);
                         context.startActivity(intent);
                     }
-                });*/
+                });
         }
     }
 }
