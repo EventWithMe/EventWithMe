@@ -9,11 +9,9 @@
         android:id="@+id/editTextStart"
         android:layout_width="107dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
         android:layout_below="@+id/editTextSearch"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="98dp"
-        android:layout_marginBottom="51dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="51dp"
         android:layout_toEndOf="@+id/editTextCityName"
         android:ems="10"
         android:hint="start date"
@@ -24,28 +22,26 @@
         android:id="@+id/editTextEnd"
         android:layout_width="107dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
         android:layout_below="@+id/editTextSearch"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="101dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="-3dp"
         android:layout_toEndOf="@+id/editTextStart"
         android:ems="10"
         android:hint="end date"
         android:inputType="textPersonName"
-        android:minHeight="48dp" />
+        android:minHeight="51dp" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextStart"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="121dp"
-        android:layout_marginBottom="266dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="23dp"
         android:minHeight="48dp"
         android:text="Search" />
 
@@ -57,10 +53,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="102dp"
-        android:layout_marginEnd="251dp"
-        android:layout_marginBottom="173dp" />
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="85dp"
+        android:layout_marginEnd="303dp"
+        android:layout_marginBottom="243dp" />
 
     <EditText
         android:id="@+id/editTextSearch"
@@ -80,14 +76,13 @@
         android:id="@+id/editTextCityName"
         android:layout_width="131dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
         android:layout_below="@+id/editTextSearch"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="94dp"
-        android:layout_marginBottom="53dp"
+        android:layout_marginTop="51dp"
         android:ems="10"
         android:hint="City/zip-code"
         android:inputType="textPersonName"
         android:minHeight="48dp" />
+
 </RelativeLayout>
