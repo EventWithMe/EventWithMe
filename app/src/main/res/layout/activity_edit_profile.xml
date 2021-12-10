@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,16 +7,100 @@
     android:padding="20dp"
     tools:context=".EditProfileActivity">
 
+    <EditText
+        android:id="@+id/editTextLastName"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:hint="@string/edit_profile_activity_hint_last_name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColorHint="#78909C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFirstName" />
+
+    <EditText
+        android:id="@+id/editTextFirstName"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:hint="@string/edit_profile_activity_hint_first_name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColorHint="#78909C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutEditProfilePicture" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:hint="@string/edit_profile_activity_hint_email"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#78909C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLastName" />
+
+    <EditText
+        android:id="@+id/editTextCity"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:hint="@string/edit_profile_activity_hint_city"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColorHint="#78909C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+
+    <Button
+        android:id="@+id/btnSaveProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_profile_activity_button_save_changes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextBio" />
+
+    <EditText
+        android:id="@+id/editTextBio"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="start|top"
+        android:hint="@string/edit_profile_activity_hint_bio"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:textColorHint="#78909C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextCity" />
+
     <RelativeLayout
         android:id="@+id/layoutEditProfilePicture"
         android:layout_width="@dimen/profile_fragment_pfp_width"
         android:layout_height="@dimen/profile_fragment_pfp_height"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageViewEditProfilePicture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="-26dp"
+            android:layout_marginBottom="7dp"
             android:contentDescription="@string/edit_profile_activity_content_desc_profile_picture"
             android:src="@drawable/ic_baseline_person_24"
             tools:srcCompat="@tools:sample/avatars" />
@@ -27,77 +111,12 @@
             android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
             android:background="@drawable/bg_circle_button"
             android:contentDescription="@string/edit_profile_activity_content_desc_edit_profile_picture"
             app:srcCompat="@mipmap/ic_pfp_camera_round" />
 
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/editTextFirstName"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layoutEditProfilePicture"
-        android:layout_marginTop="5dp"
-        android:hint="@string/edit_profile_activity_hint_first_name"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textColorHint="#78909C" />
-
-    <EditText
-        android:id="@+id/editTextLastName"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextFirstName"
-        android:layout_marginTop="5dp"
-        android:hint="@string/edit_profile_activity_hint_last_name"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textColorHint="#78909C" />
-
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextLastName"
-        android:layout_marginTop="5dp"
-        android:hint="@string/edit_profile_activity_hint_email"
-        android:importantForAutofill="no"
-        android:inputType="textEmailAddress"
-        android:textColorHint="#78909C" />
-
-    <EditText
-        android:id="@+id/editTextCity"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextEmail"
-        android:layout_marginTop="5dp"
-        android:hint="@string/edit_profile_activity_hint_city"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textColorHint="#78909C" />
-
-    <Button
-        android:id="@+id/btnSaveProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextBio"
-        android:layout_marginTop="20dp"
-        android:text="@string/edit_profile_activity_button_save_changes" />
-
-    <EditText
-        android:id="@+id/editTextBio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextCity"
-        android:layout_alignEnd="@+id/editTextCity"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
-        android:gravity="start|top"
-        android:hint="@string/edit_profile_activity_hint_bio"
-        android:inputType="textMultiLine"
-        android:lines="5"
-        android:textColorHint="#78909C"
-        android:importantForAutofill="no" />
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
