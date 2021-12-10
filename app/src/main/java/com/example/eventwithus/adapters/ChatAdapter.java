@@ -1,5 +1,6 @@
 package com.example.eventwithus.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,16 +26,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
     private static final String TAG = "ChatAdapter";
     private final List<Message> mMessages;
-    private final Context mContext;
+    private final Activity mactivity;
     private final String mUserId;
 
     private static final int MESSAGE_OUTGOING = 123;
     private static final int MESSAGE_INCOMING = 321;
 
-    public ChatAdapter(Context context, String userId, List<Message> messages) {
+    public ChatAdapter(Activity activity, String userId, List<Message> messages) {
         mMessages = messages;
         this.mUserId = userId;
-        mContext = context;
+        mactivity = activity;
     }
 
     @Override
@@ -117,7 +118,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
                     ParseFile image = objects.get(0).getParseFile("image");
                     if (image != null) {
-                        Glide.with(mContext)
+                        Glide.with(mactivity)
                                 .load(image.getUrl())
                                 .circleCrop()
                                 .into(imageOther);
@@ -139,7 +140,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
     }
 
     private void profileDialog(String firstname, String lastname, String city, ParseFile parseFile) {
-        ProfileDialog profileDialog = new ProfileDialog(mContext, firstname + " " + lastname, city, parseFile);
+        ProfileDialog profileDialog = new ProfileDialog(mactivity, firstname + " " + lastname, city, parseFile);
         profileDialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_border);
         profileDialog.show();
     }
@@ -165,7 +166,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
             ParseFile profile = ParseUser.getCurrentUser().getParseFile("image");
 
             if (profile != null) {
-                Glide.with(mContext)
+                Glide.with(mactivity)
                         .load(profile.getUrl())
                         .circleCrop()
                         .into(imageMe);

@@ -77,7 +77,7 @@ public class ChatActivity extends AppCompatActivity {
         mMessages = new ArrayList<>();
         mFirstLoad = true;
         final String userId = ParseUser.getCurrentUser().getObjectId();
-        mAdapter = new ChatAdapter(context, userId, mMessages);
+        mAdapter = new ChatAdapter(this, userId, mMessages);
         rvChat.setAdapter(mAdapter);
 
         // associate the LayoutManager with the RecyclerView

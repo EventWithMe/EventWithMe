@@ -14,11 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.eventwithus.models.EventHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 public class EventDetailActivity extends AppCompatActivity {
@@ -32,7 +31,7 @@ public class EventDetailActivity extends AppCompatActivity {
     public static final String EXTRA_VENUE_CITY = "venueCity"; // used to extract date data from intent
 
     // UI elements
-    Button btnRSVP;
+    FloatingActionButton btnRSVP;
     TextView textviewEventName;
     TextView textviewEventType;
     TextView textviewEventVenue;
@@ -93,15 +92,17 @@ public class EventDetailActivity extends AppCompatActivity {
 
         // if the user is already rsvp'd then set the btnEditProfile to cancel
         if(rsvp) {
-            btnRSVP.setText(R.string.event_detail_activity_cancel_rsvp);
+            //btnRSVP.setText(R.string.event_detail_activity_cancel_rsvp);
         }
 
         btnRSVP.setOnClickListener(view -> {
             Log.d(TAG, "btnRSVP clicked date: " + eventID + " at " + eventDate);
             EventHelper.refreshUserData();
             if(rsvp) {
+                Toast.makeText(context, eventName + " has been added your favorites", Toast.LENGTH_SHORT).show();
                 cancelRSVP(eventID);
             } else {
+                Toast.makeText(context, eventName + " has been removed your favorites", Toast.LENGTH_SHORT).show();
                 rsvpEvent(eventID, eventDate, eventDescription, eventName, venueName, imageUrl, startTime, venueCity);
             }
         });
@@ -153,7 +154,6 @@ public class EventDetailActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Toast.makeText(context, "You have cancelled your RSVP", Toast.LENGTH_SHORT).show();
                     btnRSVP.setText("RSVP");
                     rsvp = false;
                 } else {
@@ -167,8 +167,7 @@ public class EventDetailActivity extends AppCompatActivity {
         currentUser.put(PARSE_RSVP_KEY, updated.toString());
         currentUser.saveInBackground(e -> {
             if (e == null) {
-                Toast.makeText(context, "You have cancelled your RSVP", Toast.LENGTH_SHORT).show();
-                btnRSVP.setText(R.string.event_detail_activity_button_rsvp);
+                //btnRSVP.setText(R.string.event_detail_activity_button_rsvp);
                 rsvp = false;
             } else {
                 Log.e(TAG, "Error: " + e.getMessage());
@@ -180,14 +179,12 @@ public class EventDetailActivity extends AppCompatActivity {
     // updates Parse DB User eventsinfo column
     private void rsvpEvent(String eventId, String date, String eventDescription, String eventName, String venueName, String imageUrl, String startTime, String venueCity) {
         Log.i(TAG, "adding event Id: " + eventId + " on " + date);
-        Toast.makeText(context, "Event Id:" + eventId, Toast.LENGTH_SHORT).show();
         String eventsinfo = currentUser.getString(PARSE_RSVP_KEY);
         eventsinfo += "<" + eventId.trim() + ";" + date.trim() + ";" + eventDescription.trim() + ";" + eventName.trim() + ";" + venueName.trim() + ";" + imageUrl.trim() + ";" + startTime + ";" + venueCity;
         currentUser.put(PARSE_RSVP_KEY, eventsinfo);
         currentUser.saveInBackground(e -> {
             if (e == null) {
-                Toast.makeText(context, "You have RSVP'd", Toast.LENGTH_SHORT).show();
-                btnRSVP.setText(R.string.event_detail_activity_cancel_rsvp);
+                //btnRSVP.setText(R.string.event_detail_activity_cancel_rsvp);
                 rsvp = true;
                 events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
             } else {
