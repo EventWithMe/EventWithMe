@@ -344,7 +344,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                     if (spinner2.getSelectedItem() == "All Events") {
                         mEventList.clear();
                         localMiscGenre = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city="+city;
-                        
+
                         parseJSON2(localMiscGenre);
 
                     }
@@ -542,6 +542,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
  **/
 
     private void parseJSON2(String url) {
+        eventMarkers.clear();
 
         //eventMarkers.clear();
         Log.i(TAG, url);
