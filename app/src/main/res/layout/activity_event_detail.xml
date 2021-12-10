@@ -58,8 +58,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:src="@drawable/ic_favorites_not_pressed"
-        android:textAlignment="center"
-        android:textSize="20sp"
         app:backgroundTint="#7CA6EF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

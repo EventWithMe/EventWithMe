@@ -91,7 +91,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         currentUser.fetchInBackground((object, e) -> loadProfilePic());
 
-        imageViewEditProfilePicture.setOnClickListener(view -> showDialog());
+        imageViewEditProfilePicture.setOnClickListener(view -> handleImageChoice(PHOTO));
 
         btnSaveProfile.setOnClickListener(view -> {
 

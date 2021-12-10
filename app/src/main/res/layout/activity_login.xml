@@ -4,21 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgconcert"
+    android:background="@drawable/bg_title"
     tools:context=".LoginActivity">
-
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textLayoutLoginUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/title_background"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="-60dp"
         android:layout_marginEnd="10dp"
         app:errorEnabled="true">
 
@@ -26,7 +24,7 @@
             android:id="@+id/editTextLoginUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#A6FFFFFF"
+            android:background="#D0FFFFFF"
             android:hint="@string/login_activity_hint_username"
             tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -49,7 +47,7 @@
             android:id="@+id/editTextLoginPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#A6FFFFFF"
+            android:background="#D8FFFFFF"
             android:hint="@string/login_activity_hint_password"
             android:inputType="textPassword"
             tools:ignore="TextContrastCheck" />
@@ -85,5 +83,26 @@
         android:background="@color/purple_500"
         android:text="@string/login_activity_button_sign_up"
         android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
+    <ImageView
+        android:id="@+id/title_background"
+        android:layout_width="match_parent"
+        android:layout_height="334dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="0dp"
+        app:srcCompat="@drawable/ic_photocentric_good_vibes_music_youtube_thumbnail" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-162dp"
+        app:srcCompat="@drawable/ic_bg_title_image" />
 
 </RelativeLayout>

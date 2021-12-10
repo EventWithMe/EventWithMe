@@ -6,8 +6,11 @@ import static com.example.eventwithus.MainActivity.EXTRA_URL;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,6 +43,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private boolean rsvp; // variables is used to check if user has already rsvp'd to the event
     private ParseUser currentUser; // used to change the events data throughout the scene
+    private View root;
     List<String> events; // holds all the users event data if there is any
     Context context;
 
@@ -92,17 +96,21 @@ public class EventDetailActivity extends AppCompatActivity {
 
         // if the user is already rsvp'd then set the btnEditProfile to cancel
         if(rsvp) {
-            //btnRSVP.setText(R.string.event_detail_activity_cancel_rsvp);
+            btnRSVP.setImageResource(R.drawable.ic_favorites);
         }
 
         btnRSVP.setOnClickListener(view -> {
             Log.d(TAG, "btnRSVP clicked date: " + eventID + " at " + eventDate);
             EventHelper.refreshUserData();
             if(rsvp) {
-                Toast.makeText(context, eventName + " has been added your favorites", Toast.LENGTH_SHORT).show();
+                Toast mytoast = Toast.makeText(getApplicationContext(), "Unfavorited", Toast.LENGTH_SHORT);
+                mytoast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 1000);
+                mytoast.show();
                 cancelRSVP(eventID);
             } else {
-                Toast.makeText(context, eventName + " has been removed your favorites", Toast.LENGTH_SHORT).show();
+                Toast mytoast = Toast.makeText(getApplicationContext(), "Favorited", Toast.LENGTH_SHORT);
+                mytoast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 1000);
+                mytoast.show();
                 rsvpEvent(eventID, eventDate, eventDescription, eventName, venueName, imageUrl, startTime, venueCity);
             }
         });
@@ -167,7 +175,7 @@ public class EventDetailActivity extends AppCompatActivity {
         currentUser.put(PARSE_RSVP_KEY, updated.toString());
         currentUser.saveInBackground(e -> {
             if (e == null) {
-                //btnRSVP.setText(R.string.event_detail_activity_button_rsvp);
+                btnRSVP.setImageResource(R.drawable.ic_favorites_not_pressed);
                 rsvp = false;
             } else {
                 Log.e(TAG, "Error: " + e.getMessage());
@@ -184,7 +192,7 @@ public class EventDetailActivity extends AppCompatActivity {
         currentUser.put(PARSE_RSVP_KEY, eventsinfo);
         currentUser.saveInBackground(e -> {
             if (e == null) {
-                //btnRSVP.setText(R.string.event_detail_activity_cancel_rsvp);
+                btnRSVP.setImageResource(R.drawable.ic_favorites);;
                 rsvp = true;
                 events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
             } else {
