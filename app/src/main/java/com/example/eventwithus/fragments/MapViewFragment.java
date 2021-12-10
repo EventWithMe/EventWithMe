@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Criteria;
@@ -49,10 +50,15 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.Parse;
+import com.parse.ParseUser;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -72,6 +78,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
     ArrayList<EventMarker> eventMarkers2 = new ArrayList<>();
     ArrayList<EventMarker> eventMarkers3 = new ArrayList<>();
 
+
+    ParseUser currentUser = ParseUser.getCurrentUser();
+    String city = currentUser.getString("city");
 
 
 
@@ -159,6 +168,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                 }
             }
         });
+
+
+
         locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
         mLocationCallback = new LocationCallback() {
             @Override
@@ -181,7 +193,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
         String myCity = "";
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
         try {
-
             List<Address> addresses = geocoder.getFromLocation(myCoordinates.latitude, myCoordinates.longitude, 1);
             String address = addresses.get(0).getAddressLine(0);
             myCity = addresses.get(0).getLocality();
@@ -231,7 +242,26 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
 
 
     }
+    static class MarkerCallback implements Callback {
+        Marker marker=null;
 
+        MarkerCallback(Marker marker) {
+            this.marker=marker;
+        }
+
+        @Override
+        public void onError() {
+            Log.e(getClass().getSimpleName(), "Error loading thumbnail!");
+        }
+
+        @Override
+        public void onSuccess() {
+            if (marker != null && marker.isInfoWindowShown()) {
+                marker.hideInfoWindow();
+                marker.showInfoWindow();
+            }
+        }
+    }
     public ArrayList<EventMarker> getEventMarkers2() {
         return eventMarkers2;
     }

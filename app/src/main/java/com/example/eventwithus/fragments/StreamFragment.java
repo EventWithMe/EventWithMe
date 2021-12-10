@@ -36,6 +36,8 @@ import com.example.eventwithus.RequestQueueSingleton;
 import com.example.eventwithus.models.Event;
 import com.example.eventwithus.models.EventDetail;
 import com.example.eventwithus.models.EventItem;
+import com.parse.ParseUser;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -108,6 +110,15 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
     String film = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=Film";
     String misc = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
     String artNThr = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&keyword=Arts%20&%20Theater&locale=*";
+    ParseUser currentUser = ParseUser.getCurrentUser();
+    String city = currentUser.getString("city");
+
+
+    String localMiscGenre = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city=San%20Antonio";
+    String localMusicGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&radius=2000&locale=*&city=San%20Antonio&segmentName=music&genreId=" + Genreid;
+    String localArtsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&radius=2000&locale=*&city=San%20Antonio&segmentId=KZFzniwnSyZfZ7v7na&genreId=" + Genreid;
+    String localSportsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&radius=2000&locale=*&city=San%20Antonio&segmentName=sports&genreId="+Genreid;
+    String localFilmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&radius=2000&locale=*&city=San%20Antonio&segmentName=film&genreId=" + Genreid;
 
     String sportsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&genreId=" + Genreid;
     String musicGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId=" + Genreid;
@@ -213,6 +224,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                 "Science Fiction",
                 "Urban"
         };
+
 
         Map < String, String > Genresid = new HashMap < > ();
         Genresid.put("Rock", "KnvZfZ7vAvt");
@@ -331,32 +343,42 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                     }
                     if (spinner2.getSelectedItem() == "All Events") {
                         mEventList.clear();
-                        parseJSON2(misc);
+                        localMiscGenre = "https://app.ticketmaster.com/discovery/v2/events?&apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&city="+city;
+                        
+                        parseJSON2(localMiscGenre);
 
                     }
                     if (Arrays.asList(MusicGenre).contains(spinner2.getSelectedItem().toString())) {
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
+                        localMusicGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&radius=2000&locale=*&city="+city+"&segmentName=music&genreId=" + Genreid;
                         musicGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId=" + Genreid;
                         mEventList.clear();
-                        parseJSON2(musicGenre);
+                        parseJSON2(localMusicGenre);
                     }
                     if (Arrays.asList(SportsGenre).contains(spinner2.getSelectedItem().toString())) {
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
+                        Log.i("sports genre", city);
+                        localSportsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&radius=2000&locale=*&city="+city+"&segmentName=sports&genreId="+Genreid;
+
                         sportsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=sports&genreId=" + Genreid;
                         mEventList.clear();
-                        parseJSON2(sportsGenre);
+                        parseJSON2(localSportsGenre);
                     }
                     if (Arrays.asList(ArtsNThtre).contains(spinner2.getSelectedItem().toString())) {
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
+                        localArtsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&radius=2000&locale=*&city="+city+"&segmentId=KZFzniwnSyZfZ7v7na&genreId=" + Genreid;
+
                         artsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentId=KZFzniwnSyZfZ7v7na&genreId=" + Genreid;
                         mEventList.clear();
-                        parseJSON2(artsGenre);
+                        parseJSON2(localArtsGenre);
                     }
                     if (Arrays.asList(Film).contains(spinner2.getSelectedItem().toString())) {
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
+                         localFilmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&radius=2000&locale=*&city="+city+"&segmentName=film&genreId=" + Genreid;
+
                         filmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=film&genreId=" + Genreid;
                         mEventList.clear();
-                        parseJSON2(filmGenre);
+                        parseJSON2(localFilmGenre);
                     }
 
                     Toast.makeText(getContext(), item.toString(),
@@ -578,7 +600,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                                 }
 
                                 // Genresid.put(GenreName,id);
-                                EventMarker eventMarker = new EventMarker(eventName, venueName,longitude,latitude);
+                                EventMarker eventMarker = new EventMarker(eventName, venueName,longitude,latitude, venueImageURL);
                                 if(eventMarker!= null) {
                                     eventMarkers.add(eventMarker);
                                     listener.onInputStreamSent(eventMarkers);
