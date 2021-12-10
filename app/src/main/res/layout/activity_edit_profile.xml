@@ -99,9 +99,6 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="-26dp"
-            android:layout_marginBottom="7dp"
-            android:contentDescription="@string/edit_profile_activity_content_desc_profile_picture"
             android:src="@drawable/ic_baseline_person_24"
             tools:srcCompat="@tools:sample/avatars" />
 
