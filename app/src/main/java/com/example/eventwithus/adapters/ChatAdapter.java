@@ -114,6 +114,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                     String firstname = objects.get(0).getString("firstname");
                     String lastname = objects.get(0).getString("lastname");
                     String city = objects.get(0).getString("city");
+                    String bio = objects.get(0).getString("bio");
                     tvName.setText(String.format("%s %s", firstname, lastname));
 
                     ParseFile image = objects.get(0).getParseFile("image");
@@ -127,7 +128,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                         Log.i(TAG, String.format("User %s seems to have no profile picture", message.getUserId()));
                     }
 
-                    imageOther.setOnClickListener(view -> profileDialog(firstname, lastname, city, image));
+                    imageOther.setOnClickListener(view -> profileDialog(firstname, lastname, city, image, bio));
                 }
                 else {
                     Log.e(TAG, String.format("Error retrieving profile url for user %s", message.getUserId()), e);
@@ -139,8 +140,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         }
     }
 
-    private void profileDialog(String firstname, String lastname, String city, ParseFile parseFile) {
-        ProfileDialog profileDialog = new ProfileDialog(mactivity, firstname + " " + lastname, city, parseFile);
+    private void profileDialog(String firstname, String lastname, String city, ParseFile parseFile, String bio) {
+        ProfileDialog profileDialog = new ProfileDialog(mactivity, firstname + " " + lastname, city, parseFile, bio);
         profileDialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_border);
         profileDialog.show();
     }

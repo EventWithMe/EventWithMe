@@ -13,23 +13,28 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.parse.ParseFile;
 
+import org.w3c.dom.Text;
+
 public class ProfileDialog extends Dialog {
 
     ImageView iv_dialogPfp;
     TextView tv_dialogName;
     TextView tv_dialogCity;
+    TextView tv_dialogBio;
 
     Context context;
     String name;
     String city;
     ParseFile imageFile;
+    String bio;
 
-    public ProfileDialog(@NonNull Context context, String name, String city, ParseFile imageFile) {
+    public ProfileDialog(@NonNull Context context, String name, String city, ParseFile imageFile, String bio) {
         super(context);
         this.context = context;
         this.name = name;
         this.city = city;
         this.imageFile = imageFile;
+        this.bio = bio;
     }
 
     @Override
@@ -41,6 +46,7 @@ public class ProfileDialog extends Dialog {
         iv_dialogPfp = findViewById(R.id.iv_dialogPfp);
         tv_dialogName = findViewById(R.id.tv_dialogName);
         tv_dialogCity = findViewById(R.id.tv_dialogCity);
+        tv_dialogBio = findViewById(R.id.tv_dialogBio);
 
         if(imageFile != null) {
             Glide.with(context).load(imageFile.getUrl()).transform(new RoundedCorners(50)).into(iv_dialogPfp);
@@ -49,6 +55,7 @@ public class ProfileDialog extends Dialog {
         }
         tv_dialogName.setText(name);
         tv_dialogCity.setText(city);
+        tv_dialogBio.setText(bio);
     }
 
 }
