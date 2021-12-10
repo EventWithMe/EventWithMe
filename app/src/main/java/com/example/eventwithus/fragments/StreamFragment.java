@@ -149,7 +149,6 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
         if (getArguments() != null) {
             String keyword = getArguments().getString("UserInput");
-            Toast.makeText(getContext(), "keyword :" + keyword, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -163,7 +162,6 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toast.makeText(getContext(), "onViewCreated ", Toast.LENGTH_LONG).show();
         String[] Categories = {
                 "All Events",
                 "My Search",
@@ -381,11 +379,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                         parseJSON2(localFilmGenre);
                     }
 
-                    Toast.makeText(getContext(), item.toString(),
-                            Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getContext(), "Selected",
-                        Toast.LENGTH_SHORT).show();
 
             }
 
@@ -401,7 +395,6 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
             public void onClick(View view) {
 
 
-                Toast.makeText(getContext(), "searchBtn Clicked ", Toast.LENGTH_LONG).show();
                 // clear all old events displayed before displaying new ones
                 mEventList.clear();
                 String cityName = "";
@@ -546,7 +539,6 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
         //eventMarkers.clear();
         Log.i(TAG, url);
-        //Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener < JSONObject > () {
                     @Override
