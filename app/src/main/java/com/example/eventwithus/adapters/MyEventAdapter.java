@@ -1,6 +1,5 @@
 package com.example.eventwithus.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,17 +8,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eventwithus.ChatActivity;
-import com.example.eventwithus.EventDetailActivity;
-import com.example.eventwithus.MyEventDetailActivity;
 import com.example.eventwithus.R;
+import com.example.eventwithus.models.EventHelper;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHolder>{
@@ -35,7 +34,7 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.card_rsvp, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_favorites2, parent, false);
         return new ViewHolder(view);
     }
 
@@ -62,13 +61,14 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        private  ImageView ivRsvpImage;
-        private  TextView tvEventNameRSVP;
-        private  TextView tvDateRSVP;
-        private  TextView card_timeTV;
-        private  TextView card_venueTV;
-        private  TextView card_cityTV;
-        private  Button btnChatRsvp;
+        private ImageView ivImage_f2;
+        private TextView tvName_f2;
+        private TextView tvDate_f2;
+        private TextView tvTime_f2;
+        private TextView tvVenue_f2;
+        private TextView tvCity_f2;
+        private Button btnChatRsvp;
+        private CardView favorites_card2;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -76,13 +76,14 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            ivRsvpImage = itemView.findViewById(R.id.image_view);
-            tvEventNameRSVP = itemView.findViewById(R.id.text_view_name);
-            tvDateRSVP = itemView.findViewById(R.id.text_view_desc);
-//            card_timeTV = itemView.findViewById(R.id.card_timeTV);
-//            card_venueTV = itemView.findViewById(R.id.card_venueTV);
-//            card_cityTV = itemView.findViewById(R.id.card_cityTV);
+            ivImage_f2 = itemView.findViewById(R.id.ivImage_f2);
+            tvName_f2 = itemView.findViewById(R.id.tvName_f2);
+            tvDate_f2 = itemView.findViewById(R.id.tvDate_f2);
+            tvTime_f2 = itemView.findViewById(R.id.tvTime_f2);
+            tvVenue_f2 = itemView.findViewById(R.id.tvVenue_f2);
+            tvCity_f2 = itemView.findViewById(R.id.tvCity_f2);
             btnChatRsvp = itemView.findViewById(R.id.btnChatRsvp);
+            favorites_card2 = itemView.findViewById(R.id.favorites_card2);
 
             itemView.setOnClickListener(this);
         }
@@ -111,20 +112,18 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
 
         public void bind(String event) {
             String[] formatted = event.split(";");
-            tvEventNameRSVP.setText(formatted[3]);
-            tvDateRSVP.setText(formatted[1]);
-//            card_timeTV.setText("Time: " + event.getStartTime());
-//            card_venueTV.setText("Venue: " + event.getVenueName());
-//            card_cityTV.setText("City: " + event.getCity());
-                Picasso.with(context).load(formatted[5]).fit().centerInside().into(ivRsvpImage);
+            tvName_f2.setText(formatted[3]);
+            tvDate_f2.setText(EventHelper.formatJsonDate(formatted[1]));
+            tvTime_f2.setText(EventHelper.startTimeFormatter(formatted[6]));
+            tvVenue_f2.setText(formatted[4]);
+            tvCity_f2.setText(formatted[7]);
+            Picasso.with(context).load(formatted[5]).fit().centerInside().into(ivImage_f2);
 
-                btnChatRsvp.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(context, ChatActivity.class);
-                        context.startActivity(intent);
-                    }
-                });
+            favorites_card2.setOnClickListener(view -> {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("eventId", formatted[0]);
+                context.startActivity(intent);
+            });
         }
     }
 }

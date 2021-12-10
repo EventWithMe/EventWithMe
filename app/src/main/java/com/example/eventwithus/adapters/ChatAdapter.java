@@ -125,10 +125,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                         Log.i(TAG, String.format("User %s seems to have no profile picture", message.getUserId()));
                     }
 
-                    imageOther.setOnClickListener(view -> {
-                        Toast.makeText(mContext, "clicked on user: " + firstname, Toast.LENGTH_SHORT).show();
-                        profileDialog(firstname, lastname, city, image);
-                    });
+                    imageOther.setOnClickListener(view -> profileDialog(firstname, lastname, city, image));
                 }
                 else {
                     Log.e(TAG, String.format("Error retrieving profile url for user %s", message.getUserId()), e);
