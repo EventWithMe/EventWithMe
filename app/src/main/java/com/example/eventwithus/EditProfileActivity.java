@@ -135,7 +135,6 @@ public class EditProfileActivity extends AppCompatActivity {
             currentUser.put(BIO_KEY, bio);
             currentUser.saveInBackground(e -> {
                 Log.i(TAG, "Profile changes saved");
-                Toast.makeText(context, getString(R.string.edit_profile_activity_profile_saved), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, ProfileFragment.class);
                 intent.putExtra(FIRSTNAME_KEY, firstName);
                 intent.putExtra(LASTNAME_KEY, lastName);
@@ -255,7 +254,6 @@ public class EditProfileActivity extends AppCompatActivity {
         currentUser.put(IMAGE_KEY, file);
         currentUser.saveInBackground(e -> {
             if (e == null) {
-                Toast.makeText(context, getString(R.string.edit_profile_activity_toast_picture_saved), Toast.LENGTH_SHORT).show();
             } else {
                 Log.e(TAG, "Error: " + e.getMessage());
             }

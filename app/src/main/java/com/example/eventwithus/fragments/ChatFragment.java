@@ -96,7 +96,7 @@ public class ChatFragment extends Fragment {
         mMessages = new ArrayList<>();
         mFirstLoad = true;
         final String userId = ParseUser.getCurrentUser().getObjectId();
-        mAdapter = new ChatAdapter(getContext(), userId, mMessages);
+        //mAdapter = new ChatAdapter(getContext(), userId, mMessages);
         rvChat.setAdapter(mAdapter);
 
         // associate the LayoutManager with the RecyclerView

@@ -40,9 +40,9 @@
             android:layout_below="@+id/textViewEmail"
             android:layout_alignStart="@+id/textViewEmail"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:textColor="#455A64"
-            android:textSize="16sp"
+            android:textSize="18sp"
             tools:text="San Antonio" />
 
         <TextView
@@ -52,9 +52,9 @@
             android:layout_below="@+id/imageViewProfilePicture"
             android:layout_alignStart="@+id/imageViewProfilePicture"
             android:layout_marginStart="1dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:textColor="#455A64"
-            android:textSize="16sp"
+            android:textSize="18sp"
             tools:text="freddy@gmail.com" />
 
         <ImageView
@@ -73,9 +73,10 @@
             android:layout_below="@+id/textViewName"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageViewProfilePicture"
             android:textColor="#455A64"
+            android:textSize="16sp"
             tools:text="Fred is the husband of Wilma Flintstone and father of Pebbles Flintstone and together the family live in their homely cave in the town of Bedrock." />
 
         <View
@@ -109,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/layoutProfileInfo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp">
+        android:layout_marginTop="30dp">
 
         <RelativeLayout
             android:id="@+id/layoutEventsAttended"
@@ -200,8 +201,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/layoutProfileStats"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
-        android:text="@string/profile_fragment_button_edit_password" />
+        android:layout_marginTop="60dp"
+        android:text="@string/profile_fragment_button_edit_password"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/buttonLogout"
@@ -209,7 +211,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonResetPassword"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/profile_fragment_button_logout" />
+        android:layout_marginTop="30dp"
+        android:text="@string/profile_fragment_button_logout"
+        android:textSize="18sp" />
 
 </RelativeLayout>
