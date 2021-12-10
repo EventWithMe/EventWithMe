@@ -1,6 +1,7 @@
 package com.example.eventwithus.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class RsvpFragment extends Fragment {
     private MyEventAdapter myEventAdapter;
     private List<String> eventsList;
     private ParseUser currentUser;
+    boolean removed;
 
     public RsvpFragment() {
         // Required empty public constructor
@@ -53,6 +55,7 @@ public class RsvpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
+        this.removed = false;
 
         recyclerView = view.findViewById(R.id.rvMyEventsList);
         recyclerView.setHasFixedSize(true);
@@ -83,6 +86,7 @@ public class RsvpFragment extends Fragment {
                 // on below line we are getting the item at a particular position.
                 String event = eventsList.get(viewHolder.getAdapterPosition());
                 String[] formatted = event.split(";");
+                changeRemoved(true);
 
                 // below line is to get the position
                 // of the item at that position.
@@ -107,11 +111,44 @@ public class RsvpFragment extends Fragment {
                         // below line is to notify item is
                         // added to our adapter class.
                         myEventAdapter.notifyItemInserted(position);
+                        changeRemoved(false);
                     }
                 }).show();
             }
             // at last we are adding this
             // to our recycler view.
         }).attachToRecyclerView(recyclerView);
+    }
+
+    public void cancelHelper(String eventId) {
+        if(removed)
+            EventHelper.cancelRSVP(eventId, this.eventsList, this.currentUser);
+    }
+
+    public void changeRemoved(boolean removed) {
+        this.removed = removed;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "CANCEL RSVP:");
+        StringBuilder updated = new StringBuilder();
+        if(eventsList.size() > 0) {
+            updated.append("000;0000-00-00;0;0;0;0;0;0<");
+            for(int i = 0; i < eventsList.size() - 1; i++) {
+                updated.append(eventsList.get(i)).append("<");
+            }
+            updated.append(eventsList.get(eventsList.size() - 1));
+        } else
+            updated.append("000;0000-00-00;0;0;0;0;0;0");
+
+        currentUser.put(PARSE_RSVP_KEY, updated.toString());
+        currentUser.saveInBackground(e -> {
+            if (e != null) {
+                Log.e(TAG, "Error: " + e.getMessage());
+            }
+        });
+        EventHelper.refreshUserData();
     }
 }
