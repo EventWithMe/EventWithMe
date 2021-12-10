@@ -229,16 +229,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     * (Update/PUT) Update user profile data
     * (delete) delete account
 
-youtube-embed
-{
-   "width": "560",
-   "height": "315",
-   "src": "https://www.youtube.com/watch?v=8XOlISfdpbU&ab_channel=BrandonMuller",
-   "title": "YouTube video player",
-   "frameborder": "0",
-   "allow": "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-   "allowfullscreen": true
-}
+[![Our Live Demo Presentation](https://www.youtube.com/watch?v=8XOlISfdpbU&ab_channel=BrandonMuller)](https://www.youtube.com/watch?v=8XOlISfdpbU&ab_channel=BrandonMuller)
 
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
