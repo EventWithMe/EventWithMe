@@ -584,7 +584,6 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
                                 Eventcoord.put(longitude,latitude);//storing coordinates into SET
                                 mEventList.add(new EventItem(eventImage, eventName, date));
-                                Log.i("VENUE NAMES : ",venueName);
                                 mDetailList.add(new EventDetail(info, eventid, venueName, time, venueCity));
 
                             }
