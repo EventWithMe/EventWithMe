@@ -67,7 +67,6 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
         private TextView tvTime_f2;
         private TextView tvVenue_f2;
         private TextView tvCity_f2;
-        private Button btnChatRsvp;
         private CardView favorites_card2;
 
         // We also create a constructor that accepts the entire item row
@@ -82,7 +81,6 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
             tvTime_f2 = itemView.findViewById(R.id.tvTime_f2);
             tvVenue_f2 = itemView.findViewById(R.id.tvVenue_f2);
             tvCity_f2 = itemView.findViewById(R.id.tvCity_f2);
-            btnChatRsvp = itemView.findViewById(R.id.btnChatRsvp);
             favorites_card2 = itemView.findViewById(R.id.favorites_card2);
 
             itemView.setOnClickListener(this);
