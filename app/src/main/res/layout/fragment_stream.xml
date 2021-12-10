@@ -31,7 +31,6 @@
                 android:id="@+id/searchBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
                 android:paddingLeft="0dp"
                 android:paddingTop="0dp"
                 android:paddingRight="0dp"
@@ -73,9 +72,9 @@
 
             android:id="@+id/swipeContainer"
 
-            android:layout_width="410dp"
+            android:layout_width="412dp"
 
-            android:layout_height="555dp"
+            android:layout_height="691dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
