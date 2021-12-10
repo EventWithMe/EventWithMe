@@ -133,7 +133,7 @@ public class StreamDialogFragment extends DialogFragment {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 DecimalFormat mFormat= new DecimalFormat("00");
-                                editTextStartDate.setText(year + "-" + (mFormat.format(Double.valueOf(monthOfYear + 1))) + "-" + mFormat.format(Double.valueOf(dayOfMonth)));
+                                editTextEndDate.setText(year + "-" + (mFormat.format(Double.valueOf(monthOfYear + 1))) + "-" + mFormat.format(Double.valueOf(dayOfMonth)));
                             }
                         }, year, month, day);
                 picker.show();
