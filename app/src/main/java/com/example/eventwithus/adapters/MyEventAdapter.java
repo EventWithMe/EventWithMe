@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.eventwithus.ChatActivity;
 import com.example.eventwithus.R;
+import com.example.eventwithus.RoundedTransformation;
 import com.example.eventwithus.models.EventHelper;
 import com.squareup.picasso.Picasso;
 
@@ -68,6 +69,7 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
         private TextView tvVenue_f2;
         private TextView tvCity_f2;
         private CardView favorites_card2;
+        private Button btnMessages;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -82,6 +84,7 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
             tvVenue_f2 = itemView.findViewById(R.id.tvVenue_f2);
             tvCity_f2 = itemView.findViewById(R.id.tvCity_f2);
             favorites_card2 = itemView.findViewById(R.id.favorites_card2);
+            btnMessages = itemView.findViewById(R.id.btnMessages);
 
             itemView.setOnClickListener(this);
         }
@@ -115,9 +118,9 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
             tvTime_f2.setText(EventHelper.startTimeFormatter(formatted[6]));
             tvVenue_f2.setText(formatted[4]);
             tvCity_f2.setText(formatted[7]);
-            Picasso.with(context).load(formatted[5]).fit().centerInside().into(ivImage_f2);
+            Picasso.with(context).load(formatted[5]).fit().centerInside().transform(new RoundedTransformation(50, 0)).into(ivImage_f2);
 
-            favorites_card2.setOnClickListener(view -> {
+            btnMessages.setOnClickListener(view -> {
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("eventId", formatted[0]);
                 context.startActivity(intent);

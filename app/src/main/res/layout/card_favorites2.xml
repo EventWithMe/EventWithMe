@@ -31,8 +31,8 @@
             android:id="@+id/tvDate_f2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="16sp"
             card_view:layout_constraintStart_toStartOf="parent"
@@ -43,8 +43,8 @@
             android:id="@+id/tvTime_f2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="16sp"
             card_view:layout_constraintStart_toStartOf="parent"
@@ -55,8 +55,8 @@
             android:id="@+id/tvVenue_f2"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="16sp"
             card_view:layout_constraintStart_toStartOf="parent"
@@ -68,9 +68,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="16sp"
+            android:visibility="invisible"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/tvVenue_f2"
             tools:text="City: New York" />
@@ -79,7 +80,7 @@
             android:id="@+id/tvName_f2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="18sp"
@@ -88,6 +89,17 @@
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
             tools:text="Brooklyn Nets vs. Phoenix Suns " />
+
+        <Button
+            android:id="@+id/btnMessages"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="Messages"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toStartOf="@+id/ivImage_f2"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/tvVenue_f2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
