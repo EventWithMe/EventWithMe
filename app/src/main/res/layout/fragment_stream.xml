@@ -68,7 +68,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+
 
             android:id="@+id/swipeContainer"
 
@@ -97,7 +97,6 @@
             </androidx.recyclerview.widget.RecyclerView>
 
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

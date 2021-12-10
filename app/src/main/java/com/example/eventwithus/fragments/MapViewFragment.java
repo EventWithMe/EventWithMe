@@ -193,7 +193,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
         String myCity = "";
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
         try {
-            List<Address> addresses = geocoder.getFromLocation(myCoordinates.latitude, myCoordinates.longitude, 1);
+         //  List<Address> addresses = geocoder.getFromLocation(myCoordinates.latitude, myCoordinates.longitude, 1);
+          List<Address> addresses = geocoder.getFromLocationName("San Antonio", 1);
             String address = addresses.get(0).getAddressLine(0);
             myCity = addresses.get(0).getLocality();
             Log.d("mylog", "Complete Address: " + addresses.toString());
