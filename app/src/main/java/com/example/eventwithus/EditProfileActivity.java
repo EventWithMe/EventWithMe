@@ -1,10 +1,10 @@
 package com.example.eventwithus;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -52,8 +52,9 @@ public class EditProfileActivity extends AppCompatActivity {
     Button btnSaveProfile;
 
     private ParseUser currentUser;
-    private File photoFile;
-    public final String photoFileName = "photo.jpg";
+    private File profilePictureFile;
+    private static final String photoFileName = "photo%d.jpg";
+    private static int photoFileIndex = 0;
     private boolean pfpChange;
     Context context;
 
@@ -125,7 +126,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
 
             if(pfpChange) {
-                savePhotoFile(this.photoFile);
+                savePhotoFile(this.profilePictureFile);
             }
 
             currentUser.put(FIRSTNAME_KEY, firstName);
@@ -164,15 +165,17 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if(choice.equals(PHOTO)) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            photoFile = getPhotoFileUri(photoFileName);
-            Uri fileProvider = FileProvider.getUriForFile(context, "com.codepath.fileprovider", photoFile);
+            profilePictureFile = getPhotoFileUri(String.format(photoFileName, photoFileIndex));
+            photoFileIndex++;
+            Uri fileProvider = FileProvider.getUriForFile(context, "com.codepath.fileprovider", profilePictureFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
             cameraActivityResultLauncher.launch(intent);
         }
         else if(choice.equals(GALLERY)) {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            photoFile = getPhotoFileUri(photoFileName);
-            Uri fileProvider = FileProvider.getUriForFile(context, "com.codepath.fileprovider", photoFile);
+            profilePictureFile = getPhotoFileUri(String.format(photoFileName, photoFileIndex));
+            photoFileIndex++;
+            Uri fileProvider = FileProvider.getUriForFile(context, "com.codepath.fileprovider", profilePictureFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
             intent.setType("image/*");
             galleryActivityResultLauncher.launch(intent);
@@ -180,19 +183,17 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public void cameraResultCallback(ActivityResult result) {
-        Log.i(TAG, "Camera Result Received");
-
-        // by this point we have the camera photo on disk
-        Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+        Log.i(TAG, String.format("Camera Result Callback resultCode: %d", result.getResultCode()));
+        if (result.getResultCode() == Activity.RESULT_CANCELED)
+            return;
         // resize bitmap
-        Bitmap resizedImage = scaleBitmap(takenImage);
         // Load the taken image into a preview
         Glide.with(context)
-                .load(photoFile)
+                .load(profilePictureFile)
                 .circleCrop()
                 .into(imageViewEditProfilePicture);
         pfpChange = true;
-        savePhotoBitmap(resizedImage);
+        savePhotoFile(profilePictureFile);
     }
 
     public void galleryResultCallback(ActivityResult result) {
@@ -206,7 +207,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 .load(selectedImageUri)
                 .circleCrop()
                 .into(imageViewEditProfilePicture);
-        savePhotoFile(this.photoFile);
+        savePhotoFile(profilePictureFile);
     }
 
     private void showDialog(){
@@ -254,8 +255,9 @@ public class EditProfileActivity extends AppCompatActivity {
         currentUser.put(IMAGE_KEY, file);
         currentUser.saveInBackground(e -> {
             if (e == null) {
+                Log.i(TAG, "Profile picture saved successfully");
             } else {
-                Log.e(TAG, "Error: " + e.getMessage());
+                Log.e(TAG, "Error saving profile picture: " + e.getMessage());
             }
         });
     }
@@ -264,9 +266,8 @@ public class EditProfileActivity extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        ParseUser user = ParseUser.getCurrentUser();
-        user.put(IMAGE_KEY, new ParseFile("profile_picture", imageBytes));
-        user.saveInBackground();
+        currentUser.put(IMAGE_KEY, new ParseFile("profile_picture", imageBytes));
+        currentUser.saveInBackground();
     }
 
     private Bitmap scaleBitmap(Bitmap image) {

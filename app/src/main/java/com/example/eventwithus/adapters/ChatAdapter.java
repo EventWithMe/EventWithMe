@@ -136,6 +136,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
             });
             tvBody.setText(message.getBody());
+            tvTimestamp.setText(message.getTimestampAsString());
 
         }
     }
