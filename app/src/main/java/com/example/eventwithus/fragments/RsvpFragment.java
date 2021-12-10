@@ -120,11 +120,6 @@ public class RsvpFragment extends Fragment {
         }).attachToRecyclerView(recyclerView);
     }
 
-    public void cancelHelper(String eventId) {
-        if(removed)
-            EventHelper.cancelRSVP(eventId, this.eventsList, this.currentUser);
-    }
-
     public void changeRemoved(boolean removed) {
         this.removed = removed;
     }

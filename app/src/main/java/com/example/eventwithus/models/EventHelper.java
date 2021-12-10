@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.example.eventwithus.R;
+import com.parse.Parse;
 import com.parse.ParseUser;
 
 import java.text.Format;
@@ -23,7 +24,7 @@ import java.util.List;
 public class EventHelper {
 
     public static final String TAG = "EventHelper"; // tag for logging
-    public static final String PARSE_RSVP_KEY= "eventsinfo"; // key to get and update the eventinfo column in the User object in Parse DB
+    public static final String PARSE_EVENTS_KEY= "eventsinfo"; // key to get and update the eventinfo column in the User object in Parse DB
 
     // this method returns an ArrayList of Strings of the event information. Each string contains the event ID and event date formatted as eventID_eventDate
     public static List<String> getLoggedInUserEvents(String EVENTS_KEY) {
@@ -49,6 +50,17 @@ public class EventHelper {
             }
             return eventsinfo;
         }
+    }
+
+    public static int getEventCount(ParseUser currentUser) {
+        int count = 0;
+        String events = currentUser.getString(PARSE_EVENTS_KEY);
+        for (int i = 0; i < events.length(); i++) {
+            if (events.charAt(i) == '<') {
+                count++;
+            }
+        }
+        return count;
     }
 
     public static void refreshUserData() {
@@ -121,23 +133,5 @@ public class EventHelper {
                 break;
         }
         return formatted += " " + arr[0];
-    }
-
-    public static void cancelRSVP(String eventId, List<String> events, ParseUser currentUser) {
-        Log.d(TAG, "CANCEL RSVP:");
-        StringBuilder updated = new StringBuilder();
-        updated.append("000;0000-00-00;0;0;0;0;0;0<");
-        for(int i = 0; i < events.size() - 1; i++) {
-            updated.append(events.get(i)).append("<");
-        }
-        updated.append(events.get(events.size() - 1));
-
-        currentUser.put(PARSE_RSVP_KEY, updated.toString());
-        currentUser.saveInBackground(e -> {
-            if (e != null) {
-                Log.e(TAG, "Error: " + e.getMessage());
-            }
-        });
-        EventHelper.refreshUserData();
     }
 }

@@ -27,8 +27,11 @@ import com.example.eventwithus.EditProfileActivity;
 import com.example.eventwithus.LoginActivity;
 import com.example.eventwithus.PasswordChangeActivity;
 import com.example.eventwithus.R;
+import com.example.eventwithus.models.EventHelper;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
@@ -45,6 +48,7 @@ public class ProfileFragment extends Fragment {
     TextView tvEmail;
     TextView tvCity;
     TextView tvBio;
+    TextView tvEventCount;
     ImageButton btnEditProfile;
     Button btnLogout;
     Button btnEditPassword;
@@ -109,6 +113,7 @@ public class ProfileFragment extends Fragment {
         tvEmail = view.findViewById(R.id.textViewEmail);
         tvCity = view.findViewById(R.id.textViewCity);
         tvBio = view.findViewById(R.id.textViewProfileBio);
+        tvEventCount = view.findViewById(R.id.tvEventCount);
         btnEditProfile = view.findViewById(R.id.buttonEditProfile);
         btnLogout = view.findViewById(R.id.buttonLogout);
         btnEditPassword = view.findViewById(R.id.buttonResetPassword);
@@ -175,6 +180,7 @@ public class ProfileFragment extends Fragment {
                 tvBio.setText(R.string.profile_fragment_label_no_bio);
             else
                 tvBio.setText(bio);
+            tvEventCount.setText(String.valueOf(EventHelper.getEventCount(currentUser)));
         }
     }
 }
