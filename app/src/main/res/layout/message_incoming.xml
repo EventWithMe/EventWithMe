@@ -9,6 +9,14 @@
     android:clipToPadding="false">
 
     <TextView
+        android:id="@+id/textViewIncomingDot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@+id/tvName"
+        android:text="@string/messageDotSeparator" />
+
+    <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,4 +47,13 @@
         android:paddingVertical="6dp"
         android:textSize="18sp"
         tools:text="This is someone's message" />
+
+    <TextView
+        android:id="@+id/textViewIncomingTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@+id/textViewIncomingDot"
+        tools:text="1:24" />
 </RelativeLayout>

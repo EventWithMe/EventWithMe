@@ -3,11 +3,9 @@ package com.example.eventwithus;
 import android.app.Application;
 
 import com.example.eventwithus.models.Message;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.parse.Parse;
 import com.parse.ParseObject;
-
-import java.io.IOException;
-import java.util.Properties;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -17,6 +15,9 @@ public class ParseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Initialize Date/Time library functions
+        AndroidThreeTen.init(this);
 
         ParseObject.registerSubclass(Message.class);
 

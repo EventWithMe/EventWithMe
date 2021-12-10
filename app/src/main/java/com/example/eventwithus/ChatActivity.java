@@ -21,11 +21,10 @@ import com.parse.livequery.SubscriptionHandling;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ChatActivity extends AppCompatActivity {
 
-    static final String USER_ID_KEY = "userId";
-    static final String EVENT_ID_KEY = "eventId";
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
     EditText etMessage;
@@ -52,8 +51,8 @@ public class ChatActivity extends AppCompatActivity {
         try {
             ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI(websocketUrl));
             ParseQuery<Message> parseQuery = ParseQuery.getQuery(Message.class);
-            parseQuery.whereNotEqualTo(USER_ID_KEY, ParseUser.getCurrentUser().getObjectId());
-            parseQuery.whereEqualTo(EVENT_ID_KEY, eventId);
+            parseQuery.whereNotEqualTo(Message.USER_ID_KEY, ParseUser.getCurrentUser().getObjectId());
+            parseQuery.whereEqualTo(Message.EVENT_ID_KEY, eventId);
 
             // Connect to Parse server
             SubscriptionHandling<Message> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
@@ -100,6 +99,7 @@ public class ChatActivity extends AppCompatActivity {
             message.setUserId(ParseUser.getCurrentUser().getObjectId());
             message.setBody(data);
             message.setEventId(eventId);
+            message.setTimestamp(new Date(System.currentTimeMillis()));
             message.saveInBackground(e -> {
                 Log.i(TAG, "Successfully created message on Parse");
                 refreshMessages();
@@ -113,7 +113,7 @@ public class ChatActivity extends AppCompatActivity {
         // Construct query to execute
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
         // Set query to only retrieve messages from current event
-        query.whereEqualTo(EVENT_ID_KEY, eventId);
+        query.whereEqualTo(Message.EVENT_ID_KEY, eventId);
         // Configure limit and sort order
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
 

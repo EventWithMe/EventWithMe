@@ -84,7 +84,7 @@
             android:layout_height="1dp"
             android:layout_below="@+id/textViewProfileBio"
             android:layout_marginTop="@dimen/profile_fragment_edit_button_height"
-            android:layout_marginBottom="-20dp"
+            android:layout_marginBottom="5dp"
             android:background="?android:attr/listDivider"
             android:visibility="invisible" />
 
@@ -97,8 +97,8 @@
         android:layout_alignBottom="@+id/layoutProfileInfo"
         android:layout_alignParentTop="false"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
         android:contentDescription="@string/profile_fragment_content_desc_edit_profile"
         android:src="@android:drawable/ic_menu_edit"
         tools:ignore="ImageContrastCheck" />
@@ -199,9 +199,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layoutProfileStats"
-        android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="128dp"
         android:layout_marginTop="48dp"
         android:text="@string/profile_fragment_button_edit_password" />
 
@@ -209,23 +207,9 @@
         android:id="@+id/buttonLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/dividerActionBarHeight"
         android:layout_below="@+id/buttonResetPassword"
-        android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="158dp"
-        android:layout_marginBottom="34dp"
+        android:layout_marginTop="20dp"
         android:text="@string/profile_fragment_button_logout" />
-
-    <View
-        android:id="@+id/dividerActionBarHeight"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="?attr/actionBarSize"
-        android:background="?android:attr/listDivider"
-        android:visibility="invisible" />
 
 </RelativeLayout>

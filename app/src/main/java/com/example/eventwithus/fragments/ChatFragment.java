@@ -32,7 +32,6 @@ import java.util.ArrayList;
 @SuppressWarnings("FieldCanBeLocal")
 public class ChatFragment extends Fragment {
 
-    static final String USER_ID_KEY = "userId";
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
     EditText etMessage;
@@ -57,7 +56,7 @@ public class ChatFragment extends Fragment {
         try {
             ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI(websocketUrl));
             ParseQuery<Message> parseQuery = ParseQuery.getQuery(Message.class);
-            parseQuery.whereNotEqualTo(USER_ID_KEY, ParseUser.getCurrentUser().getObjectId());
+            parseQuery.whereNotEqualTo(Message.USER_ID_KEY, ParseUser.getCurrentUser().getObjectId());
 
             // Connect to Parse server
             SubscriptionHandling<Message> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -91,20 +90,22 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
     public class IncomingMessageViewHolder extends MessageViewHolder {
         final ImageView imageOther;
-        final TextView body;
-        final TextView name;
+        final TextView tvBody;
+        final TextView tvName;
+        final TextView tvTimestamp;
 
         public IncomingMessageViewHolder(View itemView) {
             super(itemView);
             imageOther = itemView.findViewById(R.id.ivProfileOther);
-            body = itemView.findViewById(R.id.tvBody);
-            name = itemView.findViewById(R.id.tvName);
+            tvBody = itemView.findViewById(R.id.tvBody);
+            tvName = itemView.findViewById(R.id.tvName);
+            tvTimestamp = itemView.findViewById(R.id.textViewIncomingTimestamp);
         }
 
         @Override
         public void bindMessage(Message message) {
 
-            // Get user's name and pfp from database
+            // Get user data from database
             ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
             query.whereEqualTo("objectId", message.getUserId());
             query.findInBackground((objects, e) -> {
@@ -112,7 +113,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                     String firstname = objects.get(0).getString("firstname");
                     String lastname = objects.get(0).getString("lastname");
                     String city = objects.get(0).getString("city");
-                    name.setText(String.format("%s %s", firstname, lastname));
+                    tvName.setText(String.format("%s %s", firstname, lastname));
 
                     ParseFile image = objects.get(0).getParseFile("image");
                     if (image != null) {
@@ -132,7 +133,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                 }
 
             });
-            body.setText(message.getBody());
+            tvBody.setText(message.getBody());
+
         }
     }
 
@@ -144,14 +146,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
     public class OutgoingMessageViewHolder extends MessageViewHolder {
         final ImageView imageMe;
-        final TextView body;
-        final TextView name;
+        final TextView tvBody;
+        final TextView tvName;
+        final TextView tvTimestamp;
 
         public OutgoingMessageViewHolder(View itemView) {
             super(itemView);
             imageMe = itemView.findViewById(R.id.ivProfileMe);
-            body = itemView.findViewById(R.id.tvBody);
-            name = itemView.findViewById(R.id.tvName);
+            tvBody = itemView.findViewById(R.id.tvBody);
+            tvName = itemView.findViewById(R.id.tvName);
+            tvTimestamp = itemView.findViewById(R.id.textViewOutgoingTimestamp);
         }
 
         @Override
@@ -169,8 +173,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
             else {
                 Log.i(TAG, String.format("User %s seems to have no profile picture", message.getUserId()));
             }
-            body.setText(message.getBody());
-            name.setText(String.format("%s %s", firstname, lastname));
+            tvBody.setText(message.getBody());
+            tvName.setText(String.format("%s %s", firstname, lastname));
+            tvTimestamp.setText(message.getTimestampAsString());
         }
     }
 }

@@ -118,10 +118,10 @@
     <string name="password_change_activity_toast_success">Password changed successfully!</string>
     <string name="signup_activity_hint_city">city</string>
     <string name="gmap_key">AIzaSyBsIph2bE1JAqVIQq5cM3LIcNzNUyG7ZP8</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="password_requirements">Password Requirements:\n\t- 8 to 20 characters long\n\t- at least one upper case character\n\t- at least one symbol\n\t- at least one digit</string>
     <string name="signup_activity_error_username_space">Username cannot contain a space</string>
+    <string name="messageDotSeparator">•</string>
 
 </resources>
