@@ -1,19 +1,17 @@
 package com.example.eventwithus;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.eventwithus.adapters.ChatAdapter;
-import com.example.eventwithus.fragments.ChatFragment;
 import com.example.eventwithus.models.Message;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -27,13 +25,15 @@ import java.util.ArrayList;
 public class ChatActivity extends AppCompatActivity {
 
     static final String USER_ID_KEY = "userId";
+    static final String EVENT_ID_KEY = "eventId";
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
     EditText etMessage;
     ImageButton ibSend;
     RecyclerView rvChat;
 
-    static final String TAG = "ChatFragment";
+    String eventId;
+    static final String TAG = "ChatActivity";
     private ArrayList<Message> mMessages;
     private boolean mFirstLoad;
     private ChatAdapter mAdapter;
@@ -46,10 +46,14 @@ public class ChatActivity extends AppCompatActivity {
         String websocketUrl = "wss://eventwithme.b4a.io/";
         context = this.getApplicationContext();
 
+        eventId = getIntent().getStringExtra("eventId");
+        Log.i(TAG, String.format("Chat opened with eventId=%s", eventId));
+
         try {
             ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI(websocketUrl));
             ParseQuery<Message> parseQuery = ParseQuery.getQuery(Message.class);
             parseQuery.whereNotEqualTo(USER_ID_KEY, ParseUser.getCurrentUser().getObjectId());
+            parseQuery.whereEqualTo(EVENT_ID_KEY, eventId);
 
             // Connect to Parse server
             SubscriptionHandling<Message> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
@@ -59,13 +63,10 @@ public class ChatActivity extends AppCompatActivity {
                 mMessages.add(0, object);
                 Log.i(TAG, String.format("New message: %s", object.getBody()));
                 // RecyclerView updates need to be run on the UI thread
-                Activity activity = ChatActivity.this;
-                if (activity != null) {
-                    activity.runOnUiThread(() -> {
-                        mAdapter.notifyItemInserted(0);
-                        rvChat.scrollToPosition(0);
-                    });
-                }
+                runOnUiThread(() -> {
+                    mAdapter.notifyItemInserted(0);
+                    rvChat.scrollToPosition(0);
+                });
             });
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -91,9 +92,14 @@ public class ChatActivity extends AppCompatActivity {
         // When send button is clicked, create message object on Parse
         ibSend.setOnClickListener(v -> {
             String data = etMessage.getText().toString();
+            if (data.isEmpty()) {
+                Log.d(TAG, "Attempted to send empty message");
+                return;
+            }
             Message message = new Message();
             message.setUserId(ParseUser.getCurrentUser().getObjectId());
             message.setBody(data);
+            message.setEventId(eventId);
             message.saveInBackground(e -> {
                 Log.i(TAG, "Successfully created message on Parse");
                 refreshMessages();
@@ -106,6 +112,8 @@ public class ChatActivity extends AppCompatActivity {
     void refreshMessages() {
         // Construct query to execute
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        // Set query to only retrieve messages from current event
+        query.whereEqualTo(EVENT_ID_KEY, eventId);
         // Configure limit and sort order
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
 
@@ -115,6 +123,7 @@ public class ChatActivity extends AppCompatActivity {
         // This is equivalent to a SELECT query with SQL
         query.findInBackground((messages, e) -> {
             if (e == null) {
+                Log.i(TAG, String.format("Found %d messages", messages.size()));
                 mMessages.clear();
                 mMessages.addAll(messages);
                 mAdapter.notifyDataSetChanged(); // update adapter
