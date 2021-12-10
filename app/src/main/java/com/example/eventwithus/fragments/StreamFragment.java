@@ -560,10 +560,12 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                                     JSONObject location = elem.getJSONObject("location");
                                     longitude = location.getString("longitude");
                                     latitude = location.getString("latitude");
-                                    JSONArray VenueImages = elem.getJSONArray("images");
-                                    for(int start = 0; start< VenueImages.length(); start++){
-                                        JSONObject element = VenueImages.getJSONObject(start);
-                                        venueImageURL = element.getString("url");
+                                    JSONArray VenueImages = elem.isNull("images") ? null : elem.getJSONArray("images");
+                                    if(VenueImages != null) {
+                                        for (int start = 0; start < VenueImages.length(); start++) {
+                                            JSONObject element = VenueImages.getJSONObject(start);
+                                            venueImageURL = element.getString("url");
+                                        }
                                     }
                                 }
 
