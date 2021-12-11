@@ -34,13 +34,13 @@ App allows users to create account and chat with people going to the same events
 
 **Optional Nice-to-have Stories**
 
-- [ ] User can use phone GPS to detect location
+- [x] User can use phone GPS to detect location
 - [ ] User can choose to sort either by most recent or by distance
 - [ ] User can privately message people attending
 - [ ] User can create groups with group chats for people attending together
 - [ ] User can receive notifications about new messages or new events in their area
 - [ ] User can change privacy settings and notification settings
-- [ ] User can view other people's profiles
+- [x] User can view other people's profiles
 
 ### 2. Screen Archetypes
 
