@@ -290,6 +290,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                 if (marker == null) {
                     marker = googleMap.addMarker(new MarkerOptions().position(myCoordinates));
                     marker.setTag(myCoordinates);//<---------------------------------------------------------------SETTING TAG HERE*******************
+                    Log.i("marker TAG: ", marker.getTag().toString());
                 } else
                     marker.setPosition(myCoordinates);
             }
@@ -325,7 +326,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
         TextView markerName = view.findViewById(R.id.markerName);
         ImageView venueIV = view.findViewById(R.id.venueImageView);
 
-        String imageUrl = (String) marker.getTag();
+        String imageUrl = marker.getTag().toString();
 
         Picasso.with(getContext()).load(imageUrl).into(venueIV);
 
@@ -426,9 +427,10 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
         if(marker.equals(marker)){
-            marker.setTag(marker.getTitle());
-            showAlertDialog(marker.getPosition(), myTestMarker );
+
+            showAlertDialog(marker.getPosition(), marker );
             Log.i("onMarkerClick", "clicked on marker "+ marker.getSnippet());
+            Log.i(" onMarkerClick", "marker Tag = "+marker.getTag().toString());
         }
 
         return false;
