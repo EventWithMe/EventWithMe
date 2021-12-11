@@ -229,6 +229,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     * (Update/PUT) Update user profile data
     * (delete) delete account
 
+[Live Demo at the University at Texas in San Antonio](https://www.youtube.com/watch?v=8XOlISfdpbU&ab_channel=BrandonMuller)
+
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
