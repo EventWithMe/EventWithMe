@@ -4,13 +4,20 @@ import static android.content.ContentValues.TAG;
 import static android.content.Context.LOCATION_SERVICE;
 
 
+import static com.parse.Parse.getApplicationContext;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Criteria;
@@ -20,11 +27,15 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,7 +45,9 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.load.engine.Initializable;
 import com.example.eventwithus.EventMarker;
 import com.example.eventwithus.GetLocation;
+import com.example.eventwithus.MainActivity;
 import com.example.eventwithus.R;
+import com.example.eventwithus.RoundedTransformation;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -45,11 +58,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.SquareCap;
 import com.parse.Parse;
 import com.parse.ParseUser;
 import com.squareup.picasso.Callback;
@@ -66,21 +81,27 @@ import java.util.Locale;
 
 
 
-public class MapViewFragment extends Fragment implements OnMapReadyCallback, Initializable {
+public class MapViewFragment extends Fragment implements OnMapReadyCallback, Initializable , GoogleMap.OnMarkerClickListener {
     public static final String MapViewKey = "key";
     MapView mMapView;
     private GoogleMap googleMap;
     private Marker marker;
+    private Marker myTestMarker;
     Button btnButton;
+    int favorited = 0;
+
     LocationManager locationManager;
     private LocationCallback mLocationCallback;
     private FusedLocationProviderClient mFusedLocationClient;
     ArrayList<EventMarker> eventMarkers2 = new ArrayList<>();
     ArrayList<EventMarker> eventMarkers3 = new ArrayList<>();
 
+    LatLng myCoordinates;
 
     ParseUser currentUser = ParseUser.getCurrentUser();
     String city = currentUser.getString("city");
+
+
 
 
 
@@ -97,6 +118,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
         }
         int count = 0;
         Log.i("onCreateView initiated ", String.valueOf(count++));
+
 
 
 
@@ -119,6 +141,76 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                     requestLocation();
             }
         });
+// Getting reference to the SupportMapFragment of activity_main.xml
+
+/**
+        googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+            // Use default InfoWindow frame
+            @Override
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
+
+            // Defines the contents of the InfoWindow
+            @Override
+            public View getInfoContents(Marker arg0) {
+
+                // Getting view from the layout file info_window_layout
+                View v = getLayoutInflater().inflate(R.layout.windowlayout, null);
+
+                // Getting the position from the marker
+                LatLng latLng = arg0.getPosition();
+
+                // Getting reference to the TextView to set latitude
+                TextView tvLat = (TextView) v.findViewById(R.id.tv_lat);
+
+                // Getting reference to the TextView to set longitude
+                TextView tvLng = (TextView) v.findViewById(R.id.tv_lng);
+
+                // Setting the latitude
+                tvLat.setText("Latitude:" + latLng.latitude);
+
+                // Setting the longitude
+                tvLng.setText("Longitude:"+ latLng.longitude);
+
+                // Returning the view containing InfoWindow contents
+                return v;
+
+            }
+        });
+
+
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
+            @Override
+            public void onMapClick(LatLng arg0) {
+                // Clears any existing markers from the GoogleMap
+                googleMap.clear();
+
+                // Creating an instance of MarkerOptions to set position
+                MarkerOptions markerOptions = new MarkerOptions();
+
+                // Setting position on the MarkerOptions
+                markerOptions.position(arg0);
+
+                // Animating to the currently touched position
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(arg0));
+
+                // Adding marker on the GoogleMap
+                Marker marker = googleMap.addMarker(markerOptions);
+
+                // Showing InfoWindow on the GoogleMap
+                marker.showInfoWindow();
+
+            }
+        });
+
+**/
+
+
+
+
 
 
 
@@ -130,7 +222,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
-
+                mMap.setOnMarkerClickListener(MapViewFragment.this);
                 // For showing a move to my location button
                 if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -145,16 +237,21 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                 googleMap.setMyLocationEnabled(true);
                 Log.i("getMapAsync geteventMarkers2 : ", getEventMarkers2().toString());
                 Log.i("getMapAsync geteventMarkers3 : ", eventMarkers3.toString());
+
                 if(eventMarkers3 != null) {
                     for (int i = 0; i < eventMarkers2.size(); i++) {
                         String NAME = eventMarkers2.get(i).getEventName();
                         String VENUE_NAME = eventMarkers2.get(i).getVenueName();
+                        String VENUE_IMG_URL = eventMarkers2.get(i).getVenueURL();
                         double LONG = Double.parseDouble(eventMarkers2.get(i).getLongitude());
                         double LAT = Double.parseDouble(eventMarkers2.get(i).getLatitude());
                         LatLng marker = new LatLng(LAT, LONG);
-                        googleMap.addMarker(new MarkerOptions().position(marker).title(NAME).snippet(VENUE_NAME));
+                       myTestMarker =  googleMap.addMarker(new MarkerOptions().position(marker).title(NAME).snippet(VENUE_NAME));
+                       myTestMarker.setTag(VENUE_IMG_URL);
                         CameraPosition cameraPosition = new CameraPosition.Builder().target(marker).zoom(12).build();
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
                     }
                 }else {
                     // For dropping a marker at a point on the Map
@@ -166,6 +263,15 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
+
+
+
+
+
+
+
+
+
             }
         });
 
@@ -177,12 +283,13 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
                 Location mCurrentLocation = locationResult.getLastLocation();
-                LatLng myCoordinates = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                 myCoordinates = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
                 String cityName = getCityName(myCoordinates);
                 Toast.makeText(getContext(), cityName, Toast.LENGTH_SHORT).show();
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myCoordinates, 13.0f));
                 if (marker == null) {
                     marker = googleMap.addMarker(new MarkerOptions().position(myCoordinates));
+                    marker.setTag(myCoordinates);//<---------------------------------------------------------------SETTING TAG HERE*******************
                 } else
                     marker.setPosition(myCoordinates);
             }
@@ -205,6 +312,81 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
         return myCity;
     }
 
+
+    @SuppressWarnings("deprecation")
+    void showAlertDialog(final LatLng markerPosition, Marker marker) {
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                .create();
+        LayoutInflater factory = LayoutInflater.from(getContext());
+        final View view = factory.inflate(R.layout.windowlayout, null);
+        Button favBTN = view.findViewById(R.id.button2);
+        TextView markerSnip = view.findViewById(R.id.markerSnippet);
+        TextView markerName = view.findViewById(R.id.markerName);
+        ImageView venueIV = view.findViewById(R.id.venueImageView);
+
+        String imageUrl = (String) marker.getTag();
+
+        Picasso.with(getContext()).load(imageUrl).into(venueIV);
+
+
+
+        markerName.setText(marker.getTitle());
+        markerSnip.setText(marker.getSnippet());
+        favBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if(favorited == 1){
+                    Toast.makeText(getApplicationContext(),
+                            "UnFavorited", Toast.LENGTH_SHORT).show();
+                            favBTN.setBackgroundColor(Color.BLUE);
+                            favorited--;
+
+                }else if(favorited == 0){
+                    Toast.makeText(getApplicationContext(),
+                            "Event Added", Toast.LENGTH_SHORT).show();
+                    favBTN.setBackgroundColor(Color.RED);
+                    favorited++;
+                }
+
+
+            }
+        });
+/**
+        alertDialog.setTitle("Location Selected");
+
+        alertDialog.setMessage("Add this Location to your");
+
+       // alertDialog.seti
+        //alertDialog.setIcon(getResources().getDrawable(R.drawable.eventwithme));
+        alertDialog.setButton2("Favorites", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),
+                        "Event Added", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        alertDialog.setButton3("Activities",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent act_intent = new Intent();
+                        act_intent.setClass(getActivity().getBaseContext(),
+                                MainActivity.class);
+                        act_intent.putExtra("username", "test");
+                        act_intent
+                                .putExtra("latitude", markerPosition.latitude);
+                        act_intent.putExtra("longitude",
+                                markerPosition.longitude);
+                        startActivity(act_intent);
+
+                    }
+                });
+ **/
+        alertDialog.setView(view);
+        alertDialog.show();
+    }
 
     @SuppressLint("WrongConstant")
     private void requestLocation() {
@@ -239,10 +421,19 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                     mLocationCallback, Looper.myLooper());
         }
 
-
-
-
     }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        if(marker.equals(marker)){
+            marker.setTag(marker.getTitle());
+            showAlertDialog(marker.getPosition(), myTestMarker );
+            Log.i("onMarkerClick", "clicked on marker "+ marker.getSnippet());
+        }
+
+        return false;
+    }
+
     static class MarkerCallback implements Callback {
         Marker marker=null;
 
