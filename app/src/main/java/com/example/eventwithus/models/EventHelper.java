@@ -60,6 +60,7 @@ public class EventHelper {
                 count++;
             }
         }
+        Log.i(TAG ,"getEventCount : "+count);
         return count;
     }
 

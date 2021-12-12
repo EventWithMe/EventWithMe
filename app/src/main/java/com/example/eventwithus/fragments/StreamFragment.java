@@ -53,9 +53,11 @@ import java.util.Map;
 public class StreamFragment extends Fragment implements EventAdapter.OnItemClickListener, Initializable , StreamDialogFragment.OnInputSelected{
    // private StreamFragment.FragmentStreamListener listener;
     private FragmentStreamListener listener;
-
-
-
+/**
+    public interface FragmentStreamListenerRSVP{
+        void onInputStreamSentFavorites(ArrayList<>)
+    }
+**/
     public interface FragmentStreamListener {
         void onInputStreamSent(ArrayList<EventMarker> eventMarkers);
     }
@@ -124,6 +126,8 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
     String musicGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=music&genreId=" + Genreid;
     String artsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentId=KZFzniwnSyZfZ7v7na&genreId=" + Genreid;
     String filmGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&locale=*&segmentName=film&genreId=" + Genreid;
+
+    String searchEventsID = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&id=G5dIZpYh91dDP,%20vvG1YZps35jeFu&locale=*";
     ArrayList<EventMarker> eventMarkers = new ArrayList<EventMarker>();
     ArrayList<SurfaceControl.Transaction> transactionList = new ArrayList<>();
     @Override
@@ -298,6 +302,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
             @Override
             public void onClick(View view) {
                 mEventList.clear();
+
                 parseJSON2(misc);
                 updateSpinner2(Categories);
             }
@@ -354,6 +359,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                         parseJSON2(localMusicGenre);
                     }
                     if (Arrays.asList(SportsGenre).contains(spinner2.getSelectedItem().toString())) {
+
                         Genreid = Genresid.get(spinner2.getSelectedItem().toString());
                         Log.i("sports genre", city);
                         localSportsGenre = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&radius=2000&locale=*&city="+city+"&segmentName=sports&genreId="+Genreid;
@@ -401,18 +407,20 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
                 switch (spinner2.getSelectedItem().toString()) {
                     case "All Events":
+                        mEventList.clear();
                         System.out.println("All Events");
                         parseJSON2(misc);
                         break;
                     case "Concerts":
                         CurrCat = "rock";
+                        mEventList.clear();
                         System.out.println("Concerts");
                         parseJSON2(music);
                         updateSpinner2(MusicGenre);
                         break;
                     case "Sports":
                         CurrCat = "sportz";
-
+                        mEventList.clear();
                         System.out.println("Sports");
                         parseJSON2(sports);
                         updateSpinner2(SportsGenre);
@@ -423,21 +431,25 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
                         parseJSON2(family);
                         break;
                     case "Film":
+                        mEventList.clear();
                         System.out.println("Film");
                         parseJSON2(film);
                         updateSpinner2(Film);
                         break;
                     case "Misc":
+                        mEventList.clear();
                         System.out.println("Misc");
                         parseJSON2(misc);
                         break;
                     case "Arts & Theater":
+                        mEventList.clear();
                         System.out.println("Saturday");
                         parseJSON2(artNThr);
                         updateSpinner2(ArtsNThtre);
 
                         break;
                     default:
+                        mEventList.clear();
                         parseJSON2(misc);
 
                 }
@@ -533,6 +545,10 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
         return strarray;
     }
  **/
+
+
+
+
 
     private void parseJSON2(String url) {
         eventMarkers.clear();

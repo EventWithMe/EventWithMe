@@ -121,7 +121,7 @@ public class EventDetailActivity extends AppCompatActivity {
         Log.d(TAG, "RSVP CHECK:");
         for(String s : events) {
             String[] eventInfo = s.split(";");
-            System.out.print(eventInfo[0] + " " + eventId);
+            System.out.print("eventInfo[0] : "+eventInfo[0] + "  eventId : " + eventId);
             System.out.println();
             if(eventInfo[0].equals(eventId)){
                 rsvp = true;

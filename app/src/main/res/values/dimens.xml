@@ -8,4 +8,6 @@
     <dimen name="chat_fragment_pfp_width">64dp</dimen>
     <dimen name="dialog_width">400dp</dimen>
     <dimen name="dialog_height">400dp</dimen>
+    <dimen name="floating_action_button_list_bottom_padding">2</dimen>
+    <dimen name="floating_action_button_translation_z">2</dimen>
 </resources>
