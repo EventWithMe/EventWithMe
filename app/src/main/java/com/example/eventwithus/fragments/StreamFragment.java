@@ -612,7 +612,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
                                 // Genresid.put(GenreName,id);
                                 EventMarker eventMarker = new EventMarker(eventName, venueName,longitude,latitude, venueImageURL);
-                                RsvpTag rsvpTag = new RsvpTag(id,date,info,eventName,venueName,eventImage,time,venueCity);
+                                RsvpTag rsvpTag = new RsvpTag(id,date,info,eventName,venueName,venueImageURL,time,venueCity);
                                 if(eventMarker!= null) {
                                     eventMarkers.add(eventMarker);
                                     rsvpTags.add(rsvpTag);
