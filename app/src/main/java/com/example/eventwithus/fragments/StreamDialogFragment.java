@@ -68,7 +68,7 @@ public class StreamDialogFragment extends DialogFragment {
         tvw = view.findViewById(R.id.textViewDisplayStart);
         ParseUser currentUser = ParseUser.getCurrentUser();
         String city = currentUser.getString("city");
-        editTextSearch.setText(city); //setting user current city as default
+        editTextCityName.setText(city); //setting user current city as default
 /**
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
