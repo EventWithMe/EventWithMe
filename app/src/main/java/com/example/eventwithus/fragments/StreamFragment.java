@@ -33,6 +33,7 @@ import com.example.eventwithus.EventMarker;
 import com.example.eventwithus.EventsAdapter;
 import com.example.eventwithus.R;
 import com.example.eventwithus.RequestQueueSingleton;
+import com.example.eventwithus.RsvpTag;
 import com.example.eventwithus.models.Event;
 import com.example.eventwithus.models.EventDetail;
 import com.example.eventwithus.models.EventItem;
@@ -59,7 +60,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
     }
 **/
     public interface FragmentStreamListener {
-        void onInputStreamSent(ArrayList<EventMarker> eventMarkers);
+        void onInputStreamSent(ArrayList<EventMarker> eventMarkers, ArrayList<RsvpTag> RsvpTags);
     }
 
     public static final String EXTRA_URL = "imageUrl";
@@ -129,6 +130,7 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
     String searchEventsID = "https://app.ticketmaster.com/discovery/v2/events?apikey=kdQ1Zu3hN6RX9HbrUlAlMIGppB2faLMB&id=G5dIZpYh91dDP,%20vvG1YZps35jeFu&locale=*";
     ArrayList<EventMarker> eventMarkers = new ArrayList<EventMarker>();
+    ArrayList<RsvpTag> rsvpTags = new ArrayList<RsvpTag>();
     ArrayList<SurfaceControl.Transaction> transactionList = new ArrayList<>();
     @Override
     public void sendInput(String searchInput, String startDate, String endDate, String city) {
@@ -610,9 +612,11 @@ public class StreamFragment extends Fragment implements EventAdapter.OnItemClick
 
                                 // Genresid.put(GenreName,id);
                                 EventMarker eventMarker = new EventMarker(eventName, venueName,longitude,latitude, venueImageURL);
+                                RsvpTag rsvpTag = new RsvpTag(id,date,info,eventName,venueName,eventImage,time,venueCity);
                                 if(eventMarker!= null) {
                                     eventMarkers.add(eventMarker);
-                                    listener.onInputStreamSent(eventMarkers);
+                                    rsvpTags.add(rsvpTag);
+                                    listener.onInputStreamSent(eventMarkers,rsvpTags);
                                 }
 
                                 Eventcoord.put(longitude,latitude);//storing coordinates into SET

@@ -43,11 +43,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.load.engine.Initializable;
+import com.example.eventwithus.EventDetailActivity;
 import com.example.eventwithus.EventMarker;
 import com.example.eventwithus.GetLocation;
 import com.example.eventwithus.MainActivity;
 import com.example.eventwithus.R;
 import com.example.eventwithus.RoundedTransformation;
+import com.example.eventwithus.RsvpTag;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -89,19 +91,26 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
     private Marker myTestMarker;
     Button btnButton;
     int favorited = 0;
+    RsvpTag rsvpTagObject;
 
     LocationManager locationManager;
     private LocationCallback mLocationCallback;
     private FusedLocationProviderClient mFusedLocationClient;
     ArrayList<EventMarker> eventMarkers2 = new ArrayList<>();
-    ArrayList<EventMarker> eventMarkers3 = new ArrayList<>();
+    //ArrayList<EventMarker> eventMarkers3 = new ArrayList<>();
+    ArrayList<RsvpTag> rsvpTags2 = new ArrayList<>();
 
     LatLng myCoordinates;
 
     ParseUser currentUser = ParseUser.getCurrentUser();
     String city = currentUser.getString("city");
 
+    //
 
+
+    public interface MapViewFragmentSent {
+        void onInputMapSent(String s);
+    }
 
 
 
@@ -143,78 +152,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
         });
 // Getting reference to the SupportMapFragment of activity_main.xml
 
-/**
-        googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
-            // Use default InfoWindow frame
-            @Override
-            public View getInfoWindow(Marker arg0) {
-                return null;
-            }
-
-            // Defines the contents of the InfoWindow
-            @Override
-            public View getInfoContents(Marker arg0) {
-
-                // Getting view from the layout file info_window_layout
-                View v = getLayoutInflater().inflate(R.layout.windowlayout, null);
-
-                // Getting the position from the marker
-                LatLng latLng = arg0.getPosition();
-
-                // Getting reference to the TextView to set latitude
-                TextView tvLat = (TextView) v.findViewById(R.id.tv_lat);
-
-                // Getting reference to the TextView to set longitude
-                TextView tvLng = (TextView) v.findViewById(R.id.tv_lng);
-
-                // Setting the latitude
-                tvLat.setText("Latitude:" + latLng.latitude);
-
-                // Setting the longitude
-                tvLng.setText("Longitude:"+ latLng.longitude);
-
-                // Returning the view containing InfoWindow contents
-                return v;
-
-            }
-        });
-
-
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-
-            @Override
-            public void onMapClick(LatLng arg0) {
-                // Clears any existing markers from the GoogleMap
-                googleMap.clear();
-
-                // Creating an instance of MarkerOptions to set position
-                MarkerOptions markerOptions = new MarkerOptions();
-
-                // Setting position on the MarkerOptions
-                markerOptions.position(arg0);
-
-                // Animating to the currently touched position
-                googleMap.animateCamera(CameraUpdateFactory.newLatLng(arg0));
-
-                // Adding marker on the GoogleMap
-                Marker marker = googleMap.addMarker(markerOptions);
-
-                // Showing InfoWindow on the GoogleMap
-                marker.showInfoWindow();
-
-            }
-        });
-
-**/
-
-
-
-
-
-
-
-
         mMapView.getMapAsync(new OnMapReadyCallback() {
 
 
@@ -236,18 +173,20 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                 }
                 googleMap.setMyLocationEnabled(true);
                 Log.i("getMapAsync geteventMarkers2 : ", getEventMarkers2().toString());
-                Log.i("getMapAsync geteventMarkers3 : ", eventMarkers3.toString());
+                //Log.i("getMapAsync geteventMarkers3 : ", eventMarkers3.toString());
 
-                if(eventMarkers3 != null) {
+                if(eventMarkers2 != null) {
                     for (int i = 0; i < eventMarkers2.size(); i++) {
                         String NAME = eventMarkers2.get(i).getEventName();
                         String VENUE_NAME = eventMarkers2.get(i).getVenueName();
                         String VENUE_IMG_URL = eventMarkers2.get(i).getVenueURL();
                         double LONG = Double.parseDouble(eventMarkers2.get(i).getLongitude());
                         double LAT = Double.parseDouble(eventMarkers2.get(i).getLatitude());
+                        rsvpTagObject = rsvpTags2.get(i);
                         LatLng marker = new LatLng(LAT, LONG);
                        myTestMarker =  googleMap.addMarker(new MarkerOptions().position(marker).title(NAME).snippet(VENUE_NAME));
-                       myTestMarker.setTag(VENUE_IMG_URL);
+                      // myTestMarker.setTag(VENUE_IMG_URL);
+                        myTestMarker.setTag(rsvpTagObject);
                         CameraPosition cameraPosition = new CameraPosition.Builder().target(marker).zoom(12).build();
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
@@ -263,13 +202,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
-
-
-
-
-
-
-
 
 
             }
@@ -316,7 +248,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
 
     @SuppressWarnings("deprecation")
     void showAlertDialog(final LatLng markerPosition, Marker marker) {
-
+        String imageUrl;
         AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                 .create();
         LayoutInflater factory = LayoutInflater.from(getContext());
@@ -325,10 +257,18 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
         TextView markerSnip = view.findViewById(R.id.markerSnippet);
         TextView markerName = view.findViewById(R.id.markerName);
         ImageView venueIV = view.findViewById(R.id.venueImageView);
+        if(marker.getTag() instanceof RsvpTag){
+            RsvpTag yourMarkerTag = ((RsvpTag)marker.getTag());
+           imageUrl= yourMarkerTag.getImageUrl();
+            Picasso.with(getContext()).load(imageUrl).into(venueIV);
+            //Toast.makeText(getActivity, yourMarkerTag.getEmail() , Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getActivity, yourMarkerTag.getPhoneNumber() , Toast.LENGTH_SHORT).show();
+        }
+      //  String imageUrl = marker.getTag().toString();
+       //= marker.getTag().;
 
-        String imageUrl = marker.getTag().toString();
-
-        Picasso.with(getContext()).load(imageUrl).into(venueIV);
+       // Picasso.with(getContext()).load(imageUrl).into(venueIV);
+        EventDetailActivity obj = new EventDetailActivity();
 
 
 
@@ -342,10 +282,27 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                 if(favorited == 1){
                     Toast.makeText(getApplicationContext(),
                             "UnFavorited", Toast.LENGTH_SHORT).show();
+                    if(marker.getTag() instanceof RsvpTag){
+                        RsvpTag yourMarkerTag = ((RsvpTag)marker.getTag());
+                        obj.cancelRSVP2(yourMarkerTag.getEventId());
+
+                    }
                             favBTN.setBackgroundColor(Color.BLUE);
                             favorited--;
-
+//rsvpEvent(String eventId, String date, String eventDescription, String eventName, String venueName, String imageUrl, String startTime, String venueCity)
                 }else if(favorited == 0){
+                    if(marker.getTag() instanceof RsvpTag){
+                        RsvpTag yourMarkerTag = ((RsvpTag)marker.getTag());
+                       String id = yourMarkerTag.getEventId();
+                     String date=  yourMarkerTag.getDate();
+                     String eventdesc = yourMarkerTag.getEventDescription();
+                     String name = yourMarkerTag.getEventName();
+                     String venueName = yourMarkerTag.getVenueName();
+                     String imgURL = yourMarkerTag.getImageUrl();
+                     String startTime = yourMarkerTag.getStartTime();
+                     String Venuecity = yourMarkerTag.getVenueCity();
+                     obj.rsvpEvent2(id,date,eventdesc,name,venueName,imgURL,startTime,Venuecity);
+                    }
                     Toast.makeText(getApplicationContext(),
                             "Event Added", Toast.LENGTH_SHORT).show();
                     favBTN.setBackgroundColor(Color.RED);
@@ -464,10 +421,11 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
         this.eventMarkers2 = eventMarkers2;
     }
 
-    public void updateEventMarkers(ArrayList<EventMarker> eventMarkers){
+    public void updateEventMarkers(ArrayList<EventMarker> eventMarkers, ArrayList<RsvpTag> rsvpTags){
        // Collections.copy(eventMarkers,eventMarkers2);
         setEventMarkers2(eventMarkers);
        eventMarkers2 = eventMarkers;
+       rsvpTags2 = rsvpTags;
         Log.i("MapViewFragment : updateEventMarkers eventMarkers2 : ", eventMarkers2.toString());
         Log.i("MapViewFragment : updateEventMarkers eventMarkers : ", eventMarkers.toString());
 
