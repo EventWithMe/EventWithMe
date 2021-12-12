@@ -403,6 +403,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
         alertDialog.show();
     }
 
+    
+
     @SuppressLint("WrongConstant")
     private void requestLocation() {
 
