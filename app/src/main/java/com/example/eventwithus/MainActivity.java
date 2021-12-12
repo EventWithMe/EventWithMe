@@ -197,9 +197,10 @@ public class MainActivity extends AppCompatActivity implements Initializable, Se
     }
 
     @Override
-    public void onInputStreamSent(ArrayList<EventMarker> eventMarkers) {
+    public void onInputStreamSent(ArrayList<EventMarker> eventMarkers, ArrayList<RsvpTag> rsvpTags) {
         if(eventMarkers != null) {
-            mapViewFragment.updateEventMarkers(eventMarkers);
+            mapViewFragment.updateEventMarkers(eventMarkers, rsvpTags);
+
         }
 
     }

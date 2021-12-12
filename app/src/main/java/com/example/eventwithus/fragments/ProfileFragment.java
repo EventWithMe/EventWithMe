@@ -74,6 +74,7 @@ public class ProfileFragment extends Fragment {
                             tvName.setText(String.format("%s %s", firstName, lastName));
                             tvEmail.setText(email);
                             tvCity.setText(city);
+                            loadProfilePic();
                             if (bio.isEmpty())
                                 tvBio.setText(R.string.profile_fragment_label_no_bio);
                             else

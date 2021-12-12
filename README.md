@@ -34,13 +34,13 @@ App allows users to create account and chat with people going to the same events
 
 **Optional Nice-to-have Stories**
 
-- [ ] User can use phone GPS to detect location
+- [x] User can use phone GPS to detect location
 - [ ] User can choose to sort either by most recent or by distance
 - [ ] User can privately message people attending
 - [ ] User can create groups with group chats for people attending together
 - [ ] User can receive notifications about new messages or new events in their area
 - [ ] User can change privacy settings and notification settings
-- [ ] User can view other people's profiles
+- [x] User can view other people's profiles
 
 ### 2. Screen Archetypes
 
@@ -228,6 +228,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     ```
     * (Update/PUT) Update user profile data
     * (delete) delete account
+
+[Live Demo at the University at Texas in San Antonio](https://www.youtube.com/watch?v=8XOlISfdpbU&ab_channel=BrandonMuller)
 
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]

@@ -14,6 +14,9 @@ android {
     testOptions {
         unitTests.includeAndroidResources = true
     }
+    buildFeatures {
+        dataBinding true
+    }
 
     defaultConfig {
         applicationId "com.example.eventwithus"
@@ -89,8 +92,7 @@ dependencies {
     //for geo location services
     implementation 'com.google.android.gms:play-services-location:18.0.0'
 
-    //swipe refresh
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
 
     //for geolocation
     implementation 'com.google.android.gms:play-services-location:18.0.0'

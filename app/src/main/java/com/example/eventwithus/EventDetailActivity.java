@@ -26,7 +26,7 @@ import java.util.List;
 public class EventDetailActivity extends AppCompatActivity {
 
     public static final String TAG = "EventDetailActivity"; // tag for logging
-    public static final String PARSE_RSVP_KEY= "eventsinfo"; // key to get and update the eventinfo column in the User object in Parse DB
+    public static final String PARSE_RSVP_KEY = "eventsinfo"; // key to get and update the eventinfo column in the User object in Parse DB
     public static final String EXTRA_EVENT_DATE = "date"; // used to extract date data from intent
     public static final String EXTRA_EVENT_ID = "id"; // used to extract date data from intent
     public static final String EXTRA_EVENT_VENUE_NAME = "venueName"; // used to extract date data from intent
@@ -67,7 +67,7 @@ public class EventDetailActivity extends AppCompatActivity {
         String[] arr = intent.getStringExtra(EXTRA_VENUE_CITY).split(":");
         String venueCity = EventHelper.cityFormatter(arr[1]);
         String venueName = intent.getStringExtra(EXTRA_EVENT_VENUE_NAME) + " in " + venueCity;
-        String startTime =  intent.getStringExtra(EXTRA_EVENT_START_TIME);
+        String startTime = intent.getStringExtra(EXTRA_EVENT_START_TIME);
         String timeDate = EventHelper.formatJsonDate(eventDate) + " " + getResources().getString(R.string.event_detail_activity_date_time_at) + " " + EventHelper.startTimeFormatter(startTime);
 
         // initialize the UI elements
@@ -88,21 +88,21 @@ public class EventDetailActivity extends AppCompatActivity {
         //printEvents();
 
         // if the user has event data proceed to check if he is already rsvp'd
-        if(events.size() == 1) {
+        if (events.size() == 1) {
             rsvp = false;
         } else {
             rsvpCheck(eventID);
         }
 
         // if the user is already rsvp'd then set the btnEditProfile to cancel
-        if(rsvp) {
+        if (rsvp) {
             btnRSVP.setImageResource(R.drawable.ic_favorites);
         }
 
         btnRSVP.setOnClickListener(view -> {
             Log.d(TAG, "btnRSVP clicked date: " + eventID + " at " + eventDate);
             EventHelper.refreshUserData();
-            if(rsvp) {
+            if (rsvp) {
                 Toast mytoast = Toast.makeText(getApplicationContext(), "Unfavorited", Toast.LENGTH_SHORT);
                 mytoast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 1000);
                 mytoast.show();
@@ -119,11 +119,11 @@ public class EventDetailActivity extends AppCompatActivity {
     // iterates through a list of events to check and see if the user has rsvp'd already
     private void rsvpCheck(String eventId) {
         Log.d(TAG, "RSVP CHECK:");
-        for(String s : events) {
+        for (String s : events) {
             String[] eventInfo = s.split(";");
-            System.out.print(eventInfo[0] + " " + eventId);
+            System.out.print("eventInfo[0] : " + eventInfo[0] + "  eventId : " + eventId);
             System.out.println();
-            if(eventInfo[0].equals(eventId)){
+            if (eventInfo[0].equals(eventId)) {
                 rsvp = true;
                 return;
             } else {
@@ -135,14 +135,15 @@ public class EventDetailActivity extends AppCompatActivity {
 
     // if user click the btnEditProfile when it says "cancel rsvp" then we remove the item from the list and DB
     private void cancelRSVP(String eventId) {
+        events = EventHelper.getLoggedInUserEvents("eventsinfo");
         Log.d(TAG, "CANCEL RSVP:");
         StringBuilder updated = new StringBuilder();
 
         Log.d(TAG, "EVENT LIST CHECKING:");
-        for(int i = 0; i < events.size(); i++) {
+        for (int i = 0; i < events.size(); i++) {
             String[] format = events.get(i).split(";");
             Log.d(TAG, format[0] + " " + eventId);
-            if(format[0].equals(eventId)) {
+            if (format[0].equals(eventId)) {
                 events.remove(i);
                 break;
             }
@@ -151,7 +152,7 @@ public class EventDetailActivity extends AppCompatActivity {
         System.out.println("Events list after remove");
         System.out.println(events);
 
-        for(int i = 0; i < events.size() - 1; i++) {
+        for (int i = 0; i < events.size() - 1; i++) {
             updated.append(events.get(i)).append("<");
         }
         updated.append(events.get(events.size() - 1));
@@ -187,12 +188,16 @@ public class EventDetailActivity extends AppCompatActivity {
     // updates Parse DB User eventsinfo column
     private void rsvpEvent(String eventId, String date, String eventDescription, String eventName, String venueName, String imageUrl, String startTime, String venueCity) {
         Log.i(TAG, "adding event Id: " + eventId + " on " + date);
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+
         String eventsinfo = currentUser.getString(PARSE_RSVP_KEY);
         eventsinfo += "<" + eventId.trim() + ";" + date.trim() + ";" + eventDescription.trim() + ";" + eventName.trim() + ";" + venueName.trim() + ";" + imageUrl.trim() + ";" + startTime + ";" + venueCity;
         currentUser.put(PARSE_RSVP_KEY, eventsinfo);
         currentUser.saveInBackground(e -> {
             if (e == null) {
-                btnRSVP.setImageResource(R.drawable.ic_favorites);;
+                btnRSVP.setImageResource(R.drawable.ic_favorites);
+                ;
                 rsvp = true;
                 events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
             } else {
@@ -206,11 +211,47 @@ public class EventDetailActivity extends AppCompatActivity {
         events = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
         Log.d(TAG, "Printing Events:");
         StringBuilder eventsStringBuilder = new StringBuilder();
-        for(String s : events) {
+        for (String s : events) {
             eventsStringBuilder.append(s).append(" ");
         }
         eventsStringBuilder.append("\n");
 
         Log.d(TAG, eventsStringBuilder.toString());
+    }
+
+
+    public void rsvpEvent2(String eventId, String date, String eventDescription, String eventName, String venueName, String imageUrl, String startTime, String venueCity) {
+        Log.i(TAG, "adding event Id: " + eventId + " on " + date);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        String eventsinfo = currentUser.getString(PARSE_RSVP_KEY);
+        eventsinfo += "<" + eventId.trim() + ";" + date.trim() + ";" + eventDescription.trim() + ";" + eventName.trim() + ";" + venueName.trim() + ";" + imageUrl.trim() + ";" + startTime + ";" + venueCity;
+        currentUser.put(PARSE_RSVP_KEY, eventsinfo);
+        //FloatingActionButton btnRSVP;
+        //btnRSVP = findViewById(R.id.btnRSVP);
+        currentUser.saveInBackground(e -> {
+
+        });
+        EventHelper.refreshUserData();
+    }
+
+
+   public void cancelRSVP2(String eventId) {
+       EventHelper.refreshUserData();
+       ParseUser currentUser = ParseUser.getCurrentUser();
+        events = EventHelper.getLoggedInUserEvents("eventsinfo");
+        Log.d(TAG, "CANCEL RSVP:");
+        StringBuilder updated = new StringBuilder();
+
+        Log.d(TAG, "EVENT LIST CHECKING:");
+        for (int i = 0; i < events.size(); i++) {
+            String[] format = events.get(i).split(";");
+            // Log.d(TAG, format[0] + " " + eventId);
+            if (format[0].equals(eventId)) {
+                events.remove(i);
+                break;
+            }
+        }
+       currentUser.put(PARSE_RSVP_KEY, updated.toString());
+       EventHelper.refreshUserData();
     }
 }

@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.eventwithus.R;
+import com.parse.ParseUser;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -65,6 +66,9 @@ public class StreamDialogFragment extends DialogFragment {
         editTextSearch = view.findViewById(R.id.editTextSearch);
         btnGet = view.findViewById(R.id.button1);
         tvw = view.findViewById(R.id.textViewDisplayStart);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        String city = currentUser.getString("city");
+        editTextCityName.setText(city); //setting user current city as default
 /**
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -63,8 +63,11 @@ public class RsvpFragment extends Fragment {
         currentUser = ParseUser.getCurrentUser();
 
         eventsList = EventHelper.getLoggedInUserEvents(PARSE_RSVP_KEY);
+        Log.i(TAG, "eventList before remove : " + eventsList.toString());
         eventsList.remove(0);
-        myEventAdapter = new MyEventAdapter(getContext(), eventsList);
+
+        Log.i(TAG, "eventList after remove : " + eventsList.toString());
+        myEventAdapter = new MyEventAdapter(getActivity().getBaseContext(), eventsList);
 
         recyclerView.setAdapter(myEventAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -85,13 +88,16 @@ public class RsvpFragment extends Fragment {
                 // this method is called when we swipe our item to right direction.
                 // on below line we are getting the item at a particular position.
                 String event = eventsList.get(viewHolder.getAdapterPosition());
+                Log.i(TAG, "onSwiped event : "+ event.toString());
+               //<---------------------ADDED THIS TO TEST
                 String[] formatted = event.split(";");
                 changeRemoved(true);
+                //myEventAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
                 // below line is to get the position
                 // of the item at that position.
                 int position = viewHolder.getAdapterPosition();
-
+                Log.i(TAG, "positon"+position);
                 // this method is called when item is swiped.
                 // below line is to remove item from our array list.
                 // TODO: 12/9/2021 eventhelper remove this event from DB
@@ -106,11 +112,12 @@ public class RsvpFragment extends Fragment {
                     public void onClick(View v) {
                         // adding on click listener to our action of snack bar.
                         // below line is to add our item to array list with a position.
+                        Log.i(TAG, "onCLick: "+event.toString());
                         eventsList.add(position, event);
 
                         // below line is to notify item is
                         // added to our adapter class.
-                        myEventAdapter.notifyItemInserted(position);
+                      //  myEventAdapter.notifyItemInserted(position);
                         changeRemoved(false);
                     }
                 }).show();
