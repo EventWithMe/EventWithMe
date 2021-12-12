@@ -78,9 +78,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-
+import java.util.Set;
 
 
 public class MapViewFragment extends Fragment implements OnMapReadyCallback, Initializable , GoogleMap.OnMarkerClickListener {
@@ -88,18 +89,20 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
     MapView mMapView;
     private GoogleMap googleMap;
     private Marker marker;
+    int pos = 0;
     private Marker myTestMarker;
     Button btnButton;
+    Button leftBTNm ,rightBTN;
     int favorited = 0;
     RsvpTag rsvpTagObject;
-
+    List<Marker> markers = new ArrayList<>();;
     LocationManager locationManager;
     private LocationCallback mLocationCallback;
     private FusedLocationProviderClient mFusedLocationClient;
     ArrayList<EventMarker> eventMarkers2 = new ArrayList<>();
     //ArrayList<EventMarker> eventMarkers3 = new ArrayList<>();
     ArrayList<RsvpTag> rsvpTags2 = new ArrayList<>();
-
+    Set<LatLng> set = new HashSet<>();
     LatLng myCoordinates;
 
     ParseUser currentUser = ParseUser.getCurrentUser();
@@ -121,6 +124,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         btnButton = rootView.findViewById(R.id.btnCurrentCity);
+        leftBTNm = rootView.findViewById(R.id.leftBTN);
+        rightBTN = rootView.findViewById(R.id.rightBTN);
         mMapView.onResume(); // needed to get the map to display immediately
         if (getArguments() != null) {
             ArrayList<EventMarker> eventMarkers3 = (ArrayList<EventMarker>) getArguments().getSerializable(MapViewKey);
@@ -137,9 +142,56 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
             e.printStackTrace();
         }
 
+        leftBTNm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "markers size :"+markers.size());
+                Log.i(TAG, "set size :"+set.size());
+                int n = set.size();
+                List<LatLng> aList = new ArrayList<LatLng>(n);
+                for (LatLng x : set)
+                    aList.add(x);
+
+                if(pos > 0) {
+                   --pos;
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(aList.get(pos)).zoom(12).build();
+                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    Log.i(TAG, "pos :" + pos);
+                }
+                Toast.makeText(getContext(), "left Button Clicked", Toast.LENGTH_SHORT).show();
+               // CameraPosition cameraPosition = new CameraPosition.Builder().target(myTestMarker.getPosition()).zoom(12).build();
+              //  googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
+        });
+
+        rightBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    Log.i(TAG, "markers size :"+markers.size());
+                    Log.i(TAG, "set size :"+set.size());
+
+                int n = set.size();
+                List<LatLng> aList = new ArrayList<LatLng>(n);
+                for (LatLng x : set)
+                    aList.add(x);
+                Log.i(TAG, "current pos before:" + pos);
+            if(pos < set.size()-1) {
+                pos++;
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(aList.get(pos)).zoom(12).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                Log.i(TAG, "current pos :" + pos);
+                 }
+                Toast.makeText(getContext(), "right Button Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         btnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         Log.d("mylog", "Not granted");
@@ -175,7 +227,10 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                 Log.i("getMapAsync geteventMarkers2 : ", getEventMarkers2().toString());
                 //Log.i("getMapAsync geteventMarkers3 : ", eventMarkers3.toString());
 
+
+
                 if(eventMarkers2 != null) {
+                    markers = new ArrayList<>();
                     for (int i = 0; i < eventMarkers2.size(); i++) {
                         String NAME = eventMarkers2.get(i).getEventName();
                         String VENUE_NAME = eventMarkers2.get(i).getVenueName();
@@ -187,6 +242,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                        myTestMarker =  googleMap.addMarker(new MarkerOptions().position(marker).title(NAME).snippet(VENUE_NAME));
                       // myTestMarker.setTag(VENUE_IMG_URL);
                         myTestMarker.setTag(rsvpTagObject);
+                        markers.add(myTestMarker);
+                        set.add(markers.get(i).getPosition());
                         CameraPosition cameraPosition = new CameraPosition.Builder().target(marker).zoom(12).build();
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
