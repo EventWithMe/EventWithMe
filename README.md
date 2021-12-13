@@ -5,19 +5,27 @@
 1. [Product Spec](#Product-Spec)
 1. [Wireframes](#Wireframes)
 2. [Schema](#Schema)
+3. [Feature Demos](#Feature-Gifs)
 
 ## Overview
 ### Description
-App allows users to create account and chat with people going to the same events and schedule meet ups 
+EventWithMe allows people to connect with each other over events. Users find events near them and favorite them to track them and then connect to the favorited event group chats. [Live Demo at the University at Texas in San Antonio](https://www.youtube.com/watch?v=8XOlISfdpbU&ab_channel=BrandonMuller)
 
 ### App Evaluation
 [Evaluation of your app across the following attributes]
 - **Category:** Social
 - **Mobile:** No website, just a mobile app
-- **Story:** Allows users to find others attending concerts and similar events in order to meet and attend together
-- **Market:** People who go to concerts or similar events
-- **Habit:** Possibly not very habit-forming? It would only be used when planning to attend an event
-- **Scope:** The app is planned to have a limited scope, only creating an environment with chat rooms for nearby events
+- **Story:** Allows users to find others attending concerts and similar events in order discuss events and/or organize meet ups
+- **Market:** People who go to events including but not limited to theater, concerts, or sports
+- **Habit:** Habits are formed by keeping users interested and involved in event group chats and notifying users of events nearby
+- **Scope:** The scope of the app consists of making a messaging platform, implementing multiple APIs, and possibly full deployment.
+
+### Tech Stack
+- Android Studio with Java
+- Parse database through back4app hosting
+- TicketMaster API & Google Maps API
+- Android Volley Library for restful client connection
+- Picasso & Glide libraries for image loading
 
 ## Product Spec
 
@@ -28,19 +36,18 @@ App allows users to create account and chat with people going to the same events
 - [x] User can create an account and login
 - [x] User can view and change their displayed name, picture, location, etc.
 - [x] User can view a list of nearby events
-- [x] User can rsvp to attend an event
+- [x] User can favorite events and view their favorited events
 - [x] User can chat with others attending the events
-- [x] User can view events they signed up for
+- [x] User can change password
 
 **Optional Nice-to-have Stories**
 
 - [x] User can use phone GPS to detect location
+- [x] User can view other people's profiles
 - [ ] User can choose to sort either by most recent or by distance
 - [ ] User can privately message people attending
-- [ ] User can create groups with group chats for people attending together
 - [ ] User can receive notifications about new messages or new events in their area
 - [ ] User can change privacy settings and notification settings
-- [x] User can view other people's profiles
 
 ### 2. Screen Archetypes
 
@@ -66,9 +73,9 @@ App allows users to create account and chat with people going to the same events
 
 **Tab Navigation** (Tab to Screen)
 
+* Search
 * Event Stream
-* My Events
-* Messaging
+* Favorites
 * Profile
 
 **Flow Navigation** (Screen to Screen)
@@ -78,42 +85,25 @@ App allows users to create account and chat with people going to the same events
     * Signup
 * Register
     * Login
+    * Event Stream
 * Event Stream
     * Event Detail 
-    * My Events
-    * Chat
+    * Favorites
     * Profile
-    * Login
-* My Events
-    * Event Detail 
+    * Search
+* Favorites
     * Event Stream
-    * My Events
-    * Chat
-    * Profile
-    * Login
-* Event Detail 
-    * Messages 
-    * Event Stream
-    * My Events
-    * Chat
-    * Profile
-    * Login
-* Chat
-    * Event Stream
-    * My Events
     * Messages
     * Profile
-    * Login
-* Messages
+    * Search
+* Event Detail 
     * Event Stream
-    * My Events
-    * Chat
-    * Profile
-    * Login
+* Messages
+    * Favorites
 * Profile
     * Event Stream
-    * My Events
-    * Chat
+    * Search
+    * Favorites
     * Login
 
 ## Wireframes
@@ -229,8 +219,34 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     * (Update/PUT) Update user profile data
     * (delete) delete account
 
-[Live Demo at the University at Texas in San Antonio](https://www.youtube.com/watch?v=8XOlISfdpbU&ab_channel=BrandonMuller)
+### Endpoints
+- TicketMaster API
+- Google Maps API
+- Parse database hoted by back4app
 
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+
+## Feature Gifs
+### Login & Signup
+<img src='login.gif' title='Login & Signup' width='' alt='Login & Signup' />
+
+
+
+### GPS Geolocation service with Google Maps API
+<img src='gps.gif' title='Geolocation Google Map API' width='' alt='Geolocation Google Map API' />
+
+
+
+### Event Stream with Ticketmaster API
+<img src='stream.gif' title='Event Stream TicketMaster API' width='' alt='Event Stream TicketMaster API' />
+
+
+
+### User Profile
+<img src='profile.gif' title='User Profile' width='' alt='User Profile' />
+
+
+
+### Messaging
+<img src='messaging.gif' title='Messaging' width='' alt='Messaging' />
