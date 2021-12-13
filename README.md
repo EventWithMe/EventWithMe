@@ -155,7 +155,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     * (create/POST) create user in 
 * Event Stream
     * (read/GET) event data from event API
-* My Events
+* Favorites
     * (read/GET) event data and user data related to event from event API 
     ```java
         ParseQuery<Post> query = ParseQuery.getQuery(Event.class);
@@ -191,9 +191,6 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
             }
         });
     ```
-* Chat
-    * (read/GET) list of chats from 
-    * (delete) remove chat from 
 * Messages
     * (read/GET) reads messages 
     * (create/POST) create message 
