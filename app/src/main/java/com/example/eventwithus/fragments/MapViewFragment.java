@@ -158,7 +158,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                     Log.i(TAG, "pos :" + pos);
                 }
-                Toast.makeText(getContext(), "left Button Clicked", Toast.LENGTH_SHORT).show();
                // CameraPosition cameraPosition = new CameraPosition.Builder().target(myTestMarker.getPosition()).zoom(12).build();
               //  googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
@@ -183,7 +182,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Ini
 
                 Log.i(TAG, "current pos :" + pos);
                  }
-                Toast.makeText(getContext(), "right Button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
