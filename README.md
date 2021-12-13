@@ -9,7 +9,7 @@
 
 ## Overview
 ### Description
-EventWithMe allows people to connect with each other over events. Users find events near them and favorite them to track them and then connect to the favorited event group chats. 
+EventWithMe allows people to connect with each other over events. Users find events near them and favorite them to track them and then connect to their favorited event group chats. 
 [Live Demo at the University at Texas in San Antonio](https://www.youtube.com/watch?v=8XOlISfdpbU&ab_channel=BrandonMuller)
 [Detailed Feature Demo Presentation](https://www.youtube.com/watch?v=MMLMEBixGi0&t=32s&ab_channel=BrandonMuller)
 
@@ -68,6 +68,7 @@ EventWithMe allows people to connect with each other over events. Users find eve
     * User can privately message people attending
 * Profile
     * User can view and change their displayed name, picture, location, etc.
+    * User can change password
 * Settings
     * User can change privacy settings and notification settings
 
@@ -107,7 +108,11 @@ EventWithMe allows people to connect with each other over events. Users find eve
     * Search
     * Favorites
     * Login
-
+* Search
+    * Event Stream
+    * Favorites
+    * Profile
+ 
 ## Wireframes
 
 <img src="WireFramePic.PNG" width=600>
@@ -226,23 +231,28 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Feature Gifs
 ### Login & Signup
 <img src='login.gif' title='Login & Signup' width='' alt='Login & Signup' />
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 
 
 ### GPS Geolocation service with Google Maps API
 <img src='gps.gif' title='Geolocation Google Map API' width='' alt='Geolocation Google Map API' />
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 
 
 ### Event Stream with Ticketmaster API
 <img src='stream.gif' title='Event Stream TicketMaster API' width='' alt='Event Stream TicketMaster API' />
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 
 
 ### User Profile
 <img src='profile.gif' title='User Profile' width='' alt='User Profile' />
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 
 
 ### Messaging
 <img src='messaging.gif' title='Messaging' width='' alt='Messaging' />
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
