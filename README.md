@@ -9,7 +9,9 @@
 
 ## Overview
 ### Description
-EventWithMe allows people to connect with each other over events. Users find events near them and favorite them to track them and then connect to the favorited event group chats. [Live Demo at the University at Texas in San Antonio](https://www.youtube.com/watch?v=8XOlISfdpbU&ab_channel=BrandonMuller)
+EventWithMe allows people to connect with each other over events. Users find events near them and favorite them to track them and then connect to the favorited event group chats. 
+[Live Demo at the University at Texas in San Antonio](https://www.youtube.com/watch?v=8XOlISfdpbU&ab_channel=BrandonMuller)
+[Detailed Feature Demo Presentation](https://www.youtube.com/watch?v=MMLMEBixGi0&t=32s&ab_channel=BrandonMuller)
 
 ### App Evaluation
 [Evaluation of your app across the following attributes]
