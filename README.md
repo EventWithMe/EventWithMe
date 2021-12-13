@@ -221,9 +221,6 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 - Google Maps API
 - Parse database hoted by back4app
 
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-
 ## Feature Gifs
 ### Login & Signup
 <img src='login.gif' title='Login & Signup' width='' alt='Login & Signup' />
