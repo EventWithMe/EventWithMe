@@ -247,11 +247,15 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Feature Gifs
 ### Login & Signup
 <img src='login.gif' title='Login & Signup' width='' alt='Login & Signup' />
+
 ### GPS Geolocation service with Google Maps API
 <img src='gps.gif' title='Geolocation Google Map API' width='' alt='Geolocation Google Map API' />
+
 ### Event Stream with Ticketmaster API
 <img src='stream.gif' title='Event Stream TicketMaster API' width='' alt='Event Stream TicketMaster API' />
+
 ### User Profile
 <img src='profile.gif' title='User Profile' width='' alt='User Profile' />
+
 ### Messaging
 <img src='messaging.gif' title='Messaging' width='' alt='Messaging' />
