@@ -73,9 +73,9 @@ EventWithMe allows people to connect with each other over events. Users find eve
 
 **Tab Navigation** (Tab to Screen)
 
+* Search
 * Event Stream
-* My Events
-* Messaging
+* Favorites
 * Profile
 
 **Flow Navigation** (Screen to Screen)
@@ -85,42 +85,25 @@ EventWithMe allows people to connect with each other over events. Users find eve
     * Signup
 * Register
     * Login
+    * Event Stream
 * Event Stream
     * Event Detail 
-    * My Events
-    * Chat
+    * Favorites
     * Profile
-    * Login
-* My Events
-    * Event Detail 
+    * Search
+* Favorites
     * Event Stream
-    * My Events
-    * Chat
-    * Profile
-    * Login
-* Event Detail 
-    * Messages 
-    * Event Stream
-    * My Events
-    * Chat
-    * Profile
-    * Login
-* Chat
-    * Event Stream
-    * My Events
     * Messages
     * Profile
-    * Login
-* Messages
+    * Search
+* Event Detail 
     * Event Stream
-    * My Events
-    * Chat
-    * Profile
-    * Login
+* Messages
+    * Favorites
 * Profile
     * Event Stream
-    * My Events
-    * Chat
+    * Search
+    * Favorites
     * Login
 
 ## Wireframes
@@ -248,14 +231,22 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ### Login & Signup
 <img src='login.gif' title='Login & Signup' width='' alt='Login & Signup' />
 
+
+
 ### GPS Geolocation service with Google Maps API
 <img src='gps.gif' title='Geolocation Google Map API' width='' alt='Geolocation Google Map API' />
+
+
 
 ### Event Stream with Ticketmaster API
 <img src='stream.gif' title='Event Stream TicketMaster API' width='' alt='Event Stream TicketMaster API' />
 
+
+
 ### User Profile
 <img src='profile.gif' title='User Profile' width='' alt='User Profile' />
+
+
 
 ### Messaging
 <img src='messaging.gif' title='Messaging' width='' alt='Messaging' />
